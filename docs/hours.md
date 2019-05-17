@@ -2,5 +2,5 @@
 
 | date | time (h) | tasks  |
 | :----:|:-----| :-----|
-| 17.5. | 3    | research available technology |
-| total   | 3   | | 
+| 17.5. | 5    | research available technology and create skeletons|
+| total   | 5   | | 
