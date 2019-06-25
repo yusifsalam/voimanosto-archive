@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import logo from './new_logo.svg';
-import { ipf_params, wilks_params } from './util'
+import { ipf_params, wilks_params } from '../../util'
 import { Button, Container, RadioGroup, TextField, FormControl, FormLabel, FormControlLabel, Radio } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles'
-import './App.css'
+import './PointCalculator.css'
 
-const App: React.FC = () => {
+const PointCalculator: React.FC = () => {
   const [points, setPoints] = useState(0)
   const [wilks, setWilks] = useState(0)
   const [total, setTotal] = useState(0)
@@ -64,6 +64,7 @@ const App: React.FC = () => {
   }
 
   const classes = useStyles()
+  
   return (
     <Container maxWidth="sm">
       <div>
@@ -111,4 +112,4 @@ const App: React.FC = () => {
   );
 }
 
-export default App;
+export default PointCalculator;
