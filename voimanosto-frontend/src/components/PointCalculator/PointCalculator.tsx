@@ -89,7 +89,7 @@ const PointCalculator: React.FC = () => {
             <FormLabel component='legend'>Event type</FormLabel>
             <RadioGroup row onChange={handleEventChange} className={classes.root} value={eventType}>
               <FormControlLabel value='SBD' control={<Radio />} label='Full competition' />
-              <FormControlLabel value='S' control={<Radio />} label='Squal' />
+              <FormControlLabel value='S' control={<Radio />} label='Squat' />
               <FormControlLabel value='B' control={<Radio />} label='Bench' />
               <FormControlLabel value='D' control={<Radio />} label='Deadlift' />
 
