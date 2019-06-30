@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PointCalculator from './components/PointCalculator/PointCalculator'
+import App from './app'
 import * as serviceWorker from './serviceWorker'
 
-ReactDOM.render(<PointCalculator />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'))
 
 serviceWorker.unregister()

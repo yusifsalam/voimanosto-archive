@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import logo from './new_logo.svg'
 import { ipf_params, wilks_params } from '../../util'
-import {
-  Button,
-  Container,
-  RadioGroup,
-  TextField,
-  FormControl,
-  FormLabel,
-  FormControlLabel,
-  Radio
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import './PointCalculator.css'
+import { Button, Icon, Form, Divider, Segment, Grid } from 'semantic-ui-react'
 import loginService from '../../services/login'
 import workoutService from '../../services/workoutService'
 
@@ -42,12 +31,6 @@ const PointCalculator: React.FC = () => {
     }
   }, [])
 
-  const useStyles = makeStyles({
-    root: {
-      padding: '10px 10px 15px 10px'
-    }
-  })
-
   const handleBodyweightChange = (event: any) => {
     event.preventDefault()
     setBodyweight(event.target.value)
@@ -58,8 +41,9 @@ const PointCalculator: React.FC = () => {
     setTotal(event.target.value)
   }
 
-  const handleSexChange = (event: React.ChangeEvent<unknown>) => {
-    setSex((event.target as HTMLInputElement).value)
+  const handleSexChange = (event: React.FormEvent<EventTarget>): void => {
+    let target = event.target as HTMLInputElement
+    setSex(target.value)
   }
 
   const handleEquipmentChange = (event: any) => {
@@ -124,118 +108,165 @@ const PointCalculator: React.FC = () => {
     return Math.round(wilks * 100) / 100
   }
 
-  const classes = useStyles()
-
   const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type='text'
-          value={username}
-          name='Username'
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type='password'
-          value={password}
-          name='Password'
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type='submit'>login</button>
-    </form>
+    <div>
+      <h2>Login</h2>
+
+      <Segment placeholder>
+        <Grid columns={2} relaxed='very' stackable>
+          <Grid.Column>
+            <Form onSubmit={handleLogin}>
+              <Form.Input
+                icon='user'
+                iconPosition='left'
+                label='Username'
+                placeholder='Username'
+                value={username}
+                onChange={({ target }) => setUsername(target.value)}
+              />
+              <Form.Input
+                icon='lock'
+                iconPosition='left'
+                label='Password'
+                type='password'
+                value={password}
+                onChange={({ target }) => setPassword(target.value)}
+              />
+
+              <Button content='Login' primary />
+            </Form>
+          </Grid.Column>
+
+          <Grid.Column verticalAlign='middle'>
+            <Button content='Sign up' icon='signup' size='big' />
+          </Grid.Column>
+        </Grid>
+
+        <Divider vertical>Or</Divider>
+      </Segment>
+    </div>
+  )
+
+  const calculatorForm = () => (
+    <div>
+      <p>IPF points {points}</p>
+      <p>Wilks points {wilks} </p>
+      <Form onSubmit={handleBodyweightChange}>
+        <Form.Group>
+          <Form.Field>
+            <label>Bodyweight</label>
+            <input
+              value={bodyweight === 0 ? '' : bodyweight}
+              onChange={handleBodyweightChange}
+              placeholder='Bodyweight'
+              type='number'
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Total</label>
+            <input
+              value={total === 0 ? '' : total}
+              onChange={handleTotalChange}
+              placeholder='Total'
+              type='number'
+            />
+          </Form.Field>
+        </Form.Group>
+        <Form.Group>
+          <label>Sex </label>
+          <Form.Field
+            control='input'
+            type='radio'
+            label='Male'
+            value='M'
+            checked={sex === 'M'}
+            onChange={handleSexChange}
+          />
+          <Form.Field
+            control='input'
+            type='radio'
+            label='Female'
+            value='F'
+            checked={sex === 'F'}
+            onChange={handleSexChange}
+          />
+        </Form.Group>
+        <Form.Group>
+          <label>Event type</label>
+          <Form.Field
+            control='input'
+            type='radio'
+            label='Full competition'
+            value='SBD'
+            checked={eventType === 'SBD'}
+            onChange={handleEventChange}
+          />
+          <Form.Field
+            control='input'
+            type='radio'
+            label='Squat'
+            value='S'
+            checked={eventType === 'S'}
+            onChange={handleEventChange}
+          />
+          <Form.Field
+            control='input'
+            type='radio'
+            label='Bench press'
+            value='B'
+            checked={eventType === 'B'}
+            onChange={handleEventChange}
+          />
+          <Form.Field
+            control='input'
+            type='radio'
+            label='Deadlift'
+            value='D'
+            checked={eventType === 'D'}
+            onChange={handleEventChange}
+          />
+        </Form.Group>
+        <Form.Group>
+          <label>Equipment</label>
+          <Form.Field
+            control='input'
+            type='radio'
+            label='Raw'
+            value='Raw'
+            checked={equipment === 'Raw'}
+            onChange={handleEquipmentChange}
+          />
+          <Form.Field
+            control='input'
+            type='radio'
+            label='Single-Ply'
+            value='Single-Ply'
+            checked={equipment === 'Single-Ply'}
+            onChange={handleEquipmentChange}
+          />
+        </Form.Group>
+      </Form>
+
+      <Button animated onClick={handlePointChange}>
+        <Button.Content visible>Calculate</Button.Content>
+        <Button.Content hidden>
+          <Icon name='calculator' />
+        </Button.Content>
+      </Button>
+    </div>
   )
 
   return (
-    <Container maxWidth='sm'>
-      <div>
-        <img src={logo} className='App-logo' alt='logo' />
-        <h2> Login </h2>
-        {user === null ? loginForm() : <div> {user.name} </div>}
-        <p>IPF points {points}</p>
-        <p>Wilks points {wilks} </p>
-        <form onSubmit={handleBodyweightChange}>
-          <TextField
-            value={bodyweight === 0 ? '' : bodyweight}
-            onChange={handleBodyweightChange}
-            placeholder='Bodyweight'
-            type='number'
-          />
-          <TextField
-            value={total === 0 ? '' : total}
-            onChange={handleTotalChange}
-            placeholder='Total'
-            type='number'
-          />
-        </form>
-        <div className={classes.root}>
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Sex</FormLabel>
-            <RadioGroup
-              row
-              onChange={handleSexChange}
-              className={classes.root}
-              value={sex}
-            >
-              <FormControlLabel value='M' control={<Radio />} label='Male' />
-              <FormControlLabel value='F' control={<Radio />} label='Female' />
-            </RadioGroup>
-          </FormControl>
-
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Event type</FormLabel>
-            <RadioGroup
-              row
-              onChange={handleEventChange}
-              className={classes.root}
-              value={eventType}
-            >
-              <FormControlLabel
-                value='SBD'
-                control={<Radio />}
-                label='Full competition'
-              />
-              <FormControlLabel value='S' control={<Radio />} label='Squat' />
-              <FormControlLabel value='B' control={<Radio />} label='Bench' />
-              <FormControlLabel
-                value='D'
-                control={<Radio />}
-                label='Deadlift'
-              />
-            </RadioGroup>
-          </FormControl>
-
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Equipment</FormLabel>
-            <RadioGroup
-              row
-              onChange={handleEquipmentChange}
-              className={classes.root}
-              value={equipment}
-            >
-              <FormControlLabel value='Raw' control={<Radio />} label='Raw' />
-              <FormControlLabel
-                value='Single-Ply'
-                control={<Radio />}
-                label='Single-Ply'
-              />
-            </RadioGroup>
-          </FormControl>
-        </div>
-      </div>
-      <Button
-        type='submit'
-        variant='contained'
-        color='primary'
-        onClick={handlePointChange}
-      >
-        Calculate
-      </Button>
-    </Container>
+    <div>
+      <img
+        src={logo}
+        className='App-logo'
+        alt='logo'
+        width='50%'
+        height='50%'
+      />
+      {user === null ? loginForm() : calculatorForm()}
+    </div>
   )
 }
 
