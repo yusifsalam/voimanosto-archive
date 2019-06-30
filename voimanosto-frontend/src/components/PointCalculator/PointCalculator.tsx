@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
-import logo from './new_logo.svg';
+import React, { useState, useEffect } from 'react'
+import logo from './new_logo.svg'
 import { ipf_params, wilks_params } from '../../util'
-import { Button, Container, RadioGroup, TextField, FormControl, FormLabel, FormControlLabel, Radio } from '@material-ui/core';
+import {
+  Button,
+  Container,
+  RadioGroup,
+  TextField,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+  Radio
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import './PointCalculator.css'
+import loginService from '../../services/login'
+import workoutService from '../../services/workoutService'
+
+type IUser = {
+  name: string
+  username: string
+}
 
 const PointCalculator: React.FC = () => {
   const [points, setPoints] = useState(0)
@@ -13,10 +29,22 @@ const PointCalculator: React.FC = () => {
   const [sex, setSex] = useState('M')
   const [equipment, setEquipment] = useState('Raw')
   const [eventType, setEventType] = useState('SBD')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState<IUser | null>(null)
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      workoutService.setToken(user.token)
+    }
+  }, [])
 
   const useStyles = makeStyles({
     root: {
-      padding: '10px 10px 15px 10px',
+      padding: '10px 10px 15px 10px'
     }
   })
 
@@ -48,38 +76,111 @@ const PointCalculator: React.FC = () => {
     setWilks(calculateWilks(total, bodyweight, sex))
   }
 
-  function calculatePoints(total: number, bw: number, sex: string, equipment: string, eventType: string, ): number {
+  const handleLogin = async (event: any) => {
+    event.preventDefault()
+    console.log('logging in with', username, password)
+    try {
+      const user = await loginService.login({
+        username,
+        password
+      })
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      workoutService.setToken(user.token)
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+
+  function calculatePoints(
+    total: number,
+    bw: number,
+    sex: string,
+    equipment: string,
+    eventType: string
+  ): number {
     if (bodyweight === 0) alert('Please enter bodyweight')
     if (total === 0) alert('Please enter total')
     let constants = ipf_params[sex][equipment][eventType]
-    let points = 500 + 100 * (total - (constants[0] * Math.log(bw) - constants[1])) / (constants[2] * Math.log(bw) - constants[3])
+    let points =
+      500 +
+      (100 * (total - (constants[0] * Math.log(bw) - constants[1]))) /
+        (constants[2] * Math.log(bw) - constants[3])
     return Math.round(points * 100) / 100
   }
 
   function calculateWilks(total: number, bw: number, sex: string): number {
     let constants = wilks_params[sex]
-    let wilks = total * 500 / (constants[0] + constants[1] * bw + constants[2] * Math.pow(bw, 2) + constants[3] * Math.pow(bw, 3)
-      + constants[4] * Math.pow(bw, 4) + constants[5] * Math.pow(bw, 5))
+    let wilks =
+      (total * 500) /
+      (constants[0] +
+        constants[1] * bw +
+        constants[2] * Math.pow(bw, 2) +
+        constants[3] * Math.pow(bw, 3) +
+        constants[4] * Math.pow(bw, 4) +
+        constants[5] * Math.pow(bw, 5))
     return Math.round(wilks * 100) / 100
   }
 
   const classes = useStyles()
-  
-  return (
-    <Container maxWidth="sm">
+
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
       <div>
-        <img src={logo} className="App-logo" alt="logo" />
+        username
+        <input
+          type='text'
+          value={username}
+          name='Username'
+          onChange={({ target }) => setUsername(target.value)}
+        />
+      </div>
+      <div>
+        password
+        <input
+          type='password'
+          value={password}
+          name='Password'
+          onChange={({ target }) => setPassword(target.value)}
+        />
+      </div>
+      <button type='submit'>login</button>
+    </form>
+  )
+
+  return (
+    <Container maxWidth='sm'>
+      <div>
+        <img src={logo} className='App-logo' alt='logo' />
+        <h2> Login </h2>
+        {user === null ? loginForm() : <div> {user.name} </div>}
         <p>IPF points {points}</p>
         <p>Wilks points {wilks} </p>
         <form onSubmit={handleBodyweightChange}>
-          <TextField value={bodyweight === 0 ? '' : bodyweight} onChange={handleBodyweightChange} placeholder='Bodyweight' type='number' />
-          <TextField value={total === 0 ? '' : total} onChange={handleTotalChange} placeholder='Total' type='number' />
-
+          <TextField
+            value={bodyweight === 0 ? '' : bodyweight}
+            onChange={handleBodyweightChange}
+            placeholder='Bodyweight'
+            type='number'
+          />
+          <TextField
+            value={total === 0 ? '' : total}
+            onChange={handleTotalChange}
+            placeholder='Total'
+            type='number'
+          />
         </form>
         <div className={classes.root}>
           <FormControl component='fieldset'>
             <FormLabel component='legend'>Sex</FormLabel>
-            <RadioGroup row onChange={handleSexChange} className={classes.root} value={sex}>
+            <RadioGroup
+              row
+              onChange={handleSexChange}
+              className={classes.root}
+              value={sex}
+            >
               <FormControlLabel value='M' control={<Radio />} label='Male' />
               <FormControlLabel value='F' control={<Radio />} label='Female' />
             </RadioGroup>
@@ -87,29 +188,55 @@ const PointCalculator: React.FC = () => {
 
           <FormControl component='fieldset'>
             <FormLabel component='legend'>Event type</FormLabel>
-            <RadioGroup row onChange={handleEventChange} className={classes.root} value={eventType}>
-              <FormControlLabel value='SBD' control={<Radio />} label='Full competition' />
+            <RadioGroup
+              row
+              onChange={handleEventChange}
+              className={classes.root}
+              value={eventType}
+            >
+              <FormControlLabel
+                value='SBD'
+                control={<Radio />}
+                label='Full competition'
+              />
               <FormControlLabel value='S' control={<Radio />} label='Squat' />
               <FormControlLabel value='B' control={<Radio />} label='Bench' />
-              <FormControlLabel value='D' control={<Radio />} label='Deadlift' />
-
+              <FormControlLabel
+                value='D'
+                control={<Radio />}
+                label='Deadlift'
+              />
             </RadioGroup>
           </FormControl>
 
           <FormControl component='fieldset'>
             <FormLabel component='legend'>Equipment</FormLabel>
-            <RadioGroup row onChange={handleEquipmentChange} className={classes.root} value={equipment}>
+            <RadioGroup
+              row
+              onChange={handleEquipmentChange}
+              className={classes.root}
+              value={equipment}
+            >
               <FormControlLabel value='Raw' control={<Radio />} label='Raw' />
-              <FormControlLabel value='Single-Ply' control={<Radio />} label='Single-Ply' />
+              <FormControlLabel
+                value='Single-Ply'
+                control={<Radio />}
+                label='Single-Ply'
+              />
             </RadioGroup>
           </FormControl>
-
         </div>
-
       </div>
-      <Button type='submit' variant='contained' color='primary' onClick={handlePointChange}>Calculate</Button>
+      <Button
+        type='submit'
+        variant='contained'
+        color='primary'
+        onClick={handlePointChange}
+      >
+        Calculate
+      </Button>
     </Container>
-  );
+  )
 }
 
-export default PointCalculator;
+export default PointCalculator
