@@ -9,5 +9,7 @@
 | 27.6  | 8        | connect backend to mongodb and publish to heroku                   |
 | 28.6  | 8        | refactor backend, implement user login                             |
 | 29.6  | 8        | brush up on redux, continue with backend, hook frontend to backend |
-| 30.6  | x        | do something                                                       |
-| total | 42       |                                                                    |
+| 30.6  | 5        | switch frontend to semantic ui                                     |
+|  1.7  | 10       | image storing in cloudinary configured                             |
+|  2.7  | 6        | refactor frontend, work on css                                     |
+| total | 63       |                                                                    |
