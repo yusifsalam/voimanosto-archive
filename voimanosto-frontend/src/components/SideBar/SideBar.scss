@@ -1,0 +1,12 @@
+@import '../../styles/shared.scss';
+
+.ui.menu.fixed.side-bar {
+  //   background-color: #f5f5f5;
+  margin-top: $header-nav-height;
+  overflow-y: auto;
+  padding-bottom: $header-nav-height;
+}
+
+.side-bar.ui.vertical.menu {
+  width: $sidebar-left-width;
+}

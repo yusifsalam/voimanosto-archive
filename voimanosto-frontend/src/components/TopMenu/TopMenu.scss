@@ -1,0 +1,13 @@
+@import '../../styles/shared.scss';
+
+.ui.menu.top-menu {
+  border: none;
+  .logo {
+    width: $sidebar-left-width;
+    .headerInLogo {
+      text-align: center;
+      padding-left: 10px;
+    }
+  }
+  max-height: $header-nav-height;
+}

@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import logo from './new_logo.svg'
 import { ipf_params, wilks_params } from '../../util'
-import { Button, Icon, Form, Divider, Segment, Grid } from 'semantic-ui-react'
+import {
+  Button,
+  Icon,
+  Form,
+  Divider,
+  Segment,
+  Grid,
+  Label
+} from 'semantic-ui-react'
 import loginService from '../../services/login'
 import workoutService from '../../services/workoutService'
+import './PointCalculator.scss'
 
 type IUser = {
   name: string
@@ -148,9 +156,16 @@ const PointCalculator: React.FC = () => {
   )
 
   const calculatorForm = () => (
-    <div>
-      <p>IPF points {points}</p>
-      <p>Wilks points {wilks} </p>
+    <div className='calculator-form'>
+      <Segment vertical>
+        <Label color='black' key='ipf_points' size='massive' horizontal>
+          IPF points {points}
+        </Label>
+        <Label color='grey' key='wilks_points' size='massive' horizontal>
+          Wilks points {wilks}
+        </Label>
+      </Segment>
+
       <Form onSubmit={handleBodyweightChange}>
         <Form.Group>
           <Form.Field>
@@ -172,6 +187,7 @@ const PointCalculator: React.FC = () => {
             />
           </Form.Field>
         </Form.Group>
+
         <Form.Group>
           <label>Sex </label>
           <Form.Field
@@ -191,6 +207,7 @@ const PointCalculator: React.FC = () => {
             onChange={handleSexChange}
           />
         </Form.Group>
+
         <Form.Group>
           <label>Event type</label>
           <Form.Field
@@ -226,6 +243,7 @@ const PointCalculator: React.FC = () => {
             onChange={handleEventChange}
           />
         </Form.Group>
+
         <Form.Group>
           <label>Equipment</label>
           <Form.Field
@@ -256,18 +274,7 @@ const PointCalculator: React.FC = () => {
     </div>
   )
 
-  return (
-    <div>
-      <img
-        src={logo}
-        className='App-logo'
-        alt='logo'
-        width='50%'
-        height='50%'
-      />
-      {user === null ? loginForm() : calculatorForm()}
-    </div>
-  )
+  return <div>{user === null ? loginForm() : calculatorForm()}</div>
 }
 
 export default PointCalculator

@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1381.4 966.5" style="enable-background:new 0 0 1381.4 966.5;" xml:space="preserve">
+	 viewBox="0 0 864.9 342.5" style="enable-background:new 0 0 864.9 342.5;" xml:space="preserve">
 <style type="text/css">
-	.st0{font-family:'RobotoMonoForPowerline-Bold';}
-	.st1{font-size:429px;}
-	.st2{fill:none;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
-	.st3{fill:#FFFFFF;}
-	.st4{fill:#3FA9F5;stroke:#000000;stroke-width:5;stroke-miterlimit:10;}
-	.st5{fill:#FF1D25;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
-	.st6{fill:#3FA9F5;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
+	.st0{enable-background:new    ;}
+	.st1{fill:none;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:#3FA9F5;stroke:#000000;stroke-width:5;stroke-miterlimit:10;}
+	.st4{fill:#FF1D25;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
+	.st5{fill:#3FA9F5;stroke:#000000;stroke-width:10;stroke-miterlimit:10;}
 </style>
 <title>HYV</title>
-<text transform="matrix(1 0 0 1 512.1536 661.9688)" class="st0 st1">Y</text>
+<g class="st0">
+	<path d="M415.7,178l60.1-140.5h64.7l-95.9,199.4l-0.2,105.6h-58.7l-0.2-108.1L291.1,37.5h64.5L415.7,178z"/>
+</g>
 <g id="barbell">
-	<path class="st2" d="M230.2,458.3c9.3-7.1,19.3-10.1,30.3-14.1c12-3,24-6,36-10c5-1,9-2,14-3c1,0,3-2,4-2c119-28,235-31,352.9-28.9
-		"/>
-	<path class="st2" d="M1092.9,459.7c-22.3-10.5-43.3-18.5-67.3-24.5c-1,0-3-2-4-2c-39-8-75-15-113-18c-3,0-7-2-10-2c-5,0-10-1-15-1
+	<path class="st1" d="M2.2,138.8c9.3-7.1,19.3-10.1,30.3-14.1c12-3,24-6,36-10c5-1,9-2,14-3c1,0,3-2,4-2c119-28,235-31,352.9-28.9"
+		/>
+	<path class="st1" d="M864.9,140.2c-22.3-10.5-43.3-18.5-67.3-24.5c-1,0-3-2-4-2c-39-8-75-15-113-18c-3,0-7-2-10-2c-5,0-10-1-15-1
 		c-3,0-7-2-10-2c-73-7-146-10-218.6-9.9"/>
 </g>
-<circle id="face" class="st3" cx="645" cy="477.7" r="41.5"/>
+<circle id="face" class="st2" cx="417" cy="158.2" r="41.5"/>
 <g id="plates">
-	<path class="st4" d="M291,325h-51c-6.6,0-12,5.4-12,12v209c0,6.6,5.4,12,12,12h51c6.6,0,12-5.4,12-12V337
-		C303,330.4,297.7,325,291,325z"/>
-	<path class="st5" d="M315,325h51c6.6,0,12,5.4,12,12v209c0,6.6-5.4,12-12,12h-51c-6.6,0-12-5.4-12-12V337
-		C303,330.4,308.4,325,315,325z"/>
+	<path class="st3" d="M63,5.5H12c-6.6,0-12,5.4-12,12v209c0,6.6,5.4,12,12,12h51c6.6,0,12-5.4,12-12v-209C75,10.9,69.7,5.5,63,5.5z"
+		/>
+	<path class="st4" d="M87,5.5h51c6.6,0,12,5.4,12,12v209c0,6.6-5.4,12-12,12H87c-6.6,0-12-5.4-12-12v-209C75,10.9,80.4,5.5,87,5.5z"
+		/>
 </g>
 <g id="plates-2">
-	<path class="st6" d="M951.9,319.5h51c6.6,0,12,5.4,12,12v209c0,6.6-5.4,12-12,12h-51c-6.6,0-12-5.4-12-12v-209
-		C939.9,324.9,945.3,319.5,951.9,319.5z"/>
-	<path class="st5" d="M1026.9,319.5h51c6.6,0,12,5.4,12,12v209c0,6.6-5.4,12-12,12h-51c-6.6,0-12-5.4-12-12v-209
-		C1014.9,324.9,1020.3,319.5,1026.9,319.5z"/>
+	<path class="st5" d="M723.9,0h51c6.6,0,12,5.4,12,12v209c0,6.6-5.4,12-12,12h-51c-6.6,0-12-5.4-12-12V12C711.9,5.4,717.3,0,723.9,0
+		z"/>
+	<path class="st4" d="M798.9,0h51c6.6,0,12,5.4,12,12v209c0,6.6-5.4,12-12,12h-51c-6.6,0-12-5.4-12-12V12C786.9,5.4,792.3,0,798.9,0
+		z"/>
 </g>
 </svg>
