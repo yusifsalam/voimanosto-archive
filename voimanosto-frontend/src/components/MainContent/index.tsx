@@ -1,9 +1,9 @@
 import React from 'react'
 import './MainContent.scss'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import PointCalculator from '../PointCalculator/PointCalculator'
-import UserProfile from '../UserProfile/UserProfile'
-import UserSettings from '../UserSettings/UserSettings'
+import PointCalculator from '../PointCalculator'
+import UserProfile from '../UserProfile'
+import UserSettings from '../UserSettings'
 import CustomCalendar from '../Calendar'
 
 const MainContent: React.FC = () => {

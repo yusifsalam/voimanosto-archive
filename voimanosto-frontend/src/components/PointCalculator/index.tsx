@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { ipf_params, wilks_params } from '../../util'
-import {
-  Button,
-  Icon,
-  Form,
-  Divider,
-  Segment,
-  Grid,
-  Label
-} from 'semantic-ui-react'
+import { Button, Icon, Form, Segment, Label } from 'semantic-ui-react'
 import loginService from '../../services/login'
 import workoutService from '../../services/workoutService'
 import './PointCalculator.scss'
+import LoginForm from '../LoginForm'
 
 type IUser = {
   name: string
@@ -115,45 +108,6 @@ const PointCalculator: React.FC = () => {
         constants[5] * Math.pow(bw, 5))
     return Math.round(wilks * 100) / 100
   }
-
-  const loginForm = () => (
-    <div>
-      <h2>Login</h2>
-
-      <Segment placeholder>
-        <Grid columns={2} relaxed='very' stackable>
-          <Grid.Column>
-            <Form onSubmit={handleLogin}>
-              <Form.Input
-                icon='user'
-                iconPosition='left'
-                label='Username'
-                placeholder='Username'
-                value={username}
-                onChange={({ target }) => setUsername(target.value)}
-              />
-              <Form.Input
-                icon='lock'
-                iconPosition='left'
-                label='Password'
-                type='password'
-                value={password}
-                onChange={({ target }) => setPassword(target.value)}
-              />
-
-              <Button content='Login' primary />
-            </Form>
-          </Grid.Column>
-
-          <Grid.Column verticalAlign='middle'>
-            <Button content='Sign up' icon='signup' size='big' />
-          </Grid.Column>
-        </Grid>
-
-        <Divider vertical>Or</Divider>
-      </Segment>
-    </div>
-  )
 
   const calculatorForm = () => (
     <div className='calculator-form'>
@@ -274,7 +228,21 @@ const PointCalculator: React.FC = () => {
     </div>
   )
 
-  return <div>{user === null ? loginForm() : calculatorForm()}</div>
+  return (
+    <div>
+      {user === null ? (
+        <LoginForm
+          username={username}
+          password={password}
+          handleLogin={handleLogin}
+          setUsername={setUsername}
+          setPassword={setPassword}
+        />
+      ) : (
+        calculatorForm()
+      )}
+    </div>
+  )
 }
 
 export default PointCalculator
