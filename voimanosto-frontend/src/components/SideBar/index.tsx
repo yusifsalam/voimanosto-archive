@@ -3,7 +3,11 @@ import './SideBar.scss'
 import { Menu, Icon } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 
-const SideBar: React.FC = () => {
+interface SideBarProps {
+  loggedIn?: boolean
+}
+
+const SideBar: React.FC<SideBarProps> = ({ loggedIn }) => {
   return (
     <Menu
       borderless
@@ -13,19 +17,19 @@ const SideBar: React.FC = () => {
       className='side-bar'
       icon='labeled'
     >
-      <Menu.Item as={NavLink} to='/profile'>
+      <Menu.Item disabled={!loggedIn} as={NavLink} to='/profile'>
         <Icon name='user' />
         My profile
       </Menu.Item>
-      <Menu.Item as={NavLink} to='/calendar'>
+      <Menu.Item disabled={!loggedIn} as={NavLink} to='/calendar'>
         <Icon name='calendar alternate' />
         My workouts
       </Menu.Item>
-      <Menu.Item as={NavLink} to='/calculator'>
+      <Menu.Item disabled={!loggedIn} as={NavLink} to='/calculator'>
         <Icon name='calculator' />
         IPF points calcualtor
       </Menu.Item>
-      <Menu.Item as={NavLink} to='/settings'>
+      <Menu.Item disabled={!loggedIn} as={NavLink} to='/settings'>
         <Icon name='settings' />
         Settings
       </Menu.Item>

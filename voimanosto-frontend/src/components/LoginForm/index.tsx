@@ -1,17 +1,19 @@
 import React from 'react'
-import { Segment, Grid, Form, Button, Divider } from 'semantic-ui-react'
-
-interface ILoginProps {
-  username: string
-  password: string
-  handleLogin(event: React.FormEvent<HTMLFormElement>): void
-  setUsername(username: string): void
-  setPassword(password: string): void
-}
+import {
+  Segment,
+  Grid,
+  Form,
+  Button,
+  Divider,
+  Message
+} from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
+import { ILoginProps } from '../../types'
 
 const LoginForm: React.FC<ILoginProps> = ({
   username,
   password,
+  errorMessage,
   handleLogin,
   setUsername,
   setPassword
@@ -19,7 +21,14 @@ const LoginForm: React.FC<ILoginProps> = ({
   return (
     <div>
       <h2>Login</h2>
-
+      {errorMessage !== null ? (
+        <Message negative>
+          <Message.Header>Something went wrong</Message.Header>
+          <p>{errorMessage}</p>
+        </Message>
+      ) : (
+        <div> </div>
+      )}
       <Segment placeholder>
         <Grid columns={2} relaxed='very' stackable>
           <Grid.Column>
@@ -46,7 +55,13 @@ const LoginForm: React.FC<ILoginProps> = ({
           </Grid.Column>
 
           <Grid.Column verticalAlign='middle'>
-            <Button content='Sign up' icon='signup' size='big' />
+            <Button
+              as={NavLink}
+              to='/register'
+              content='Sign up'
+              icon='signup'
+              size='big'
+            />
           </Grid.Column>
         </Grid>
 

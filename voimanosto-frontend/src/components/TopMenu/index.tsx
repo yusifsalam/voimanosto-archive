@@ -1,6 +1,7 @@
 import React from 'react'
 import './TopMenu.scss'
 import { Menu, Image, Button, Icon, Header } from 'semantic-ui-react'
+
 interface TopMenuProps {
   logo: string
 }
@@ -14,9 +15,6 @@ const TopMenu: React.FC<TopMenuProps> = ({ logo }) => {
       </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item>
-          <Button icon color='green'>
-            Log In <Icon name='sign-in' />
-          </Button>
           <Menu.Item>
             <Button
               icon
