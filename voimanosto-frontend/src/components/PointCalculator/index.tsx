@@ -1,15 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { ipf_params, wilks_params } from '../../util'
+import React, { useState } from 'react'
+import { calculatePoints, calculateWilks } from '../../util'
 import { Button, Icon, Form, Segment, Label } from 'semantic-ui-react'
-import loginService from '../../services/login'
-import workoutService from '../../services/workoutService'
 import './PointCalculator.scss'
-import LoginForm from '../LoginForm'
-
-type IUser = {
-  name: string
-  username: string
-}
 
 const PointCalculator: React.FC = () => {
   const [points, setPoints] = useState(0)
@@ -19,18 +11,6 @@ const PointCalculator: React.FC = () => {
   const [sex, setSex] = useState('M')
   const [equipment, setEquipment] = useState('Raw')
   const [eventType, setEventType] = useState('SBD')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState<IUser | null>(null)
-
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      workoutService.setToken(user.token)
-    }
-  }, [])
 
   const handleBodyweightChange = (event: any) => {
     event.preventDefault()
@@ -61,55 +41,7 @@ const PointCalculator: React.FC = () => {
     setWilks(calculateWilks(total, bodyweight, sex))
   }
 
-  const handleLogin = async (event: any) => {
-    event.preventDefault()
-    console.log('logging in with', username, password)
-    try {
-      const user = await loginService.login({
-        username,
-        password
-      })
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
-      workoutService.setToken(user.token)
-      setUser(user)
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      console.log(exception)
-    }
-  }
-
-  function calculatePoints(
-    total: number,
-    bw: number,
-    sex: string,
-    equipment: string,
-    eventType: string
-  ): number {
-    if (bodyweight === 0) alert('Please enter bodyweight')
-    if (total === 0) alert('Please enter total')
-    let constants = ipf_params[sex][equipment][eventType]
-    let points =
-      500 +
-      (100 * (total - (constants[0] * Math.log(bw) - constants[1]))) /
-        (constants[2] * Math.log(bw) - constants[3])
-    return Math.round(points * 100) / 100
-  }
-
-  function calculateWilks(total: number, bw: number, sex: string): number {
-    let constants = wilks_params[sex]
-    let wilks =
-      (total * 500) /
-      (constants[0] +
-        constants[1] * bw +
-        constants[2] * Math.pow(bw, 2) +
-        constants[3] * Math.pow(bw, 3) +
-        constants[4] * Math.pow(bw, 4) +
-        constants[5] * Math.pow(bw, 5))
-    return Math.round(wilks * 100) / 100
-  }
-
-  const calculatorForm = () => (
+  return (
     <div className='calculator-form'>
       <Segment vertical>
         <Label color='black' key='ipf_points' size='massive' horizontal>
@@ -225,22 +157,6 @@ const PointCalculator: React.FC = () => {
           <Icon name='calculator' />
         </Button.Content>
       </Button>
-    </div>
-  )
-
-  return (
-    <div>
-      {user === null ? (
-        <LoginForm
-          username={username}
-          password={password}
-          handleLogin={handleLogin}
-          setUsername={setUsername}
-          setPassword={setPassword}
-        />
-      ) : (
-        calculatorForm()
-      )}
     </div>
   )
 }

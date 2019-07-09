@@ -1,7 +1,6 @@
 import React from 'react'
 import './TopMenu.scss'
 import { Menu, Image, Button, Icon, Header } from 'semantic-ui-react'
-
 interface TopMenuProps {
   logo: string
 }
@@ -19,7 +18,14 @@ const TopMenu: React.FC<TopMenuProps> = ({ logo }) => {
             Log In <Icon name='sign-in' />
           </Button>
           <Menu.Item>
-            <Button icon color='red'>
+            <Button
+              icon
+              color='red'
+              onClick={() => {
+                window.localStorage.removeItem('loggedUser')
+                window.location.reload()
+              }}
+            >
               Log out <Icon name='sign-out' />
             </Button>
           </Menu.Item>
