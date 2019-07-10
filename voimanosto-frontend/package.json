@@ -12,6 +12,7 @@
     "react": "^16.8.6",
     "react-calendar": "^2.19.0",
     "react-dom": "^16.8.6",
+    "react-lottie": "^1.2.3",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "semantic-ui-css": "^2.4.1",
@@ -41,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-lottie": "^1.2.2",
     "@types/react-router-dom": "^4.3.4"
   }
 }

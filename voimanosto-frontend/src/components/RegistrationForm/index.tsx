@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Button, Message } from 'semantic-ui-react'
 
 const RegistrationForm: React.FC = () => {
   const [name, setName] = useState('')
@@ -7,13 +7,27 @@ const RegistrationForm: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const handleSubmit = () => {
-    console.log('form sent with ', name, username)
+    if (name.length < 3) setErrorMessage('Name must be at least 3 letters long')
+    else if (username.length < 3)
+      setErrorMessage('Username must be at least 3 letters long')
+    else if (password === '' || confirmPassword === '')
+      setErrorMessage("Password can't be empty!")
+    else if (password !== confirmPassword)
+      setErrorMessage("Passwords don't match!")
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 3000)
   }
   return (
     <div>
-      Register now!!
+      {errorMessage === null ? (
+        <div />
+      ) : (
+        <Message negative>{errorMessage}</Message>
+      )}
       <Form onSubmit={handleSubmit}>
         <Form.Input
           icon='user'
