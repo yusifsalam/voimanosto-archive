@@ -5,9 +5,19 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
+      unique: true,
+      required: true,
+      minlength: 3
+    },
+    name: {
+      type: String,
+      required: true,
+      minlength: 3
+    },
+    email: {
+      type: String,
       unique: true
     },
-    name: String,
     passwordHash: String,
     workouts: [
       {
