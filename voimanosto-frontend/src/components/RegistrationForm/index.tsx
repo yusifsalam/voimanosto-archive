@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Button, Message } from 'semantic-ui-react'
-import EmailValidator, { validate } from 'email-validator'
+import EmailValidator from 'email-validator'
+import registrationService from '../../services/registrationService'
 
 const RegistrationForm: React.FC = () => {
   const [name, setName] = useState('')
@@ -9,6 +10,7 @@ const RegistrationForm: React.FC = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [nameError, setNameError] = useState<string | boolean>(false)
   const [usernameError, setUsernameError] = useState<string | boolean>(false)
   const [emailError, setEmailError] = useState<string | boolean>(false)
@@ -17,12 +19,36 @@ const RegistrationForm: React.FC = () => {
     string | boolean
   >(false)
 
-  const handleSubmit = () => {
+  const emptyFields = () => {
+    setName('')
+    setUsername('')
+    setEmail('')
+    setPassword('')
+    setConfirmPassword('')
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (nameError || usernameError || emailError)
       setErrorMessage('Invalid field values present!')
     else if (password !== confirmPassword)
       setErrorMessage('Passwords do not match')
+    else {
+      try {
+        const user = await registrationService.register({
+          username,
+          name,
+          email,
+          password
+        })
+        emptyFields()
+
+        setSuccessMessage(`Registration successful for ${user.name}`)
+      } catch (exception) {
+        setErrorMessage(exception.response.data.error)
+      }
+    }
     setTimeout(() => {
+      setSuccessMessage(null)
       setErrorMessage(null)
     }, 3000)
   }
@@ -71,6 +97,11 @@ const RegistrationForm: React.FC = () => {
         <div />
       ) : (
         <Message negative>{errorMessage}</Message>
+      )}
+      {successMessage === null ? (
+        <div />
+      ) : (
+        <Message positive>{successMessage}</Message>
       )}
       <Form onSubmit={handleSubmit}>
         <Form.Input

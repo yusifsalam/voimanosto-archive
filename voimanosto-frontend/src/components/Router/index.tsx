@@ -5,21 +5,32 @@ import UserProfile from '../UserProfile'
 import UserSettings from '../UserSettings'
 import CustomCalendar from '../Calendar'
 import RegistrationForm from '../RegistrationForm'
+import { IUser } from '../../types'
 
 interface IRouter {
   loggedIn?: boolean
+  user?: IUser | null
+  setUser(user: IUser): void
 }
 
-const RouterLinks: React.FC<IRouter> = ({ loggedIn }) => {
+const RouterLinks: React.FC<IRouter> = ({ loggedIn, user, setUser }) => {
   return (
     <div>
       {loggedIn ? (
         <div>
           <Redirect path='/' to='/profile' />
           <Switch>
-            <Route path='/profile' component={UserProfile} />
+            <Route
+              path='/profile'
+              render={props => <UserProfile {...props} user={user} />}
+            />
             <Route path='/calculator' component={PointCalculator} />
-            <Route path='/settings' component={UserSettings} />
+            <Route
+              path='/settings'
+              render={props => (
+                <UserSettings {...props} user={user} setUser={setUser} />
+              )}
+            />
             <Route path='/calendar' component={CustomCalendar} />
           </Switch>
         </div>
