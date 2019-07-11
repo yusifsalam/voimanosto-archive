@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
       unique: true
     },
     passwordHash: String,
+    avatar: String,
     workouts: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -8,11 +8,11 @@ const usersRouter = require('./controllers/users')
 const workoutsRouter = require('./controllers/workouts')
 const exercsiesRouter = require('./controllers/exercises')
 const loginRouter = require('./controllers/login')
-const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
 const path = require('path')
 const cloudinary = require('cloudinary')
 const multer = require('multer')
+const Users = require('./models/user')
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -66,14 +66,20 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/build/index.html'))
 })
 
-app.post('/img_upload', upload.single('file'), (req, res, next) => {
+app.post('/img_upload', upload.single('file'), async (req, res, next) => {
+  const tempUser = await Users.findOne({ username: req.body.username })
   cloudinary.uploader.upload(req.file.path, function(result, error) {
     console.log('**uploading file**')
     console.log('result', result)
     if (error) {
       next(error)
     }
-    res.json(result)
+    tempUser.avatar = result.secure_url
+    console.log(tempUser)
+    tempUser.save()
+    tempUser.token = req.body.token
+    delete tempUser.workouts
+    res.json(tempUser.toJSON())
   })
 })
 app.use(middleware.unknownEndpoint)
