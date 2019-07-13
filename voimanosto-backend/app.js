@@ -5,8 +5,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const usersRouter = require('./controllers/users')
-const workoutsRouter = require('./controllers/workouts')
-const exercsiesRouter = require('./controllers/exercises')
 const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 const path = require('path')
@@ -59,8 +57,6 @@ app.use(middleware.requstLogger)
 
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
-app.use('/api/workouts', workoutsRouter)
-app.use('/api/exercises', exercsiesRouter)
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/build/index.html'))

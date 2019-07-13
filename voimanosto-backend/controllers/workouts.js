@@ -1,15 +1,8 @@
-const workoutsRouter = require('express').Router()
+const workoutsRouter = require('express').Router({ mergeParams: true })
 const Workout = require('../models/workout')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
-
-const getTokenFrom = req => {
-  const auth = req.get('authorization')
-  if (auth && auth.toLowerCase().startsWith('bearer')) {
-    return auth.substring(7)
-  }
-  return null
-}
+const getTokenFrom = require('../utils/middleware')
 
 workoutsRouter.post('/', async (req, res, next) => {
   const body = req.body
@@ -20,7 +13,7 @@ workoutsRouter.post('/', async (req, res, next) => {
       return res.status(401).json({ error: 'token missing or invalid' })
     }
 
-    const user = await User.findById(body.userId)
+    const user = await User.findOne({ username: req.params.username })
 
     const workout = new Workout({
       date: body.date,
@@ -37,11 +30,23 @@ workoutsRouter.post('/', async (req, res, next) => {
 })
 
 workoutsRouter.get('/', async (req, res) => {
-  const workouts = await Workout.find({}).populate('user', {
+  const user = await User.findOne({ username: req.params.username })
+  const workouts = await Workout.find({
+    user: user._id
+  }).populate('user', {
     username: 1,
     name: 1
   })
   res.json(workouts.map(workout => workout.toJSON()))
+})
+
+workoutsRouter.get('/:date', async (req, res, next) => {
+  try {
+    const workout = await Workout.findOne({ date: req.params.date })
+    res.json(workout.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 module.exports = workoutsRouter

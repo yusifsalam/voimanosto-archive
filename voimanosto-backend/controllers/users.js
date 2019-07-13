@@ -1,6 +1,11 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
+const workoutsRouter = require('./workouts')
+const bodyweightsRouter = require('./bodyweights')
+
+usersRouter.use('/:username/workouts', workoutsRouter)
+usersRouter.use('/:username/bodyweight', bodyweightsRouter)
 
 usersRouter.post('/', async (req, res, next) => {
   try {
@@ -30,6 +35,15 @@ usersRouter.get('/', async (req, res) => {
     username: 1
   })
   res.json(users.map(u => u.toJSON()))
+})
+
+usersRouter.get('/:username', async (req, res, next) => {
+  try {
+    const newUser = await User.findOne({ username: req.params.username })
+    res.json(newUser.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 module.exports = usersRouter
