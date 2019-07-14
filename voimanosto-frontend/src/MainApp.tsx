@@ -9,6 +9,7 @@ import { IUser } from './types'
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState<null | IUser>(null)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
@@ -18,17 +19,24 @@ const App: React.FC = () => {
       workoutService.setToken(user.token)
       setLoggedIn(true)
     }
+    if (
+      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
+        navigator.userAgent
+      )
+    )
+      setIsMobile(true)
   }, [])
 
   return (
     <div>
       <TopMenu logo={logo} />
-      <SideBar loggedIn={loggedIn} />
+      <SideBar loggedIn={loggedIn} isMobile={isMobile} />
       <MainContent
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
         user={user}
         setUser={setUser}
+        isMobile={isMobile}
       />
     </div>
   )

@@ -31,7 +31,10 @@ const RouterLinks: React.FC<IRouter> = ({ loggedIn, user, setUser }) => {
                 <UserSettings {...props} user={user} setUser={setUser} />
               )}
             />
-            <Route path='/calendar' component={CustomCalendar} />
+            <Route
+              path='/calendar'
+              render={props => <CustomCalendar {...props} user={user} />}
+            />
           </Switch>
         </div>
       ) : (
