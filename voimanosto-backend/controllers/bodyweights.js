@@ -34,9 +34,12 @@ bodyweightsRouter.get('/', async (req, res, next) => {
 
     const bodyweights = await Bodyweight.find({
       user: user._id
-    }).populate('user', {
-      name: 1
     })
+      .populate('user', {
+        name: 1
+      })
+      .sort({ date: 'asc' })
+
     res.json(bodyweights.map(bw => bw.toJSON()))
   } catch (exception) {
     next(exception)
