@@ -6,16 +6,17 @@ import SettingsLottie from '../../animations/SettingsLottie'
 
 interface SideBarProps {
   loggedIn?: boolean
+  isMobile: boolean
 }
 
-const SideBar: React.FC<SideBarProps> = ({ loggedIn }) => {
+const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
   return (
     <Menu
       borderless
-      vertical
-      stackable
-      fixed='left'
-      className='side-bar'
+      vertical={isMobile ? false : true}
+      stackable={isMobile ? false : true}
+      fixed={isMobile ? 'bottom' : 'left'}
+      className={isMobile ? 'side-bar mobile' : 'side-bar'}
       icon='labeled'
     >
       <Menu.Item

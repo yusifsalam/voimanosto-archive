@@ -1,16 +1,13 @@
 @import '../../styles/shared.scss';
 
 .ui.menu.fixed.side-bar {
-  // background-color: #081b33;
   margin-top: $header-nav-height;
   overflow-y: auto;
   padding-bottom: $header-nav-height;
-  // .white-icon {
-  //   color: whitesmoke;
-  // }
-  // .white-font {
-  //   color: white;
-  // }
+  &.mobile {
+    padding-bottom: 0;
+    height: 80px;
+  }
 }
 
 .side-bar.ui.vertical.menu {

@@ -4,4 +4,9 @@
   margin-top: $header-nav-height;
   margin-left: $sidebar-left-width;
   justify-content: center;
+  &.mobile {
+    margin-left: 0;
+    padding-bottom: 10rem;
+    justify-content: left;
+  }
 }

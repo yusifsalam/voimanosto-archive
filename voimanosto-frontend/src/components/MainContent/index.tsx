@@ -12,13 +12,15 @@ interface IMainContentProps {
   loggedIn?: boolean
   setLoggedIn(loggedIn: boolean): void
   setUser(user: IUser): void
+  isMobile: boolean
 }
 
 const MainContent: React.FC<IMainContentProps> = ({
   loggedIn,
   setLoggedIn,
   user,
-  setUser
+  setUser,
+  isMobile
 }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -47,16 +49,8 @@ const MainContent: React.FC<IMainContentProps> = ({
     }
   }
 
-  let isMobile = false //initiate as false
-  if (
-    /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
-      navigator.userAgent
-    )
-  )
-    isMobile = true
-
   return (
-    <div className='main-content'>
+    <div className={isMobile ? 'main-content mobile' : 'main-content'}>
       {isMobile ? <h1>You're on mobile</h1> : <h1>You're on desktop</h1>}
 
       <RouterLinks loggedIn={loggedIn} user={user} setUser={setUser} />
