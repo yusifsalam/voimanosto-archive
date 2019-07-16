@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Icon, Image, Label } from 'semantic-ui-react'
 import { IUser } from '../../types'
 import {
   AreaChart,
   Area,
-  Label,
+  Label as ChartLabel,
   XAxis,
   YAxis,
   ResponsiveContainer,
@@ -14,6 +14,7 @@ import {
 import moment from 'moment'
 import bodyweightService from '../../services/bodyweightService'
 import LoadingLottie from '../../animations/LoadingLottie'
+import { NavLink } from 'react-router-dom'
 
 interface UserProfileProps {
   user?: IUser | null
@@ -47,11 +48,21 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
       {user !== undefined && user !== null ? (
         <div>
           <Card>
-            {user.avatar === 'default' ? (
-              <Image src='https://res.cloudinary.com/yusif/image/upload/v1562012928/ove22swyg688lvfvnw5m.png' />
-            ) : (
-              <Image src={user.avatar} />
-            )}
+            <Image
+              src={
+                user.avatar === 'default'
+                  ? 'https://res.cloudinary.com/yusif/image/upload/v1562012928/ove22swyg688lvfvnw5m.png'
+                  : user.avatar
+              }
+              label={
+                <Label
+                  as={NavLink}
+                  to='/settings#second'
+                  corner='left'
+                  icon='cog'
+                />
+              }
+            />
 
             <Card.Content>
               <Card.Header>{user.name}</Card.Header>
@@ -78,7 +89,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
                 dataKey='date'
                 tickFormatter={tick => moment(tick).format('MMM DD')}
               >
-                <Label
+                <ChartLabel
                   value='Bodyweight'
                   position='insideBottom'
                   offset={-10}

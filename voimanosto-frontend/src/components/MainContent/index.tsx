@@ -50,8 +50,6 @@ const MainContent: React.FC<IMainContentProps> = ({
 
   return (
     <div className={isMobile ? 'main-content mobile' : 'main-content'}>
-      {isMobile ? <h1>You're on mobile</h1> : <h1>You're on desktop</h1>}
-
       <RouterLinks loggedIn={loggedIn} user={user} setUser={setUser} />
       <Route
         path='/login'

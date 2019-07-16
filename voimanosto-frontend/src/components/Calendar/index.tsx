@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import Calendar from 'react-calendar'
-import { TransitionablePortal, Button, Form } from 'semantic-ui-react'
+import {
+  TransitionablePortal,
+  Button,
+  Form,
+  Segment,
+  Message
+} from 'semantic-ui-react'
 import './CustomCalendar.scss'
 import bodyweightService from '../../services/bodyweightService'
 import moment from 'moment'
@@ -12,10 +18,12 @@ interface CalendarProps {
 
 const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
   const [portalOpen, setPortalOpen] = useState(false)
+  const [subPortalOpen, setSubPortalOpen] = useState(false)
   const [popupTopPos, setPopupTopPos] = useState(0)
   const [popupLeftPos, setPopupLeftPos] = useState(0)
   const [selectedDay, setSelectedDay] = useState('')
   const [bodyweight, setBodyweight] = useState(0)
+  const [msg, setMsg] = useState<null | string>(null)
 
   const handleClick = (event: any) => {
     setPortalOpen(true)
@@ -47,13 +55,27 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
         username: user.username,
         token: user.token
       })
-      console.log(result)
+      setMsg(
+        `Successfully added new bodyweight (${
+          result.bodyweight
+        } kg) to ${moment(result.date).format('MMMM Do, YYYY')}`
+      )
+      setTimeout(() => {
+        setMsg(null)
+      }, 3000)
+      setSubPortalOpen(false)
     }
   }
 
   return (
     <div>
-      <h1>Calendar y'all</h1>
+      <Message
+        header='Sucess'
+        content={msg}
+        hidden={msg ? false : true}
+        success
+      />
+
       <Calendar onChange={handleClick} className='react-calendar' />
       <TransitionablePortal
         onClose={() => setPortalOpen(false)}
@@ -67,7 +89,8 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
             maxWidth: '150px',
             maxHeight: '200px',
             zIndex: 1000,
-            backgroundColor: 'white'
+            backgroundColor: 'white',
+            border: '3px solid rgba(255,0,0,0.5)'
           }}
           vertical
           size='small'
@@ -76,9 +99,12 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
             size='mini'
             color='youtube'
             style={{ border: '2px white solid' }}
-            onClick={() => addBodyweight()}
+            onClick={() => {
+              setPortalOpen(false)
+              setSubPortalOpen(true)
+            }}
           >
-            Add new bodyweight reading
+            Log bodyweight
           </Button>
 
           <Button
@@ -86,7 +112,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
             color='youtube'
             style={{ border: '2px white solid' }}
           >
-            Add new workout
+            New workouts
           </Button>
 
           <Button
@@ -94,18 +120,32 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
             color='youtube'
             style={{ border: '2px white solid' }}
           >
-            Add new competition
+            New competition
           </Button>
 
           <div />
         </Button.Group>
       </TransitionablePortal>
-      <Form>
-        <Form.Input
-          type='number'
-          onChange={({ target }) => setBodyweight(Number(target.value))}
-        />
-      </Form>
+      <TransitionablePortal
+        open={subPortalOpen}
+        onClose={() => setSubPortalOpen(false)}
+      >
+        <Segment
+          style={{ left: '40%', position: 'fixed', top: '50%', zIndex: 1000 }}
+        >
+          <Form onSubmit={addBodyweight}>
+            <Form.Input
+              placeholder='bodyweight'
+              type='number'
+              step='0.01'
+              min='0'
+              onChange={({ target }) => setBodyweight(Number(target.value))}
+            />
+            <Button type='submit'>Add bodyiweght</Button>
+          </Form>
+          <Button onClick={() => setSubPortalOpen(false)}>Cancel</Button>
+        </Segment>
+      </TransitionablePortal>
     </div>
   )
 }
