@@ -2,7 +2,7 @@ import React from 'react'
 import './SideBar.scss'
 import { Menu, Icon } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
-import SettingsLottie from '../../animations/SettingsLottie'
+// import SettingsLottie from '../../animations/SettingsLottie'
 
 interface SideBarProps {
   loggedIn?: boolean
@@ -34,11 +34,11 @@ const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
       </Menu.Item>
       <Menu.Item disabled={!loggedIn} as={NavLink} to='/calculator'>
         <Icon name='calculator' />
-        IPF points calcualtor
+        Tools
       </Menu.Item>
       <Menu.Item disabled={!loggedIn} as={NavLink} to='/settings'>
-        {/* <Icon name='settings' /> */}
-        <SettingsLottie />
+        <Icon name='settings' />
+        {/* <SettingsLottie /> */}
         Settings
       </Menu.Item>
     </Menu>

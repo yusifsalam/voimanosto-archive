@@ -11,7 +11,22 @@ const App: React.FC = () => {
   const [user, setUser] = useState<null | IUser>(null)
   const [isMobile, setIsMobile] = useState(false)
 
+  function updateDimensions() {
+    if (window.innerWidth <= 900) {
+      setIsMobile(true)
+    } else setIsMobile(false)
+  }
+
   useEffect(() => {
+    if (
+      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
+        navigator.userAgent
+      )
+    ) {
+      setIsMobile(true)
+      document.body.style.zoom = '80%'
+    }
+    window.addEventListener('resize', updateDimensions)
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
@@ -19,12 +34,6 @@ const App: React.FC = () => {
       workoutService.setToken(user.token)
       setLoggedIn(true)
     }
-    if (
-      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(
-        navigator.userAgent
-      )
-    )
-      setIsMobile(true)
   }, [])
 
   return (
