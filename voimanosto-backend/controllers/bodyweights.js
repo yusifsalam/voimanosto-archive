@@ -29,7 +29,12 @@ bodyweightsRouter.post('/', async (req, res, next) => {
 })
 
 bodyweightsRouter.get('/', async (req, res, next) => {
+  const token = utils.getTokenFrom(req)
   try {
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    if (!token || !decodedToken.id) {
+      return res.status(401).json({ error: 'token missing or invalid' })
+    }
     const user = await User.findOne({ username: req.params.username })
 
     const bodyweights = await Bodyweight.find({
