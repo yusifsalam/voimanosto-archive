@@ -28,13 +28,12 @@ const MainContent: React.FC<IMainContentProps> = ({
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log('logging in with', username, password)
     try {
       const user = await loginService.login({
         username,
         password
       })
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      window.localStorage.setItem('loggedUser', user.token)
       workoutService.setToken(user.token)
       setUser(user)
       setUsername('')
