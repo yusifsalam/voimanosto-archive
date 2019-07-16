@@ -13,6 +13,7 @@ import {
 } from 'recharts'
 import moment from 'moment'
 import bodyweightService from '../../services/bodyweightService'
+import LoadingLottie from '../../animations/LoadingLottie'
 
 interface UserProfileProps {
   user?: IUser | null
@@ -30,7 +31,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
-        const res = await bodyweightService.getBw(user.username)
+        const res = await bodyweightService.getBw({
+          username: user.username,
+          token: user.token
+        })
         setData(res)
         setDataLoaded(true)
       }
@@ -97,7 +101,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
             </AreaChart>
           </ResponsiveContainer>
         ) : (
-          <div> Loading... </div>
+          <div>
+            <LoadingLottie />
+            <h2>Loading data...</h2>
+          </div>
         )}
       </div>
     </div>

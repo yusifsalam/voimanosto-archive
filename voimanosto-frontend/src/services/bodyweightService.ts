@@ -7,20 +7,31 @@ interface addBwProps {
   token: string
 }
 
-const addBw = async (bw: addBwProps) => {
+const addBw = async (props: addBwProps) => {
   const config = {
-    headers: { Authorization: `bearer ${bw.token}` }
+    headers: { Authorization: `bearer ${props.token}` }
   }
   const result = await axios.post(
-    `/api/users/${bw.username}/bodyweight`,
-    bw,
+    `/api/users/${props.username}/bodyweight`,
+    props,
     config
   )
   return result.data
 }
 
-const getBw = async (username: string) => {
-  const result = await axios.get(`/api/users/${username}/bodyweight`)
+interface getBwProps {
+  username: string
+  token: string
+}
+
+const getBw = async (props: getBwProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const result = await axios.get(
+    `/api/users/${props.username}/bodyweight`,
+    config
+  )
   return result.data
 }
 
