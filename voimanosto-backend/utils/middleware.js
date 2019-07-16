@@ -1,4 +1,6 @@
 const logger = require('./logger')
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 
 const requstLogger = (req, res, next) => {
   logger.info('Method:', req.method)
@@ -24,15 +26,43 @@ const errorHandler = (err, req, res, next) => {
   next(err)
 }
 
+const getTokenFrom = req => {
+  const auth = req.get('authorization')
+  if (auth && auth.toLowerCase().startsWith('bearer')) {
+    return auth.substring(7)
+  }
+  return null
+}
+
+const verifyIdentity = async req => {
+  const token = getTokenFrom(req)
+  try {
+    let decodedToken
+    if (token) {
+      decodedToken = jwt.verify(token, process.env.SECRET)
+    }
+    if (!token || !decodedToken.id) {
+      return 'token missing or invalid'
+    }
+    const user = await User.findOne({ username: req.params.username })
+    if (!user) {
+      return 'user not found'
+    }
+    if (decodedToken.id !== user._id.toString()) {
+      return 'unauthorized'
+    } else {
+      return true
+    }
+  } catch (exception) {
+    console.error(exception)
+    return exception.message
+  }
+}
+
 module.exports = {
   requstLogger,
   unknownEndpoint,
   errorHandler,
-  getTokenFrom: function(req) {
-    const auth = req.get('authorization')
-    if (auth && auth.toLowerCase().startsWith('bearer')) {
-      return auth.substring(7)
-    }
-    return null
-  }
+  getTokenFrom,
+  verifyIdentity
 }
