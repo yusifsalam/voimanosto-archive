@@ -2,10 +2,18 @@ const mongoose = require('mongoose')
 
 const exerciseSchema = mongoose.Schema({
   etype: String,
+  name: String,
   variation: String,
-  volume: Number,
-  date: Date,
-  important: Boolean
+  prs: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'PersonalBest'
+    }
+  ],
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 exerciseSchema.set('toJSON', {
