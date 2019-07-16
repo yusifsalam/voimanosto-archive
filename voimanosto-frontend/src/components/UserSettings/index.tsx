@@ -14,7 +14,7 @@ const UserSettings: React.FC<UserSettingsProps> = ({ user, setUser }) => {
     setFile(e[0])
   }
 
-  const handleFileUpload = () => {
+  const handleFileUpload = async () => {
     const selectedFile = file as File
     console.log(selectedFile)
     const formData = new FormData()
@@ -24,7 +24,7 @@ const UserSettings: React.FC<UserSettingsProps> = ({ user, setUser }) => {
       formData.append('token', user.token)
     }
 
-    axios
+    await axios
       .post('/img_upload', formData, {
         onUploadProgress: progressEvent => {
           console.log(progressEvent.loaded / progressEvent.total)
@@ -32,7 +32,7 @@ const UserSettings: React.FC<UserSettingsProps> = ({ user, setUser }) => {
       })
       .then(newUser => {
         setUser(newUser.data)
-        window.localStorage.setItem('loggedUser', JSON.stringify(newUser.data))
+        setFile(null)
       })
   }
   return (
