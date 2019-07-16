@@ -31,7 +31,23 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Bodyweight'
       }
-    ]
+    ],
+    prs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PersonalRecord'
+      }
+    ],
+    exercises: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Exercise'
+      }
+    ],
+    isAdmin: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 )
@@ -41,6 +57,7 @@ userSchema.plugin(uniqueValidator)
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
+    delete returnedObject.isAdmin
     delete returnedObject._id
     delete returnedObject.__v
     delete returnedObject.passwordHash

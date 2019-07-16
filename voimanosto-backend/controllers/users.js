@@ -3,26 +3,35 @@ const usersRouter = require('express').Router()
 const User = require('../models/user')
 const workoutsRouter = require('./workouts')
 const bodyweightsRouter = require('./bodyweights')
+const prRouter = require('./personalRecords')
+const exercisesRouter = require('./exercises')
+const exerciseBase = require('../utils/defaultExercises')
 
 usersRouter.use('/:username/workouts', workoutsRouter)
 usersRouter.use('/:username/bodyweight', bodyweightsRouter)
+usersRouter.use('/:username/prs', prRouter)
+usersRouter.use('/:username/exercises', exercisesRouter)
 
 usersRouter.post('/', async (req, res, next) => {
   try {
     const body = req.body
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
-
     const user = new User({
       username: body.username,
       name: body.name,
       email: body.email,
       avatar: 'default',
       passwordHash,
-      workouts: []
+      workouts: [],
+      exercises: []
     })
     const savedUser = await user.save()
-    res.json(savedUser)
+    const exercises = await exerciseBase(savedUser._id)
+    // console.log(exercises)
+    savedUser.exercises = savedUser.exercises.concat(exercises)
+    const updatedUser = await savedUser.save()
+    res.json(updatedUser)
   } catch (exception) {
     next(exception)
   }
