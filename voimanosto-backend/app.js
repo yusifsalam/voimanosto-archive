@@ -73,9 +73,13 @@ app.post('/img_upload', upload.single('file'), async (req, res, next) => {
     tempUser.avatar = result.secure_url
     console.log(tempUser)
     tempUser.save()
-    tempUser.token = req.body.token
-    delete tempUser.workouts
-    res.json(tempUser.toJSON())
+    res.json({
+      username: tempUser.username,
+      name: tempUser.name,
+      email: tempUser.email,
+      avatar: tempUser.avatar,
+      token: req.body.token
+    })
   })
 })
 app.use(middleware.unknownEndpoint)
