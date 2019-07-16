@@ -1,11 +1,12 @@
-import React from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Route, Switch } from 'react-router-dom'
 import PointCalculator from '../PointCalculator'
 import UserProfile from '../UserProfile'
 import UserSettings from '../UserSettings'
 import CustomCalendar from '../Calendar'
 import RegistrationForm from '../RegistrationForm'
 import { IUser } from '../../types'
+import useReactRouter from 'use-react-router'
 
 interface IRouter {
   loggedIn?: boolean
@@ -14,11 +15,19 @@ interface IRouter {
 }
 
 const RouterLinks: React.FC<IRouter> = ({ loggedIn, user, setUser }) => {
+  const { history } = useReactRouter()
+
+  useEffect(() => {
+    if (!loggedIn) {
+      history.push('/login')
+    } else {
+      history.goBack()
+    }
+  }, [loggedIn, history])
   return (
     <div>
       {loggedIn ? (
         <div>
-          <Redirect path='/' to='/profile' />
           <Switch>
             <Route
               path='/profile'
@@ -40,7 +49,6 @@ const RouterLinks: React.FC<IRouter> = ({ loggedIn, user, setUser }) => {
       ) : (
         <div>
           <Route path='/register' component={RegistrationForm} />
-          <Redirect path='/' to='/login' />
         </div>
       )}
     </div>
