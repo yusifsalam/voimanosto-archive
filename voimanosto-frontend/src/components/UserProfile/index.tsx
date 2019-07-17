@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Icon, Image, Label } from 'semantic-ui-react'
-import { IUser } from '../../types'
+import ExerciseLibrary from '../ExerciseLibrary'
+
 import {
   AreaChart,
   Area,
@@ -28,7 +29,9 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
   }
 
   const [data, setData] = useState<bodyweight[]>([])
+
   const [dateLoaded, setDataLoaded] = useState(false)
+
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -36,6 +39,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
           username: user.username,
           token: user.token
         })
+
         setData(res)
         setDataLoaded(true)
       }
@@ -44,80 +48,85 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
   }, [user])
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-      {user !== undefined && user !== null ? (
-        <div>
-          <Card>
-            <Image
-              src={
-                user.avatar === 'default'
-                  ? 'https://res.cloudinary.com/yusif/image/upload/v1562012928/ove22swyg688lvfvnw5m.png'
-                  : user.avatar
-              }
-              label={
-                <Label
-                  as={NavLink}
-                  to='/settings#second'
-                  corner='left'
-                  icon='cog'
-                />
-              }
-            />
-
-            <Card.Content>
-              <Card.Header>{user.name}</Card.Header>
-              <Card.Meta>Joined in 2019</Card.Meta>
-              <Card.Description>{user.name} is a powerlifter!</Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <Icon name='user' />
-              420 wilks!!!
-            </Card.Content>
-          </Card>
-        </div>
-      ) : (
-        <div />
-      )}
-      <div style={{ width: '500px', height: '300px', display: 'flex' }}>
-        {dateLoaded ? (
-          <ResponsiveContainer>
-            <AreaChart
-              data={data}
-              margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
-            >
-              <XAxis
-                dataKey='date'
-                tickFormatter={tick => moment(tick).format('MMM DD')}
-              >
-                <ChartLabel
-                  value='Bodyweight'
-                  position='insideBottom'
-                  offset={-10}
-                />
-              </XAxis>
-              <YAxis />
-              <Area
-                type='monotone'
-                dataKey='bodyweight'
-                stroke='#8884d8'
-                fill='#8884d8'
-                fillOpacity={0.7}
-              />
-              <Tooltip
-                labelFormatter={value =>
-                  'Date: ' + moment(value).format('MMM DD')
+    <div>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {user !== undefined && user !== null ? (
+          <div>
+            <Card>
+              <Image
+                src={
+                  user.avatar === 'default'
+                    ? 'https://res.cloudinary.com/yusif/image/upload/v1562012928/ove22swyg688lvfvnw5m.png'
+                    : user.avatar
+                }
+                label={
+                  <Label
+                    as={NavLink}
+                    to='/settings#second'
+                    corner='left'
+                    icon='cog'
+                  />
                 }
               />
-              <CartesianGrid strokeDasharray='3 3' />
-            </AreaChart>
-          </ResponsiveContainer>
-        ) : (
-          <div>
-            <LoadingLottie />
-            <h2>Loading data...</h2>
+
+              <Card.Content>
+                <Card.Header>{user.name}</Card.Header>
+                <Card.Meta>Joined in 2019</Card.Meta>
+                <Card.Description>
+                  {user.name} is a powerlifter!
+                </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <Icon name='user' />
+                420 wilks!!!
+              </Card.Content>
+            </Card>
           </div>
+        ) : (
+          <div />
         )}
+        <div style={{ width: '500px', height: '300px', display: 'flex' }}>
+          {dateLoaded ? (
+            <ResponsiveContainer>
+              <AreaChart
+                data={data}
+                margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
+              >
+                <XAxis
+                  dataKey='date'
+                  tickFormatter={tick => moment(tick).format('MMM DD')}
+                >
+                  <ChartLabel
+                    value='Bodyweight'
+                    position='insideBottom'
+                    offset={-10}
+                  />
+                </XAxis>
+                <YAxis />
+                <Area
+                  type='monotone'
+                  dataKey='bodyweight'
+                  stroke='#8884d8'
+                  fill='#8884d8'
+                  fillOpacity={0.7}
+                />
+                <Tooltip
+                  labelFormatter={value =>
+                    'Date: ' + moment(value).format('MMM DD')
+                  }
+                />
+                <CartesianGrid strokeDasharray='3 3' />
+              </AreaChart>
+            </ResponsiveContainer>
+          ) : (
+            <div>
+              <LoadingLottie />
+              <h2>Loading data...</h2>
+            </div>
+          )}
+        </div>
       </div>
+      <ExerciseLibrary user={user} />
     </div>
   )
 }

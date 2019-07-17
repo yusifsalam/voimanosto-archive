@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { IUser } from '../../types'
 
 interface UserSettingsProps {
   user?: IUser | null

@@ -5,7 +5,6 @@ import UserProfile from '../UserProfile'
 import UserSettings from '../UserSettings'
 import CustomCalendar from '../Calendar'
 import RegistrationForm from '../RegistrationForm'
-import { IUser } from '../../types'
 import useReactRouter from 'use-react-router'
 
 interface IRouter {

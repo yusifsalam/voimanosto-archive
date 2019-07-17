@@ -1,11 +1,3 @@
-export type IUser = {
-  name: string
-  username: string
-  avatar: string
-  email: string
-  token: string
-}
-
 export interface ILoginProps {
   username: string
   password: string

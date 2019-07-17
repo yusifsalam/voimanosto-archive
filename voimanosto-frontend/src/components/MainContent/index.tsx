@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './MainContent.scss'
 import RouterLinks from '../Router'
-import { IUser } from '../../types'
 import loginService from '../../services/loginService'
 import workoutService from '../../services/workoutService'
 import { Route } from 'react-router-dom'

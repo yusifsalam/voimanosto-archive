@@ -10,7 +10,6 @@ import {
 import './CustomCalendar.scss'
 import bodyweightService from '../../services/bodyweightService'
 import moment from 'moment'
-import { IUser } from '../../types'
 
 interface CalendarProps {
   user: IUser | null | undefined

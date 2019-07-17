@@ -5,7 +5,6 @@ import MainContent from './components/MainContent'
 import logo from './components/PointCalculator/new_logo.svg'
 import workoutService from './services/workoutService'
 import loginService from './services/loginService'
-import { IUser } from './types'
 import useReactRouter from 'use-react-router'
 
 const App: React.FC = () => {
