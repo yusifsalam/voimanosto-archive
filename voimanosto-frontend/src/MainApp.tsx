@@ -6,17 +6,21 @@ import logo from './components/PointCalculator/new_logo.svg'
 import workoutService from './services/workoutService'
 import loginService from './services/loginService'
 import { IUser } from './types'
+import useReactRouter from 'use-react-router'
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [user, setUser] = useState<null | IUser>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const { location } = useReactRouter()
 
   function updateDimensions() {
     if (window.innerWidth <= 900) {
       setIsMobile(true)
     } else setIsMobile(false)
   }
+
+  let redirectURL = location.pathname
 
   useEffect(() => {
     const verifyUser = async () => {
@@ -53,6 +57,7 @@ const App: React.FC = () => {
         user={user}
         setUser={setUser}
         isMobile={isMobile}
+        redirectURL={redirectURL}
       />
     </div>
   )

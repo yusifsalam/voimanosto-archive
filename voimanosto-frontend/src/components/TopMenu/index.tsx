@@ -1,12 +1,14 @@
 import React from 'react'
 import './TopMenu.scss'
 import { Menu, Image, Button, Icon, Header } from 'semantic-ui-react'
+import useReactRouter from 'use-react-router'
 
 interface TopMenuProps {
   logo: string
 }
 
 const TopMenu: React.FC<TopMenuProps> = ({ logo }) => {
+  const { history } = useReactRouter()
   return (
     <Menu fixed='top' borderless className='top-menu'>
       <Menu.Item header className='logo'>
@@ -21,6 +23,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ logo }) => {
               color='red'
               onClick={() => {
                 window.localStorage.removeItem('loggedUser')
+                history.push('/signed-out')
                 window.location.reload()
               }}
             >

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Link } from 'react-router-dom'
 import PointCalculator from '../PointCalculator'
 import UserProfile from '../UserProfile'
 import UserSettings from '../UserSettings'
@@ -12,18 +12,22 @@ interface IRouter {
   loggedIn?: boolean
   user?: IUser | null
   setUser(user: IUser): void
+  redirectURL: string
 }
 
-const RouterLinks: React.FC<IRouter> = ({ loggedIn, user, setUser }) => {
+const RouterLinks: React.FC<IRouter> = ({
+  loggedIn,
+  user,
+  setUser,
+  redirectURL
+}) => {
   const { history } = useReactRouter()
 
   useEffect(() => {
-    if (!loggedIn) {
-      history.push('/login')
-    } else {
-      history.goBack()
-    }
-  }, [loggedIn, history])
+    if (loggedIn && (redirectURL === '/login' || redirectURL === '/'))
+      history.push('/profile')
+    else if (!loggedIn && redirectURL === '/') history.push('/login')
+  }, [redirectURL, loggedIn, history])
   return (
     <div>
       {loggedIn ? (
@@ -33,7 +37,7 @@ const RouterLinks: React.FC<IRouter> = ({ loggedIn, user, setUser }) => {
               path='/profile'
               render={props => <UserProfile {...props} user={user} />}
             />
-            <Route path='/calculator' component={PointCalculator} />
+            <Route path='/tools' component={PointCalculator} />
             <Route
               path='/settings'
               render={props => (
@@ -49,6 +53,15 @@ const RouterLinks: React.FC<IRouter> = ({ loggedIn, user, setUser }) => {
       ) : (
         <div>
           <Route path='/register' component={RegistrationForm} />
+          <Route
+            path='/signed-out'
+            render={() => (
+              <div>
+                <h2>You have signed out</h2>
+                <Link to='/login'>Login again</Link>
+              </div>
+            )}
+          />
         </div>
       )}
     </div>

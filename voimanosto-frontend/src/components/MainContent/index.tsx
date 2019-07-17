@@ -13,6 +13,7 @@ interface IMainContentProps {
   setLoggedIn(loggedIn: boolean): void
   setUser(user: IUser): void
   isMobile: boolean
+  redirectURL: string
 }
 
 const MainContent: React.FC<IMainContentProps> = ({
@@ -20,7 +21,8 @@ const MainContent: React.FC<IMainContentProps> = ({
   setLoggedIn,
   user,
   setUser,
-  isMobile
+  isMobile,
+  redirectURL
 }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -50,7 +52,12 @@ const MainContent: React.FC<IMainContentProps> = ({
 
   return (
     <div className={isMobile ? 'main-content mobile' : 'main-content'}>
-      <RouterLinks loggedIn={loggedIn} user={user} setUser={setUser} />
+      <RouterLinks
+        loggedIn={loggedIn}
+        user={user}
+        setUser={setUser}
+        redirectURL={redirectURL}
+      />
       <Route
         path='/login'
         render={props => (

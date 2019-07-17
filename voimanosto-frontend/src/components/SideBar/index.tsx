@@ -23,20 +23,32 @@ const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
         className='white-item'
         disabled={!loggedIn}
         as={NavLink}
-        to='/profile'
+        to={loggedIn ? '/profile' : '/login'}
       >
         <Icon className='white-icon' name='user' />
         <p className='white-font'>My profile</p>
       </Menu.Item>
-      <Menu.Item disabled={!loggedIn} as={NavLink} to='/calendar'>
+      <Menu.Item
+        disabled={!loggedIn}
+        as={NavLink}
+        to={loggedIn ? '/calendar' : '/login'}
+      >
         <Icon name='calendar alternate' />
-        My workouts
+        Calendar
       </Menu.Item>
-      <Menu.Item disabled={!loggedIn} as={NavLink} to='/calculator'>
+      <Menu.Item
+        disabled={!loggedIn}
+        as={NavLink}
+        to={loggedIn ? '/tools' : '/login'}
+      >
         <Icon name='calculator' />
         Tools
       </Menu.Item>
-      <Menu.Item disabled={!loggedIn} as={NavLink} to='/settings'>
+      <Menu.Item
+        disabled={!loggedIn}
+        as={NavLink}
+        to={loggedIn ? '/settings' : '/login'}
+      >
         <Icon name='settings' />
         {/* <SettingsLottie /> */}
         Settings
