@@ -23,4 +23,23 @@ const getExercises = async (props: getExerciseProps) => {
   return result.data
 }
 
-export default { getExercises }
+interface postExerciseProps {
+  username: string
+  token: string
+  type: string
+  name: string
+  variation: string
+  reps: number
+  weight: number
+}
+
+const postExercise = async (props: postExerciseProps) => {
+  const baseURL: string = `/api/users/${props.username}/exercises`
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.post(baseURL, props, config)
+  return res.data
+}
+
+export default { getExercises, postExercise }
