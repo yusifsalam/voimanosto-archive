@@ -2,6 +2,7 @@ const exerciseRouter = require('express').Router({ mergeParams: true })
 const Exercise = require('../models/exercise')
 const utils = require('../utils/middleware')
 const User = require('../models/user')
+const PR = require('../models/personalRecord')
 
 exerciseRouter.get('/', async (req, res, next) => {
   const verified = await utils.verifyIdentity(req)
@@ -11,9 +12,11 @@ exerciseRouter.get('/', async (req, res, next) => {
     try {
       const user = await User.findOne({ username: req.params.username })
       console.log(user)
-      Exercise.find({ user: user._id }).then(exercises => {
-        res.json(exercises)
-      })
+      Exercise.find({ user: user._id })
+        .sort({ name: 1, variation: 1 })
+        .then(exercises => {
+          res.json(exercises)
+        })
     } catch (exception) {
       next(exception)
     }
@@ -29,11 +32,11 @@ exerciseRouter.get('/:type', async (req, res, next) => {
       const user = await User.findOne({
         username: req.params.username
       })
-      Exercise.find({ user: user._id, etype: req.params.type }).then(
-        exercises => {
+      Exercise.find({ user: user._id, type: req.params.type })
+        .sort({ name: 1, variation: 1 })
+        .then(exercises => {
           res.json(exercises)
-        }
-      )
+        })
     } catch (exception) {
       next(exception)
     }
@@ -51,31 +54,52 @@ exerciseRouter.get('/:type/:name', async (req, res, next) => {
       })
       Exercise.find({
         user: user._id,
-        etype: req.params.type,
+        type: req.params.type,
         name: req.params.name
-      }).then(exercises => {
-        res.json(exercises)
       })
+        .sort({ name: 1, variation: 1 })
+        .then(exercises => {
+          res.json(exercises)
+        })
     } catch (exception) {
       next(exception)
     }
   }
 })
 
-exerciseRouter.post('/', (req, res) => {
-  const body = req.body
-  if (body.etype === undefined) {
-    return res.status(400).json({ error: 'exercise type missing' })
+exerciseRouter.post('/', async (req, res, next) => {
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      const user = await User.findOne({
+        username: req.params.username
+      })
+      const newExercise = new Exercise({
+        type: req.body.type,
+        name: req.body.name,
+        variation: req.body.variation,
+        user: user._id,
+        prs: []
+      })
+      const savedExercise = await newExercise.save()
+      const newPR = new PR({
+        exercise: savedExercise._id,
+        user: user._id,
+        reps: 1,
+        weight: req.body.weight
+      })
+      const savedPR = await newPR.save()
+      savedExercise.prs = savedExercise.prs.concat(savedPR)
+      const exercise = await savedExercise.save()
+      user.exercises = user.exercises.concat(exercise)
+      await user.save()
+      res.json(exercise.toJSON())
+    } catch (exception) {
+      next(exception)
+    }
   }
-
-  const exercise = new Exercise({
-    etype: body.etype,
-    variation: body.variation,
-    name: body.name
-  })
-  exercise.save().then(savedExercise => {
-    res.json(savedExercise.toJSON())
-  })
 })
 
 module.exports = exerciseRouter
