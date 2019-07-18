@@ -5,7 +5,8 @@ import {
   Button,
   Form,
   Segment,
-  Message
+  Message,
+  Container
 } from 'semantic-ui-react'
 import './CustomCalendar.scss'
 import bodyweightService from '../../services/bodyweightService'
@@ -67,7 +68,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
   }
 
   return (
-    <div>
+    <Container text>
       <Message
         header='Sucess'
         content={msg}
@@ -145,7 +146,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
           <Button onClick={() => setSubPortalOpen(false)}>Cancel</Button>
         </Segment>
       </TransitionablePortal>
-    </div>
+    </Container>
   )
 }
 
