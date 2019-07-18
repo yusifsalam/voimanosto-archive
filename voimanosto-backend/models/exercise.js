@@ -1,9 +1,15 @@
 const mongoose = require('mongoose')
 
 const exerciseSchema = mongoose.Schema({
-  etype: String,
-  name: String,
-  variation: String,
+  type: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  variation: { type: String, required: true },
   prs: [
     {
       type: mongoose.Schema.Types.ObjectId,

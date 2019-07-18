@@ -3,13 +3,16 @@ const mongoose = require('mongoose')
 const personalRecordSchema = mongoose.Schema({
   exercise: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Exercise'
+    ref: 'Exercise',
+    required: true
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
-  reps: Number,
+  reps: { type: Number, required: true },
+  weight: { type: Number, required: true },
   date: Date,
   youtubeURL: String
 })
