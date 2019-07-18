@@ -28,7 +28,7 @@ const NewExerciseForm: React.FC<NewExerciseFormProps> = ({
   }
 
   return (
-    <Transition visible={isOpen} animation='swing down' duration={500}>
+    <Transition visible={isOpen} animation='slide down' duration={500}>
       <Modal
         dimmer='blurring'
         open={isOpen}
