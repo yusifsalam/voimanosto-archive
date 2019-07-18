@@ -1,7 +1,15 @@
 import React, { useState } from 'react'
-import { Segment, Button, Form } from 'semantic-ui-react'
+import { Modal, Button, Form, Transition } from 'semantic-ui-react'
 
-const NewExerciseForm: React.FC = () => {
+interface NewExerciseFormProps {
+  isOpen: boolean
+  closePortal(): void
+}
+
+const NewExerciseForm: React.FC<NewExerciseFormProps> = ({
+  isOpen,
+  closePortal
+}) => {
   const [type, setType] = useState('')
   const [name, setName] = useState('')
   const [variation, setVariation] = useState('')
@@ -20,42 +28,50 @@ const NewExerciseForm: React.FC = () => {
   }
 
   return (
-    <Segment
-      style={{
-        zIndex: 1000,
-        border: '3px dashed green'
-      }}
-    >
-      <h3>Add new exercise</h3>
-      <Form>
-        <Form.Dropdown
-          value={type}
-          label='Exercise type'
-          placeholder='Exercise type'
-          options={[
-            { key: 'sbd', value: 'sbd', text: 'SBD' },
-            { key: 'acc', value: 'acc', text: 'Accessory' }
-          ]}
-          onChange={handleTypeChange}
-        />
-        <Form.Dropdown
-          value={name}
-          label='Exercise name'
-          placeholder='Exercise name'
-          options={[
-            { key: 'squat', value: 'squat', text: 'Squat' },
-            { key: 'bench', value: 'bench', text: 'Bench' }
-          ]}
-          onChange={handleNameChange}
-        />
-        <Form.Input placeholder='Variation' type='text' />
-        <Form.Input placeholder='1RM' type='number' />
-        <Button type='submit' color='violet'>
-          Send it bro
-        </Button>
-      </Form>
-      <Button color='red'>cancel</Button>
-    </Segment>
+    <Transition visible={isOpen} animation='swing down' duration={500}>
+      <Modal
+        dimmer='blurring'
+        open={isOpen}
+        centered={false}
+        onClose={closePortal}
+      >
+        <Modal.Header>Add new exercise</Modal.Header>
+        <Modal.Content>
+          <Form onSubmit={() => console.log('submitted le form')}>
+            <Form.Group>
+              <Form.Dropdown
+                value={type}
+                label='Exercise type'
+                placeholder='Exercise type'
+                options={[
+                  { key: 'sbd', value: 'sbd', text: 'SBD' },
+                  { key: 'acc', value: 'acc', text: 'Accessory' }
+                ]}
+                onChange={handleTypeChange}
+              />
+              <Form.Dropdown
+                value={name}
+                label='Exercise name'
+                placeholder='Exercise name'
+                options={[
+                  { key: 'squat', value: 'squat', text: 'Squat' },
+                  { key: 'bench', value: 'bench', text: 'Bench' }
+                ]}
+                onChange={handleNameChange}
+              />
+            </Form.Group>
+            <Form.Input placeholder='Variation' type='text' />
+            <Form.Input placeholder='1RM' type='number' />
+            <Button type='submit' color='violet' inverted>
+              Send it bro
+            </Button>
+            <Button color='green' inverted onClick={closePortal}>
+              Cancel
+            </Button>
+          </Form>
+        </Modal.Content>
+      </Modal>
+    </Transition>
   )
 }
 

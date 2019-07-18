@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  Dropdown,
-  Table,
-  Button,
-  Icon,
-  TransitionablePortal,
-  Container
-} from 'semantic-ui-react'
+import { Dropdown, Table, Button, Icon } from 'semantic-ui-react'
 import exerciseLibraryService from '../../services/exerciseLibraryService'
 import NewExerciseForm from '../NewExerciseForm'
 
@@ -117,28 +110,16 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
                 <Icon name='add circle' />
                 Add new exercise
               </Button>
+
+              <NewExerciseForm
+                isOpen={portalOpen}
+                closePortal={() => setPortalOpen(false)}
+              />
             </Table.HeaderCell>
             <Table.HeaderCell />
           </Table.Row>
         </Table.Footer>
       </Table>
-
-      <TransitionablePortal
-        open={portalOpen}
-        transition={{ animation: 'slide right', duration: 500 }}
-        onClose={() => setPortalOpen(false)}
-      >
-        <Container
-          style={{
-            position: 'fixed',
-            bottom: '30%',
-            left: '20%',
-            width: 'auto'
-          }}
-        >
-          <NewExerciseForm />
-        </Container>
-      </TransitionablePortal>
     </div>
   )
 }
