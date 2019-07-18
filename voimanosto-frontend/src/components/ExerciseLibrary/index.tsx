@@ -9,23 +9,25 @@ interface ExerciseLibraryProps {
 
 const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
   interface exercise {
-    etype: string
+    type: string
     name: string
     variation: string
     id: string
   }
 
   const [exercises, setExercises] = useState<exercise[]>([])
-  const [exerciseType, setExerciseType] = useState('sbd')
+  const [exerciseType, setExerciseType] = useState('')
   const [exerciseName, setExerciseName] = useState('')
   const [portalOpen, setPortalOpen] = useState(false)
-  const names = exercises.map(ex => {
-    return {
-      key: ex.name,
-      value: ex.name,
-      text: ex.name.charAt(0).toUpperCase() + ex.name.slice(1)
-    }
-  })
+
+  const uniqueNames = Array.from(
+    new Set(exercises.map(exercise => exercise.name))
+  )
+  const names = uniqueNames.map(ex => ({
+    key: ex,
+    value: ex,
+    text: ex.charAt(0).toUpperCase() + ex.slice(1)
+  }))
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +38,6 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
           type: exerciseType,
           name: exerciseName
         })
-
         setExercises(res)
       }
     }
@@ -65,7 +66,8 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
         selection
         placeholder='Select exercise type'
         options={[
-          { key: 'sbd', value: 'sbd', text: 'SBD' },
+          { key: '', value: '', text: 'All' },
+          { key: 'sbd', value: 'sbd', text: 'Main' },
           { key: 'acc', value: 'acc', text: 'Accessory' }
         ]}
         value={exerciseType}
@@ -79,7 +81,7 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
         onChange={handleExerciseSelect}
       />
 
-      <Table celled collapsing>
+      <Table celled collapsing selectable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Exercise</Table.HeaderCell>
@@ -103,7 +105,8 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
           <Table.Row>
             <Table.HeaderCell>
               <Button
-                primary
+                inverted
+                color='violet'
                 floated='left'
                 onClick={() => setPortalOpen(!portalOpen)}
               >
@@ -114,6 +117,7 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
               <NewExerciseForm
                 isOpen={portalOpen}
                 closePortal={() => setPortalOpen(false)}
+                user={user}
               />
             </Table.HeaderCell>
             <Table.HeaderCell />
