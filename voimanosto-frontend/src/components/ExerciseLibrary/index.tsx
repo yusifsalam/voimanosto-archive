@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dropdown, Table, Button, Icon } from 'semantic-ui-react'
+import { Dropdown, Table, Button, Icon, Header } from 'semantic-ui-react'
 import exerciseLibraryService from '../../services/exerciseLibraryService'
 import NewExerciseForm from '../NewExerciseForm'
 
@@ -60,7 +60,7 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
 
   return (
     <div>
-      <h3>My exercise library</h3>
+      <Header inverted>My exercise library</Header>
       <Dropdown
         clearable
         selection
@@ -81,7 +81,7 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
         onChange={handleExerciseSelect}
       />
 
-      <Table celled collapsing selectable>
+      <Table inverted celled collapsing selectable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Exercise</Table.HeaderCell>

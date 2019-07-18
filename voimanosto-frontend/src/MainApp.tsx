@@ -52,6 +52,12 @@ const App: React.FC = () => {
       <TopMenu logo={logo} />
       <SideBar loggedIn={loggedIn} isMobile={isMobile} />
       <Container textAlign='left' fluid>
+        <style>
+          {`
+      html, body {
+        background-color: #222 !important;
+      }`}
+        </style>
         <MainContent
           loggedIn={loggedIn}
           setLoggedIn={setLoggedIn}

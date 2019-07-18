@@ -12,6 +12,7 @@ interface SideBarProps {
 const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
   return (
     <Menu
+      inverted
       borderless
       vertical={isMobile ? false : true}
       stackable={isMobile ? false : true}
@@ -20,12 +21,11 @@ const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
       icon='labeled'
     >
       <Menu.Item
-        className='white-item'
         disabled={!loggedIn}
         as={NavLink}
         to={loggedIn ? '/profile' : '/login'}
       >
-        <Icon className='white-icon' name='user' />
+        <Icon name='user' />
         <p className='white-font'>My profile</p>
       </Menu.Item>
       <Menu.Item

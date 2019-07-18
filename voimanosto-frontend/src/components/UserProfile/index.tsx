@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Icon, Image, Label, Grid } from 'semantic-ui-react'
+import { Card, Icon, Image, Label, Grid, Header } from 'semantic-ui-react'
 import ExerciseLibrary from '../ExerciseLibrary'
 
 import {
@@ -87,7 +87,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
         )}
 
         <Grid.Column width={12}>
-          <h4>Recent bodyweight</h4>
+          <Header inverted>Recent bodyweight</Header>
           {dateLoaded ? (
             <ResponsiveContainer height={300} width='100%'>
               <AreaChart
@@ -97,14 +97,24 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
                 <XAxis
                   dataKey='date'
                   tickFormatter={tick => moment(tick).format('MMM DD')}
+                  stroke='white'
                 >
                   <ChartLabel
-                    value='Bodyweight'
+                    value='Date'
                     position='insideBottom'
                     offset={-10}
+                    fill='white'
                   />
                 </XAxis>
-                <YAxis />
+                <YAxis
+                  stroke='white'
+                  label={{
+                    value: 'Bodyweight, kg',
+                    angle: -90,
+                    fill: 'white',
+                    position: 'insideLeft'
+                  }}
+                />
                 <Area
                   type='monotone'
                   dataKey='bodyweight'
@@ -117,13 +127,15 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
                     'Date: ' + moment(value).format('MMM DD')
                   }
                 />
-                <CartesianGrid strokeDasharray='3 3' />
+                <CartesianGrid strokeDasharray='3 3' opacity={0.3} />
               </AreaChart>
             </ResponsiveContainer>
           ) : (
             <div>
               <LoadingLottie />
-              <h2>Loading data...</h2>
+              <Header as='h2' inverted>
+                Loading data...
+              </Header>
             </div>
           )}
         </Grid.Column>

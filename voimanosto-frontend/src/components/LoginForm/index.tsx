@@ -5,7 +5,8 @@ import {
   Form,
   Button,
   Divider,
-  Message
+  Message,
+  Header
 } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 import { ILoginProps } from '../../types'
@@ -20,7 +21,9 @@ const LoginForm: React.FC<ILoginProps> = ({
 }) => {
   return (
     <div>
-      <h2>Login</h2>
+      <Header inverted as='h2'>
+        Login
+      </Header>
       {errorMessage !== null ? (
         <Message negative>
           <Message.Header>Something went wrong</Message.Header>
@@ -29,10 +32,10 @@ const LoginForm: React.FC<ILoginProps> = ({
       ) : (
         <div> </div>
       )}
-      <Segment placeholder>
+      <Segment inverted placeholder style={{ backgroundColor: '#222' }}>
         <Grid columns={2} relaxed='very' stackable>
           <Grid.Column>
-            <Form onSubmit={handleLogin}>
+            <Form inverted onSubmit={handleLogin}>
               <Form.Input
                 icon='user'
                 iconPosition='left'
@@ -50,12 +53,13 @@ const LoginForm: React.FC<ILoginProps> = ({
                 onChange={({ target }) => setPassword(target.value)}
               />
 
-              <Button content='Login' primary />
+              <Button inverted content='Login' primary />
             </Form>
           </Grid.Column>
 
           <Grid.Column verticalAlign='middle'>
             <Button
+              inverted
               as={NavLink}
               to='/register'
               content='Sign up'
@@ -65,7 +69,9 @@ const LoginForm: React.FC<ILoginProps> = ({
           </Grid.Column>
         </Grid>
 
-        <Divider vertical>Or</Divider>
+        <Divider inverted vertical>
+          Or
+        </Divider>
       </Segment>
     </div>
   )
