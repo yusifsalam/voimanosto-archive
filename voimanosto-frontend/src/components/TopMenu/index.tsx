@@ -10,7 +10,7 @@ interface TopMenuProps {
 const TopMenu: React.FC<TopMenuProps> = ({ logo }) => {
   const { history } = useReactRouter()
   return (
-    <Menu fixed='top' borderless className='top-menu'>
+    <Menu inverted fixed='top' borderless className='top-menu'>
       <Menu.Item header className='logo'>
         <Image src={logo} size='tiny' />
         <Header className='headerInLogo'>Voimanosto</Header>
@@ -19,6 +19,7 @@ const TopMenu: React.FC<TopMenuProps> = ({ logo }) => {
         <Menu.Item>
           <Menu.Item>
             <Button
+              inverted
               icon
               color='red'
               onClick={() => {
