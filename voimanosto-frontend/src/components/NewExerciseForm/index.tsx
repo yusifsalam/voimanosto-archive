@@ -22,12 +22,7 @@ const NewExerciseForm: React.FC = () => {
   return (
     <Segment
       style={{
-        left: '30%',
-        position: 'fixed',
-        bottom: '20%',
         zIndex: 1000,
-        width: '50%',
-        height: 'auto',
         border: '3px dashed green'
       }}
     >

@@ -4,7 +4,8 @@ import {
   Table,
   Button,
   Icon,
-  TransitionablePortal
+  TransitionablePortal,
+  Container
 } from 'semantic-ui-react'
 import exerciseLibraryService from '../../services/exerciseLibraryService'
 import NewExerciseForm from '../NewExerciseForm'
@@ -113,7 +114,7 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
                 floated='left'
                 onClick={() => setPortalOpen(!portalOpen)}
               >
-                <Icon name='user' />
+                <Icon name='add circle' />
                 Add new exercise
               </Button>
             </Table.HeaderCell>
@@ -124,9 +125,19 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
 
       <TransitionablePortal
         open={portalOpen}
-        transition={{ animation: 'drop', duration: 500 }}
+        transition={{ animation: 'slide right', duration: 500 }}
+        onClose={() => setPortalOpen(false)}
       >
-        <NewExerciseForm />
+        <Container
+          style={{
+            position: 'fixed',
+            bottom: '30%',
+            left: '20%',
+            width: 'auto'
+          }}
+        >
+          <NewExerciseForm />
+        </Container>
       </TransitionablePortal>
     </div>
   )
