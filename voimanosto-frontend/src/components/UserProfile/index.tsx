@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Icon, Image, Label } from 'semantic-ui-react'
+import { Card, Icon, Image, Label, Grid } from 'semantic-ui-react'
 import ExerciseLibrary from '../ExerciseLibrary'
 
 import {
@@ -48,10 +48,10 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
   }, [user])
 
   return (
-    <div>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <Grid doubling columns={2} style={{ margin: '2%' }}>
+      <Grid.Row>
         {user !== undefined && user !== null ? (
-          <div>
+          <Grid.Column width={4}>
             <Card>
               <Image
                 src={
@@ -81,13 +81,15 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
                 420 wilks!!!
               </Card.Content>
             </Card>
-          </div>
+          </Grid.Column>
         ) : (
           <div />
         )}
-        <div style={{ width: '500px', height: '300px', display: 'flex' }}>
+
+        <Grid.Column width={12}>
+          <h4>Recent bodyweight</h4>
           {dateLoaded ? (
-            <ResponsiveContainer>
+            <ResponsiveContainer height={300} width='100%'>
               <AreaChart
                 data={data}
                 margin={{ top: 5, right: 30, left: 20, bottom: 20 }}
@@ -124,10 +126,12 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
               <h2>Loading data...</h2>
             </div>
           )}
-        </div>
-      </div>
-      <ExerciseLibrary user={user} />
-    </div>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <ExerciseLibrary user={user} />
+      </Grid.Row>
+    </Grid>
   )
 }
 

@@ -6,6 +6,7 @@ import logo from './components/PointCalculator/new_logo.svg'
 import workoutService from './services/workoutService'
 import loginService from './services/loginService'
 import useReactRouter from 'use-react-router'
+import { Container } from 'semantic-ui-react'
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -50,14 +51,16 @@ const App: React.FC = () => {
     <div>
       <TopMenu logo={logo} />
       <SideBar loggedIn={loggedIn} isMobile={isMobile} />
-      <MainContent
-        loggedIn={loggedIn}
-        setLoggedIn={setLoggedIn}
-        user={user}
-        setUser={setUser}
-        isMobile={isMobile}
-        redirectURL={redirectURL}
-      />
+      <Container textAlign='left' fluid>
+        <MainContent
+          loggedIn={loggedIn}
+          setLoggedIn={setLoggedIn}
+          user={user}
+          setUser={setUser}
+          isMobile={isMobile}
+          redirectURL={redirectURL}
+        />
+      </Container>
     </div>
   )
 }
