@@ -115,6 +115,7 @@ const NewExerciseForm: React.FC<NewExerciseFormProps> = ({
       <Dimmer.Dimmable
         dimmed={dimmed}
         as={Modal}
+        closeIcon
         dimmer='blurring'
         open={isOpen}
         centered={false}
