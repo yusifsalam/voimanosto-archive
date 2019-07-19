@@ -36,7 +36,10 @@ const RouterLinks: React.FC<IRouter> = ({
               path='/profile'
               render={props => <UserProfile {...props} user={user} />}
             />
-            <Route path='/tools' component={PointCalculator} />
+            <Route
+              path='/tools'
+              render={props => <PointCalculator {...props} moi={false} />}
+            />
             <Route
               path='/settings'
               render={props => (

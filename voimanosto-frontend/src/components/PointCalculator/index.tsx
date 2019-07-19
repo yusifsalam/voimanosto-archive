@@ -1,9 +1,21 @@
 import React, { useState } from 'react'
 import { calculatePoints, calculateWilks } from '../../util'
-import { Button, Icon, Form, Segment, Label } from 'semantic-ui-react'
+import {
+  Button,
+  Icon,
+  Form,
+  Statistic,
+  Container,
+  Header,
+  Grid
+} from 'semantic-ui-react'
 import './PointCalculator.scss'
 
-const PointCalculator: React.FC = () => {
+interface calculatorProps {
+  moi: boolean
+}
+
+const PointCalculator: React.FC<calculatorProps> = ({ moi }) => {
   const [points, setPoints] = useState(0)
   const [wilks, setWilks] = useState(0)
   const [total, setTotal] = useState(0)
@@ -42,122 +54,145 @@ const PointCalculator: React.FC = () => {
   }
 
   return (
-    <div className='calculator-form'>
-      <Segment vertical>
-        <Label color='black' key='ipf_points' size='massive' horizontal>
-          IPF points {points}
-        </Label>
-        <Label color='grey' key='wilks_points' size='massive' horizontal>
-          Wilks points {wilks}
-        </Label>
-      </Segment>
+    <Container text className='calculator-form'>
+      <Grid divided>
+        <Grid.Row>
+          <Statistic.Group inverted size='small'>
+            <Statistic inverted key='ipf_points'>
+              <Statistic.Value>
+                IPF points: {points === 0 ? '' : points}
+              </Statistic.Value>
+            </Statistic>
+            <Statistic key='wilks_points'>
+              <Statistic.Value>
+                Wilks points: {wilks === 0 ? '' : wilks}
+              </Statistic.Value>
+            </Statistic>
+          </Statistic.Group>
+        </Grid.Row>
+        <Grid.Row>
+          <Form inverted size='large' onSubmit={handleBodyweightChange}>
+            <Grid.Row divided>
+              <Form.Group inline={true}>
+                <Grid.Column>
+                  <Form.Field>
+                    <Header inverted>Bodyweight</Header>
+                    <Form.Input
+                      value={bodyweight === 0 ? '' : bodyweight}
+                      onChange={handleBodyweightChange}
+                      placeholder='Bodyweight'
+                      type='number'
+                    />
+                  </Form.Field>
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.Field>
+                    <Header inverted>Total</Header>
+                    <Form.Input
+                      value={total === 0 ? '' : total}
+                      onChange={handleTotalChange}
+                      placeholder='Total'
+                      type='number'
+                    />
+                  </Form.Field>
+                </Grid.Column>
+              </Form.Group>
+            </Grid.Row>
 
-      <Form onSubmit={handleBodyweightChange}>
-        <Form.Group>
-          <Form.Field>
-            <label>Bodyweight</label>
-            <input
-              value={bodyweight === 0 ? '' : bodyweight}
-              onChange={handleBodyweightChange}
-              placeholder='Bodyweight'
-              type='number'
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Total</label>
-            <input
-              value={total === 0 ? '' : total}
-              onChange={handleTotalChange}
-              placeholder='Total'
-              type='number'
-            />
-          </Form.Field>
-        </Form.Group>
-
-        <Form.Group>
-          <label>Sex </label>
-          <Form.Field
-            control='input'
-            type='radio'
-            label='Male'
-            value='M'
-            checked={sex === 'M'}
-            onChange={handleSexChange}
-          />
-          <Form.Field
-            control='input'
-            type='radio'
-            label='Female'
-            value='F'
-            checked={sex === 'F'}
-            onChange={handleSexChange}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <label>Event type</label>
-          <Form.Field
-            control='input'
-            type='radio'
-            label='Full competition'
-            value='SBD'
-            checked={eventType === 'SBD'}
-            onChange={handleEventChange}
-          />
-          <Form.Field
-            control='input'
-            type='radio'
-            label='Squat'
-            value='S'
-            checked={eventType === 'S'}
-            onChange={handleEventChange}
-          />
-          <Form.Field
-            control='input'
-            type='radio'
-            label='Bench press'
-            value='B'
-            checked={eventType === 'B'}
-            onChange={handleEventChange}
-          />
-          <Form.Field
-            control='input'
-            type='radio'
-            label='Deadlift'
-            value='D'
-            checked={eventType === 'D'}
-            onChange={handleEventChange}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <label>Equipment</label>
-          <Form.Field
-            control='input'
-            type='radio'
-            label='Raw'
-            value='Raw'
-            checked={equipment === 'Raw'}
-            onChange={handleEquipmentChange}
-          />
-          <Form.Field
-            control='input'
-            type='radio'
-            label='Single-Ply'
-            value='Single-Ply'
-            checked={equipment === 'Single-Ply'}
-            onChange={handleEquipmentChange}
-          />
-        </Form.Group>
-      </Form>
-
-      <Button animated onClick={handlePointChange}>
-        <Button.Content visible>Calculate</Button.Content>
-        <Button.Content hidden>
-          <Icon name='calculator' />
-        </Button.Content>
-      </Button>
-    </div>
+            <Grid.Row>
+              <Form.Group>
+                <Header inverted>Sex </Header>
+                <Form.Radio
+                  control='input'
+                  type='radio'
+                  label='Male'
+                  value='M'
+                  checked={sex === 'M'}
+                  onChange={handleSexChange}
+                />
+                <Form.Field
+                  control='input'
+                  type='radio'
+                  label='Female'
+                  value='F'
+                  checked={sex === 'F'}
+                  onChange={handleSexChange}
+                />
+              </Form.Group>
+            </Grid.Row>
+            <Grid.Row>
+              <Form.Group>
+                <Header inverted>Event type</Header>
+                <Form.Field
+                  control='input'
+                  type='radio'
+                  label='Full competition'
+                  value='SBD'
+                  checked={eventType === 'SBD'}
+                  onChange={handleEventChange}
+                />
+                <Form.Field
+                  control='input'
+                  type='radio'
+                  label='Squat'
+                  value='S'
+                  checked={eventType === 'S'}
+                  onChange={handleEventChange}
+                />
+                <Form.Field
+                  control='input'
+                  type='radio'
+                  label='Bench press'
+                  value='B'
+                  checked={eventType === 'B'}
+                  onChange={handleEventChange}
+                />
+                <Form.Field
+                  control='input'
+                  type='radio'
+                  label='Deadlift'
+                  value='D'
+                  checked={eventType === 'D'}
+                  onChange={handleEventChange}
+                />
+              </Form.Group>
+            </Grid.Row>
+            <Grid.Row>
+              <Form.Group>
+                <Header inverted>Equipment</Header>
+                <Form.Field
+                  control='input'
+                  type='radio'
+                  label='Raw'
+                  value='Raw'
+                  checked={equipment === 'Raw'}
+                  onChange={handleEquipmentChange}
+                />
+                <Form.Field
+                  control='input'
+                  type='radio'
+                  label='Single-Ply'
+                  value='Single-Ply'
+                  checked={equipment === 'Single-Ply'}
+                  onChange={handleEquipmentChange}
+                />
+              </Form.Group>
+            </Grid.Row>
+            <Button
+              inverted
+              color='violet'
+              animated
+              onClick={handlePointChange}
+            >
+              <Button.Content visible>Calculate</Button.Content>
+              <Button.Content hidden>
+                <Icon name='calculator' />
+              </Button.Content>
+            </Button>
+          </Form>
+        </Grid.Row>
+      </Grid>
+    </Container>
   )
 }
 
