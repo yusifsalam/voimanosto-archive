@@ -160,7 +160,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
       </TransitionablePortal>
       <Header inverted as='h4'>
         {selectedDay !== ''
-          ? moment(selectedDay).format('MMMM Do') + ' selected'
+          ? moment(selectedDay).format('MMMM D, YYYY') + ' selected'
           : null}{' '}
       </Header>
     </Container>

@@ -72,4 +72,20 @@
   .react-calendar__month-view__weekdays__weekday {
     color: whitesmoke;
   }
+
+  .react-calendar__navigation {
+    &:hover {
+      background-color: $green;
+    }
+    .react-calendar__navigation__arrow {
+      &:hover {
+        background-color: lighten($green, 20%);
+      }
+    }
+    .react-calendar__navigation__label {
+      &:hover {
+        background-color: $green;
+      }
+    }
+  }
 }
