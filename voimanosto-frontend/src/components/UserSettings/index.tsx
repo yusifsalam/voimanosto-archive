@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { Header, Container, Button } from 'semantic-ui-react'
+import './UserSettings.scss'
 
 interface UserSettingsProps {
   user?: IUser | null
@@ -35,16 +37,33 @@ const UserSettings: React.FC<UserSettingsProps> = ({ user, setUser }) => {
       })
   }
   return (
-    <div>
-      <h1>Set your profile picture</h1>
-      <input
-        type='file'
-        onChange={e => handleFileChange(e.target.files)}
-      />{' '}
-      <button type='submit' onClick={handleFileUpload}>
+    <Container>
+      <Header inverted as='h2'>
+        Set your profile picture
+      </Header>
+      <div>
+        <input
+          id='file'
+          type='file'
+          onChange={e => handleFileChange(e.target.files)}
+        />
+        <label htmlFor='file' className='btn-2'>
+          <span>Select image</span>
+        </label>
+        <Header inverted as='h5'>
+          {file ? (
+            <div>
+              File: {file.name}
+              <br /> Size: {(file.size / 1024).toFixed(1)} kb
+            </div>
+          ) : null}
+        </Header>
+      </div>
+      <br />
+      <Button inverted color='violet' type='submit' onClick={handleFileUpload}>
         Submit
-      </button>
-    </div>
+      </Button>
+    </Container>
   )
 }
 
