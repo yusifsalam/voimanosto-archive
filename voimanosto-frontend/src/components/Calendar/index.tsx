@@ -95,7 +95,11 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
         success
       />
 
-      <Calendar onChange={handleClick} className='react-calendar' />
+      <Calendar
+        minDetail='year'
+        onChange={handleClick}
+        className='react-calendar'
+      />
       <TransitionablePortal
         onClose={() => setPortalOpen(false)}
         open={portalOpen}
