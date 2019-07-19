@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Calendar from 'react-calendar'
 import {
   TransitionablePortal,
@@ -6,7 +6,8 @@ import {
   Form,
   Segment,
   Message,
-  Container
+  Container,
+  Header
 } from 'semantic-ui-react'
 import './CustomCalendar.scss'
 import bodyweightService from '../../services/bodyweightService'
@@ -24,6 +25,24 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
   const [selectedDay, setSelectedDay] = useState('')
   const [bodyweight, setBodyweight] = useState(0)
   const [msg, setMsg] = useState<null | string>(null)
+
+  useEffect(() => {
+    let icon = document.createElement('i')
+    icon.classList.add('icon', 'trophy')
+    // icon.classList.add('calendar check')
+    const test = document
+      .getElementsByClassName('react-calendar__tile--now')
+      .item(0)
+
+    if (test) {
+      let nodes = Array.from(test.childNodes)
+      if (nodes.length < 2) {
+        test.appendChild(icon)
+      }
+    }
+  })
+
+  console.log(moment(selectedDay).month())
 
   const handleClick = (event: any) => {
     setPortalOpen(true)
@@ -68,7 +87,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
   }
 
   return (
-    <Container text>
+    <Container fluid>
       <Message
         header='Sucess'
         content={msg}
@@ -86,18 +105,19 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
             left: `${popupLeftPos}px`,
             position: 'fixed',
             top: `${popupTopPos}px`,
-            maxWidth: '150px',
+            maxWidth: '155px',
             maxHeight: '200px',
             zIndex: 1000,
-            backgroundColor: 'white',
-            border: '3px solid rgba(255,0,0,0.5)'
+            backgroundColor: 'black'
+            // border: '3px solid rgba(255,0,0,0.5)'
           }}
           vertical
           size='small'
+          inverted
+          color='red'
         >
           <Button
             size='mini'
-            color='youtube'
             style={{ border: '2px white solid' }}
             onClick={() => {
               setPortalOpen(false)
@@ -107,19 +127,11 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
             Log bodyweight
           </Button>
 
-          <Button
-            size='mini'
-            color='youtube'
-            style={{ border: '2px white solid' }}
-          >
+          <Button size='mini' style={{ border: '2px white solid' }}>
             New workouts
           </Button>
 
-          <Button
-            size='mini'
-            color='youtube'
-            style={{ border: '2px white solid' }}
-          >
+          <Button size='mini' style={{ border: '2px white solid' }}>
             New competition
           </Button>
 
@@ -146,6 +158,11 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
           <Button onClick={() => setSubPortalOpen(false)}>Cancel</Button>
         </Segment>
       </TransitionablePortal>
+      <Header inverted as='h4'>
+        {selectedDay !== ''
+          ? moment(selectedDay).format('MMMM Do') + ' selected'
+          : null}{' '}
+      </Header>
     </Container>
   )
 }

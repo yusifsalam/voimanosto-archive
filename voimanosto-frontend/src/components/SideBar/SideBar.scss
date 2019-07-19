@@ -4,6 +4,7 @@
   margin-top: $header-nav-height;
   overflow-y: auto;
   padding-bottom: $header-nav-height;
+  background-color: $gray5;
   &.mobile {
     padding-bottom: 0;
     height: 80px;

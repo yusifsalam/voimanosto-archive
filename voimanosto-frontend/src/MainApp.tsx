@@ -55,7 +55,7 @@ const App: React.FC = () => {
         <style>
           {`
       html, body {
-        background-color: #222 !important;
+        background-color: #1C1C1E !important;
       }`}
         </style>
         <MainContent

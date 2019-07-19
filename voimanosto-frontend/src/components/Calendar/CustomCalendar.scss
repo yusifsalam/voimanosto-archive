@@ -1,24 +1,30 @@
+@import '../../styles/shared.scss';
+
 .react-calendar {
   min-width: 100px;
   max-width: auto;
   // height: 100%;
   width: auto;
-  background: rgb(29, 28, 31);
-  border-color: rgb(29, 28, 31);
+  background: $gray6;
+  border-color: $gray2;
+  // border-radius: 5px;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.15em;
   font-size: 1.35em;
 
   .react-calendar__tile {
     height: 100px;
-    background-color: rgb(29, 28, 31);
+    background-color: $gray6;
     color: whitesmoke;
     vertical-align: text-top;
     text-align: right;
     font-size: 15px;
     position: relative;
+    border-color: $gray3;
+    border-width: 1px;
+    border-style: solid;
     &:hover {
-      background-color: rgb(38, 86, 44);
+      background-color: $green;
     }
 
     abbr {
@@ -36,22 +42,22 @@
       right: 10px;
       height: 20px;
       width: 20px;
-      background-color: rgb(253, 74, 67);
+      background-color: $red;
       color: black;
       border-radius: 10px;
       text-align: center;
     }
   }
-  .react-calendar__tile--active {
-    background-color: rgb(83, 55, 90);
+  .react-calendar__tile--active.react-calendar__tile--rangeBothEnds {
+    background-color: $blue;
     &:enabled {
-      background-color: lighten(rgb(83, 55, 90), 10%);
+      background-color: lighten($blue, 10%);
     }
   }
 
   .react-calendar__month-view__days__day--weekend {
-    background-color: rgb(38, 38, 40);
-    color: rgb(150, 150, 150);
+    background-color: $gray4;
+    color: $gray;
   }
   .react-calendar__navigation {
     background-color: rgb(29, 28, 31);
