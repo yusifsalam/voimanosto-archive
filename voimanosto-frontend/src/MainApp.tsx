@@ -7,6 +7,7 @@ import workoutService from './services/workoutService'
 import loginService from './services/loginService'
 import useReactRouter from 'use-react-router'
 import { Container } from 'semantic-ui-react'
+import 'fomantic-ui-css/semantic.css'
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false)
