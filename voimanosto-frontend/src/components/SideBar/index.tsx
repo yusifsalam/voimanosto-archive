@@ -25,7 +25,7 @@ const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
         as={NavLink}
         to={loggedIn ? '/profile' : '/login'}
       >
-        <Icon name='user' />
+        <i className='ui icon user tie' />
         <p className='white-font'>My profile</p>
       </Menu.Item>
       <Menu.Item
@@ -41,7 +41,7 @@ const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
         as={NavLink}
         to={loggedIn ? '/tools' : '/login'}
       >
-        <Icon name='calculator' />
+        <i className='ui icon toolbox' />
         Tools
       </Menu.Item>
       <Menu.Item
@@ -50,7 +50,6 @@ const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
         to={loggedIn ? '/settings' : '/login'}
       >
         <Icon name='settings' />
-        {/* <SettingsLottie /> */}
         Settings
       </Menu.Item>
     </Menu>
