@@ -6,11 +6,15 @@ const bodyweightsRouter = require('./bodyweights')
 const prRouter = require('./personalRecords')
 const exercisesRouter = require('./exercises')
 const exerciseBase = require('../utils/defaultExercises')
+const statsRouters = require('./stats')
+const notificationsRouter = require('./notifications')
 
 usersRouter.use('/:username/workouts', workoutsRouter)
 usersRouter.use('/:username/bodyweight', bodyweightsRouter)
 usersRouter.use('/:username/prs', prRouter)
 usersRouter.use('/:username/exercises', exercisesRouter)
+usersRouter.use('/:username/stats', statsRouters)
+usersRouter.use('/:username/notifications', notificationsRouter)
 
 usersRouter.post('/', async (req, res, next) => {
   try {
