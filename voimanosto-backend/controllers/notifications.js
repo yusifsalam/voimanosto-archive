@@ -88,3 +88,5 @@ notificationsRouter.put('/:id', async (req, res, next) => {
     }
   }
 })
+
+module.exports = notificationsRouter
