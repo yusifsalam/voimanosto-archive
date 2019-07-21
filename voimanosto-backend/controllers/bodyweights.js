@@ -1,6 +1,5 @@
 const bodyweightsRouter = require('express').Router({ mergeParams: true })
 const utils = require('../utils/middleware')
-const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const Bodyweight = require('../models/bodyweight')
 

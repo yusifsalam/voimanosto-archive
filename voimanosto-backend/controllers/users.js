@@ -24,7 +24,9 @@ usersRouter.post('/', async (req, res, next) => {
       avatar: 'default',
       passwordHash,
       workouts: [],
-      exercises: []
+      exercises: [],
+      notifications: [],
+      stats: []
     })
     const savedUser = await user.save()
     const exercises = await exerciseBase(savedUser._id)
