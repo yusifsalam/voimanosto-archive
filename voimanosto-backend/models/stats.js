@@ -28,14 +28,3 @@ statsSchema.set('toJSON', {
 })
 
 module.exports = mongoose.model('Stats', statsSchema)
-
-const statsSchema = mongoose.Schema({
-  fruits: [
-    {
-      apples: Number,
-      oranges: Number,
-      bananas: Number,
-      total: Number
-    }
-  ]
-})
