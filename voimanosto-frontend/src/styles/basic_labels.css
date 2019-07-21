@@ -1,0 +1,5 @@
+@import './shared.scss';
+
+.ui.basic.blue.label {
+  background: none !important;
+}

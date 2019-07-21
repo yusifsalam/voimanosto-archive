@@ -8,6 +8,7 @@ import loginService from './services/loginService'
 import useReactRouter from 'use-react-router'
 import { Container } from 'semantic-ui-react'
 import 'fomantic-ui-css/semantic.css'
+import './styles/basic_labels.css'
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(false)
@@ -49,7 +50,7 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <div>
+    <div id='main-div'>
       <TopMenu logo={logo} />
       <SideBar loggedIn={loggedIn} isMobile={isMobile} />
       <Container textAlign='left' fluid>
