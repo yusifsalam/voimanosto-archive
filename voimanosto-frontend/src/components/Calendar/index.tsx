@@ -29,7 +29,6 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
   useEffect(() => {
     let icon = document.createElement('i')
     icon.classList.add('icon', 'trophy')
-    // icon.classList.add('calendar check')
     const test = document
       .getElementsByClassName('react-calendar__tile--now')
       .item(0)
@@ -147,19 +146,41 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
         onClose={() => setSubPortalOpen(false)}
       >
         <Segment
-          style={{ left: '40%', position: 'fixed', top: '50%', zIndex: 1000 }}
+          inverted
+          style={{
+            left: '40%',
+            position: 'fixed',
+            top: '50%',
+            zIndex: 1000,
+            border: '2px white solid'
+          }}
         >
-          <Form onSubmit={addBodyweight}>
+          <Form>
             <Form.Input
-              placeholder='bodyweight'
+              placeholder='Bodyweight'
               type='number'
               step='0.01'
               min='0'
               onChange={({ target }) => setBodyweight(Number(target.value))}
             />
-            <Button type='submit'>Add bodyiweght</Button>
+            <Button.Group>
+              <Button
+                inverted
+                color='green'
+                type='submit'
+                onClick={addBodyweight}
+              >
+                Add bodyiweght
+              </Button>
+              <Button
+                inverted
+                color='red'
+                onClick={() => setSubPortalOpen(false)}
+              >
+                Cancel
+              </Button>
+            </Button.Group>
           </Form>
-          <Button onClick={() => setSubPortalOpen(false)}>Cancel</Button>
         </Segment>
       </TransitionablePortal>
       <Header inverted as='h4'>

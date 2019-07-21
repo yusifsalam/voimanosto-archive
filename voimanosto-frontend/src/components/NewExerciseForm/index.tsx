@@ -120,6 +120,7 @@ const NewExerciseForm: React.FC<NewExerciseFormProps> = ({
         open={isOpen}
         centered={false}
         onClose={closePortal}
+        className='inverted'
       >
         <Modal.Header>Add new exercise</Modal.Header>
         <Modal.Content>

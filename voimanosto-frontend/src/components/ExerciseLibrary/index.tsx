@@ -72,6 +72,7 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
         ]}
         value={exerciseType}
         onChange={handleTypeSelect}
+        className='inverted'
       />
       <Dropdown
         clearable
@@ -79,6 +80,7 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
         placeholder='Select exercise'
         options={names}
         onChange={handleExerciseSelect}
+        className='inverted'
       />
 
       <Table inverted celled collapsing selectable>
