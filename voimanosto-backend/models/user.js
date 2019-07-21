@@ -44,6 +44,18 @@ const userSchema = new mongoose.Schema(
         ref: 'Exercise'
       }
     ],
+    notifications: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Notification'
+      }
+    ],
+    stats: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Stats'
+      }
+    ],
     isAdmin: {
       type: Boolean,
       default: false
