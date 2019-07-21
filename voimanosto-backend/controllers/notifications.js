@@ -10,6 +10,41 @@ notificationsRouter.get('/', async (req, res, next) => {
   } else {
     try {
       const user = await User.findOne({ username: req.params.username })
+      const notifications = await Notification.find({
+        user: user._id,
+        seen: false
+      })
+      res.json(notifications.map(n => n.toJSON()))
+    } catch (exception) {
+      next(exception)
+    }
+  }
+})
+
+notificationsRouter.get('/all', async (req, res, next) => {
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      const user = await User.findOne({ username: req.params.username })
+      const notifications = await Notification.find({
+        user: user._id
+      })
+      res.json(notifications.map(n => n.toJSON()))
+    } catch (exception) {
+      next(exception)
+    }
+  }
+})
+
+notificationsRouter.post('/', async (req, res, next) => {
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      const user = await User.findOne({ username: req.params.username })
       const notification = new Notification({
         user: user._id,
         date: req.body.date,
@@ -28,23 +63,28 @@ notificationsRouter.get('/', async (req, res, next) => {
 })
 
 notificationsRouter.put('/:id', async (req, res, next) => {
-  try {
-    const body = req.body
-    const notification = {
-      user: body.user,
-      date: body.date,
-      message: body.message,
-      seen: body.seen,
-      type: body.type
-    }
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      const body = req.body
+      const notification = {
+        user: body.user,
+        date: body.date,
+        message: body.message,
+        seen: body.seen,
+        type: body.type
+      }
 
-    const modifiedNotification = await Notification.findByIdAndUpdate(
-      req.params.id,
-      notification,
-      { new: true }
-    )
-    res.json(modifiedNotification.toJSON())
-  } catch (exception) {
-    next(exception)
+      const modifiedNotification = await Notification.findByIdAndUpdate(
+        req.params.id,
+        notification,
+        { new: true }
+      )
+      res.json(modifiedNotification.toJSON())
+    } catch (exception) {
+      next(exception)
+    }
   }
 })
