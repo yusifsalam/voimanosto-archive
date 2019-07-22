@@ -23,11 +23,15 @@ const TopMenu: React.FC<TopMenuProps> = ({ logo }) => {
       </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item>
-          <Menu.Item as={NavLink} to='/notifications'>
-            <div className='ui blue basic label'>
-              <i className='ui big icon bell outline ' />2
-            </div>
-          </Menu.Item>
+          {loggedIn ? (
+            <Menu.Item as={NavLink} to='/notifications'>
+              <div className='ui blue basic label'>
+                <i className='ui big icon bell outline ' />2
+              </div>
+            </Menu.Item>
+          ) : (
+            <div />
+          )}
           <Menu.Item>
             {loggedIn ? (
               <Button
