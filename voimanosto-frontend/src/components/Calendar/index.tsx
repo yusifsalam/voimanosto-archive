@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Calendar from 'react-calendar'
 import {
   TransitionablePortal,
@@ -12,12 +12,9 @@ import {
 import './CustomCalendar.scss'
 import bodyweightService from '../../services/bodyweightService'
 import moment from 'moment'
+import { UserContext } from '../../context/userContext'
 
-interface CalendarProps {
-  user: IUser | null | undefined
-}
-
-const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
+const CustomCalendar: React.FC = () => {
   const [portalOpen, setPortalOpen] = useState(false)
   const [subPortalOpen, setSubPortalOpen] = useState(false)
   const [popupTopPos, setPopupTopPos] = useState(0)
@@ -25,6 +22,7 @@ const CustomCalendar: React.FC<CalendarProps> = ({ user }) => {
   const [selectedDay, setSelectedDay] = useState('')
   const [bodyweight, setBodyweight] = useState(0)
   const [msg, setMsg] = useState<null | string>(null)
+  const { user } = useContext(UserContext)
 
   useEffect(() => {
     let icon = document.createElement('i')

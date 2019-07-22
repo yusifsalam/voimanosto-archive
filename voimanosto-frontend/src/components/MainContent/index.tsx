@@ -1,31 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import './MainContent.scss'
 import RouterLinks from '../Router'
 import loginService from '../../services/loginService'
 import workoutService from '../../services/workoutService'
 import { Route } from 'react-router-dom'
 import LoginForm from '../LoginForm'
+import { UserContext } from '../../context/userContext'
 
 interface IMainContentProps {
-  user: IUser | null
-  loggedIn?: boolean
-  setLoggedIn(loggedIn: boolean): void
-  setUser(user: IUser): void
   isMobile: boolean
   redirectURL: string
 }
 
 const MainContent: React.FC<IMainContentProps> = ({
-  loggedIn,
-  setLoggedIn,
-  user,
-  setUser,
   isMobile,
   redirectURL
 }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const { setUser } = useContext(UserContext)
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -34,12 +28,12 @@ const MainContent: React.FC<IMainContentProps> = ({
         username,
         password
       })
+      user.loggedIn = true
       window.localStorage.setItem('loggedUser', user.token)
       workoutService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
-      setLoggedIn(true)
     } catch (exception) {
       setErrorMessage('Login failed')
       setTimeout(() => {
@@ -51,12 +45,7 @@ const MainContent: React.FC<IMainContentProps> = ({
 
   return (
     <div className={isMobile ? 'main-content mobile' : 'main-content'}>
-      <RouterLinks
-        loggedIn={loggedIn}
-        user={user}
-        setUser={setUser}
-        redirectURL={redirectURL}
-      />
+      <RouterLinks redirectURL={redirectURL} />
       <Route
         path='/login'
         render={props => (

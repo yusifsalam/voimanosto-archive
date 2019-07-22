@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { Header, Container, Button } from 'semantic-ui-react'
 import './UserSettings.scss'
+import { UserContext } from '../../context/userContext'
 
-interface UserSettingsProps {
-  user?: IUser | null
-  setUser(user: IUser): void
-}
-
-const UserSettings: React.FC<UserSettingsProps> = ({ user, setUser }) => {
+const UserSettings: React.FC = () => {
+  const { user, setUser } = useContext(UserContext)
   const [file, setFile] = useState<File | null>(null)
 
   const handleFileChange = (e: any) => {
@@ -17,7 +14,6 @@ const UserSettings: React.FC<UserSettingsProps> = ({ user, setUser }) => {
 
   const handleFileUpload = async () => {
     const selectedFile = file as File
-    console.log(selectedFile)
     const formData = new FormData()
     formData.append('file', selectedFile)
     if (user !== null && user !== undefined) {
@@ -32,6 +28,7 @@ const UserSettings: React.FC<UserSettingsProps> = ({ user, setUser }) => {
         }
       })
       .then(newUser => {
+        newUser.data.loggedIn = true
         setUser(newUser.data)
         setFile(null)
       })

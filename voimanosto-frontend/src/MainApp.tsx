@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import TopMenu from './components/TopMenu'
 import SideBar from './components/SideBar'
 import MainContent from './components/MainContent'
@@ -9,10 +9,18 @@ import useReactRouter from 'use-react-router'
 import { Container } from 'semantic-ui-react'
 import 'fomantic-ui-css/semantic.css'
 import './styles/basic_labels.css'
+import { UserContext } from './context/userContext'
 
 const App: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [user, setUser] = useState<null | IUser>(null)
+  const [user, setUser] = useState<IUser>({
+    name: '',
+    username: '',
+    avatar: '',
+    email: '',
+    token: '',
+    loggedIn: false
+  })
+  const value = useMemo(() => ({ user, setUser }), [user, setUser])
   const [isMobile, setIsMobile] = useState(false)
   const { location } = useReactRouter()
 
@@ -30,9 +38,9 @@ const App: React.FC = () => {
       if (loggedUserToken) {
         const user = await loginService.verify(loggedUserToken)
         user.token = loggedUserToken
+        user.loggedIn = true
         setUser(user)
         workoutService.setToken(loggedUserToken)
-        setLoggedIn(true)
       }
     }
 
@@ -50,25 +58,20 @@ const App: React.FC = () => {
   }, [])
 
   return (
-    <div id='main-div'>
-      <TopMenu logo={logo} />
-      <SideBar loggedIn={loggedIn} isMobile={isMobile} />
-      <Container textAlign='left' fluid>
-        <style>
-          {`
+    <div>
+      <UserContext.Provider value={value}>
+        <TopMenu logo={logo} />
+        <SideBar isMobile={isMobile} />
+        <Container textAlign='left' fluid>
+          <style>
+            {`
       html, body {
         background-color: #1C1C1E !important;
       }`}
-        </style>
-        <MainContent
-          loggedIn={loggedIn}
-          setLoggedIn={setLoggedIn}
-          user={user}
-          setUser={setUser}
-          isMobile={isMobile}
-          redirectURL={redirectURL}
-        />
-      </Container>
+          </style>
+          <MainContent isMobile={isMobile} redirectURL={redirectURL} />
+        </Container>
+      </UserContext.Provider>
     </div>
   )
 }

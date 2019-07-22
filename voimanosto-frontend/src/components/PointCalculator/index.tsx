@@ -11,11 +11,7 @@ import {
 } from 'semantic-ui-react'
 import './PointCalculator.scss'
 
-interface calculatorProps {
-  moi: boolean
-}
-
-const PointCalculator: React.FC<calculatorProps> = ({ moi }) => {
+const PointCalculator: React.FC = () => {
   const [points, setPoints] = useState(0)
   const [wilks, setWilks] = useState(0)
   const [total, setTotal] = useState(0)

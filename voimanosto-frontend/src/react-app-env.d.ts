@@ -6,4 +6,5 @@ type IUser = {
   avatar: string
   email: string
   token: string
+  loggedIn: boolean
 }

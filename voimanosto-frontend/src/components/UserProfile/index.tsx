@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
   Card,
   Icon,
@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react'
 import ExerciseLibrary from '../ExerciseLibrary'
 import NotificationGroup from '../NotificationGroup'
-
+import { UserContext } from '../../context/userContext'
 import {
   AreaChart,
   Area,
@@ -26,16 +26,13 @@ import bodyweightService from '../../services/bodyweightService'
 import LoadingLottie from '../../animations/LoadingLottie'
 import { NavLink } from 'react-router-dom'
 
-interface UserProfileProps {
-  user?: IUser | null
-}
-
-const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
+const UserProfile: React.FC = () => {
   interface bodyweight {
     date: Date
     bodyweight: number
     id: string
   }
+  const { user } = useContext(UserContext)
 
   const [data, setData] = useState<bodyweight[]>([])
 

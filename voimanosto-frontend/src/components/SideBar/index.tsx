@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './SideBar.scss'
 import { Menu, Icon } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
-// import SettingsLottie from '../../animations/SettingsLottie'
+import { UserContext } from '../../context/userContext'
 
 interface SideBarProps {
-  loggedIn?: boolean
   isMobile: boolean
 }
 
-const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
+const SideBar: React.FC<SideBarProps> = ({ isMobile }) => {
+  const { user } = useContext(UserContext)
+  const loggedIn = user.loggedIn
   return (
     <Menu
       inverted
@@ -20,6 +21,14 @@ const SideBar: React.FC<SideBarProps> = ({ loggedIn, isMobile }) => {
       className={isMobile ? 'side-bar mobile' : 'side-bar'}
       icon='labeled'
     >
+      <Menu.Item
+        disabled={!loggedIn}
+        as={NavLink}
+        to={loggedIn ? '/dashboard' : '/login'}
+      >
+        <i className='ui icon tachometer alternate' />
+        <p className='white-font'>Dashboard</p>
+      </Menu.Item>
       <Menu.Item
         disabled={!loggedIn}
         as={NavLink}
