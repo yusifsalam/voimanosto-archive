@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import TopMenu from './components/TopMenu'
 import SideBar from './components/SideBar'
-import MainContent from './views/MainContent'
+import MainContent from './components/MainContent'
 import logo from './components/PointCalculator/new_logo.svg'
 import workoutService from './services/workoutService'
 import loginService from './services/loginService'

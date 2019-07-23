@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { Header, Container, Button } from 'semantic-ui-react'
-import './UserSettings.scss'
+import './Settings.scss'
 import { UserContext } from '../../context/userContext'
 
 const UserSettings: React.FC = () => {
