@@ -8,3 +8,13 @@ type IUser = {
   token: string
   loggedIn: boolean
 }
+
+interface IBodyweight {
+  date: Date
+  bodyweight: number
+  id: string
+}
+
+interface IBodyweightProps {
+  data: IBodyweight[]
+}

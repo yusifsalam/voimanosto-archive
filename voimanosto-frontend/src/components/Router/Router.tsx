@@ -1,6 +1,8 @@
 import React, { useEffect, useContext } from 'react'
 import { Route, Switch, Link } from 'react-router-dom'
-import PointCalculator from '../PointCalculator'
+import Tools from '../../views/Tools'
+import PointCalculator from '../../components/PointCalculator'
+import Bodyweight from '../../components/Bodyweight'
 import UserProfile from '../../views/Profile'
 import UserSettings from '../../views/Settings'
 import CustomCalendar from '../../views/Calendar'
@@ -32,9 +34,15 @@ const RouterLinks: React.FC<IRouter> = ({ redirectURL }) => {
           <Switch>
             <Route path='/dashboard' component={Dashboard} />
             <Route path='/profile' component={UserProfile} />
-            <Route path='/tools' component={PointCalculator} />
             <Route path='/settings' component={UserSettings} />
             <Route path='/calendar' component={CustomCalendar} />
+            <Route exact path='/tools' component={Tools} />
+            <Route
+              exact
+              path='/tools/pointsCalculator'
+              component={PointCalculator}
+            />
+            <Route exact path='/tools/bodyweight' component={Bodyweight} />
           </Switch>
         </div>
       ) : (
