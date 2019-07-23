@@ -8,8 +8,8 @@ import {
   Header,
   Button
 } from 'semantic-ui-react'
-import ExerciseLibrary from '../ExerciseLibrary'
-import NotificationGroup from '../NotificationGroup'
+import ExerciseLibrary from '../../components/ExerciseLibrary'
+import NotificationGroup from '../../components/NotificationGroup'
 import { UserContext } from '../../context/userContext'
 import {
   AreaChart,

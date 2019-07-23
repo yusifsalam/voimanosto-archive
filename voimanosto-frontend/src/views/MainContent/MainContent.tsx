@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react'
 import './MainContent.scss'
-import RouterLinks from '../Router'
+import RouterLinks from '../../components/Router'
 import loginService from '../../services/loginService'
 import workoutService from '../../services/workoutService'
 import { Route } from 'react-router-dom'
-import LoginForm from '../LoginForm'
+import LoginForm from '../../components/LoginForm'
 import { UserContext } from '../../context/userContext'
 
 interface IMainContentProps {

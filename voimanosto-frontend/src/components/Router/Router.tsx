@@ -1,10 +1,11 @@
 import React, { useEffect, useContext } from 'react'
 import { Route, Switch, Link } from 'react-router-dom'
 import PointCalculator from '../PointCalculator'
-import UserProfile from '../UserProfile'
-import UserSettings from '../UserSettings'
-import CustomCalendar from '../Calendar'
+import UserProfile from '../../views/UserProfile'
+import UserSettings from '../../views/UserSettings'
+import CustomCalendar from '../../views/Calendar'
 import RegistrationForm from '../RegistrationForm'
+import Dashboard from '../../views/Dashboard'
 import useReactRouter from 'use-react-router'
 import { UserContext } from '../../context/userContext'
 import { Header } from 'semantic-ui-react'
@@ -29,6 +30,7 @@ const RouterLinks: React.FC<IRouter> = ({ redirectURL }) => {
       {loggedIn ? (
         <div>
           <Switch>
+            <Route path='/dashboard' component={Dashboard} />
             <Route path='/profile' component={UserProfile} />
             <Route path='/tools' component={PointCalculator} />
             <Route path='/settings' component={UserSettings} />

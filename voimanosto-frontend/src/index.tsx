@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
-import App from './MainApp'
-import * as serviceWorker from './serviceWorker'
+import App from './App'
 
 ReactDOM.render(
   <Router>
@@ -10,5 +9,3 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 )
-
-serviceWorker.unregister()
