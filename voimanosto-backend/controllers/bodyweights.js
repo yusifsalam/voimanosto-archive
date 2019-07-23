@@ -43,4 +43,43 @@ bodyweightsRouter.get('/', async (req, res, next) => {
   }
 })
 
+bodyweightsRouter.put('/:id', async (req, res, next) => {
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      const user = await User.findOne({ username: req.params.username })
+      const body = req.body
+      const bodyweight = {
+        bodyweight: body.bodyweight,
+        date: body.date,
+        user: user._id
+      }
+      const modifiedBodyweight = await Bodyweight.findByIdAndUpdate(
+        req.params.id,
+        bodyweight,
+        { new: true }
+      )
+      res.json(modifiedBodyweight.toJSON())
+    } catch (exception) {
+      next(exception)
+    }
+  }
+})
+
+bodyweightsRouter.delete('/:id', async (req, res, next) => {
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      await Bodyweight.findByIdAndDelete(req.params.id)
+      res.status(204).end()
+    } catch (exception) {
+      next(exception)
+    }
+  }
+})
+
 module.exports = bodyweightsRouter
