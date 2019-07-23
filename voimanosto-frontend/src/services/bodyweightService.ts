@@ -35,4 +35,41 @@ const getBw = async (props: getBwProps) => {
   return result.data
 }
 
-export default { addBw, getBw }
+interface deleteBwProps {
+  username: string
+  token: string
+  id: string
+}
+
+const deleteBw = async (props: deleteBwProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.delete(
+    `/api/users/${props.username}/bodyweight/${props.id}`,
+    config
+  )
+  return res
+}
+
+interface editBwProps {
+  username: string
+  token: string
+  bodyweight: number
+  date: Date
+  id: string
+}
+
+const editBw = async (props: editBwProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.put(
+    `/api/users/${props.username}/bodyweight/${props.id}`,
+    props,
+    config
+  )
+  return res.data
+}
+
+export default { addBw, getBw, deleteBw, editBw }
