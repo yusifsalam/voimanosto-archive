@@ -36,7 +36,11 @@ const upload = multer({
 })
 
 mongoose
-  .connect(config.MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true })
+  .connect(config.MONGODB_URI, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
   .then(res => {
     console.log('connected to MongoDB')
   })
