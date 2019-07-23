@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from 'react'
 import { Route, Switch, Link } from 'react-router-dom'
 import PointCalculator from '../PointCalculator'
-import UserProfile from '../../views/UserProfile'
-import UserSettings from '../../views/UserSettings'
+import UserProfile from '../../views/Profile'
+import UserSettings from '../../views/Settings'
 import CustomCalendar from '../../views/Calendar'
 import RegistrationForm from '../RegistrationForm'
 import Dashboard from '../../views/Dashboard'
@@ -22,7 +22,7 @@ const RouterLinks: React.FC<IRouter> = ({ redirectURL }) => {
 
   useEffect(() => {
     if (loggedIn && (redirectURL === '/login' || redirectURL === '/'))
-      history.push('/profile')
+      history.push('/dashboard')
     else if (!loggedIn && redirectURL === '/') history.push('/login')
   }, [redirectURL, loggedIn, history])
   return (
