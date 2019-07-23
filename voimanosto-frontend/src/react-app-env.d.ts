@@ -18,3 +18,8 @@ interface IBodyweight {
 interface IBodyweightProps {
   data: IBodyweight[]
 }
+
+interface IBodyweightTableProps {
+  data: IBodyweight[]
+  setData: (data: IBodyweight[]) => void
+}

@@ -3,8 +3,6 @@ import Calendar from 'react-calendar'
 import {
   TransitionablePortal,
   Button,
-  Form,
-  Segment,
   Message,
   Container,
   Header
@@ -13,6 +11,7 @@ import './CustomCalendar.scss'
 import bodyweightService from '../../services/bodyweightService'
 import moment from 'moment'
 import { UserContext } from '../../context/userContext'
+import BodyweightForm from '../../components/Bodyweight/Form'
 
 const CustomCalendar: React.FC = () => {
   const [portalOpen, setPortalOpen] = useState(false)
@@ -38,8 +37,6 @@ const CustomCalendar: React.FC = () => {
       }
     }
   })
-
-  console.log(moment(selectedDay).month())
 
   const handleClick = (event: any) => {
     setPortalOpen(true)
@@ -139,48 +136,13 @@ const CustomCalendar: React.FC = () => {
           <div />
         </Button.Group>
       </TransitionablePortal>
-      <TransitionablePortal
+      <BodyweightForm
+        addBodyweight={addBodyweight}
+        setBodyweight={setBodyweight}
         open={subPortalOpen}
-        onClose={() => setSubPortalOpen(false)}
-      >
-        <Segment
-          inverted
-          style={{
-            left: '40%',
-            position: 'fixed',
-            top: '50%',
-            zIndex: 1000,
-            border: '2px white solid'
-          }}
-        >
-          <Form>
-            <Form.Input
-              placeholder='Bodyweight'
-              type='number'
-              step='0.01'
-              min='0'
-              onChange={({ target }) => setBodyweight(Number(target.value))}
-            />
-            <Button.Group>
-              <Button
-                inverted
-                color='green'
-                type='submit'
-                onClick={addBodyweight}
-              >
-                Add bodyiweght
-              </Button>
-              <Button
-                inverted
-                color='red'
-                onClick={() => setSubPortalOpen(false)}
-              >
-                Cancel
-              </Button>
-            </Button.Group>
-          </Form>
-        </Segment>
-      </TransitionablePortal>
+        setOpen={setSubPortalOpen}
+        btnText='Add'
+      />
       <Header inverted as='h4'>
         {selectedDay !== ''
           ? moment(selectedDay).format('MMMM D, YYYY') + ' selected'

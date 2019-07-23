@@ -63,7 +63,11 @@ const Bodyweight: React.FC = () => {
       {dataLoaded ? (
         <div>
           <BodyweightChart data={data} />
-          {showTable ? <BodyweightTable data={data} /> : <div />}
+          {showTable ? (
+            <BodyweightTable data={data} setData={setData} />
+          ) : (
+            <div />
+          )}
         </div>
       ) : (
         <div>
