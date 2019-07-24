@@ -36,6 +36,7 @@ usersRouter.post('/', async (req, res, next) => {
       workouts: [],
       exercises: [],
       notifications: [],
+      competitions: [],
       stats: []
     })
     const savedUser = await user.save()

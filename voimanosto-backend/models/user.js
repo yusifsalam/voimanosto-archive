@@ -56,6 +56,12 @@ const userSchema = new mongoose.Schema(
         ref: 'Stats'
       }
     ],
+    competitions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Competition'
+      }
+    ],
     isAdmin: {
       type: Boolean,
       default: false
