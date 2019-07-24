@@ -15,6 +15,31 @@ interface IBodyweight {
   id: string
 }
 
+interface IExercise {
+  type: String
+  name: String
+  variation: String
+  prs: IPR[]
+}
+
+interface IExerciseInstance {
+  exercise: IExercise
+  reps: Number
+  sets: Number
+  weight: Number
+  intensity: Number
+  RPE: Number
+  isPR: boolean
+}
+
+interface IPR {
+  date: Date
+  reps: Number
+  weight: Number
+  exercise: IExercise
+  _id?: string
+}
+
 interface IBodyweightProps {
   data: IBodyweight[]
 }

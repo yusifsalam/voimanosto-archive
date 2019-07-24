@@ -3,6 +3,7 @@ import { Route, Switch, Link } from 'react-router-dom'
 import Tools from '../../views/Tools'
 import PointCalculator from '../../components/PointCalculator'
 import Bodyweight from '../../components/Bodyweight'
+import PRTable from '../../components/PRTable'
 import UserProfile from '../../views/Profile'
 import UserSettings from '../../views/Settings'
 import CustomCalendar from '../../views/Calendar'
@@ -43,6 +44,7 @@ const RouterLinks: React.FC<IRouter> = ({ redirectURL }) => {
               component={PointCalculator}
             />
             <Route exact path='/tools/bodyweight' component={Bodyweight} />
+            <Route exact path='/tools/prs' component={PRTable} />
           </Switch>
         </div>
       ) : (
