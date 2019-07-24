@@ -14,6 +14,11 @@ const personalRecordSchema = mongoose.Schema({
   reps: { type: Number, required: true },
   weight: { type: Number, required: true },
   date: Date,
+  isCurrentPR: Boolean,
+  previousPR: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PersonalRecord'
+  },
   youtubeURL: String
 })
 
