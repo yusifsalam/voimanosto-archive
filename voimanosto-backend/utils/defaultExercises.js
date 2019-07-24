@@ -2,21 +2,21 @@ const Exercise = require('../models/exercise')
 
 const exercises = async user => {
   const squat = new Exercise({
-    etype: 'sbd',
+    type: 'sbd',
     name: 'Squat',
     variation: 'Competition',
     prs: [],
     user: user._id
   })
   const bench = new Exercise({
-    etype: 'sbd',
-    name: 'Benchpress',
+    type: 'sbd',
+    name: 'Bench',
     variation: 'Competition',
     prs: [],
     user: user._id
   })
   const deadlift = new Exercise({
-    etype: 'sbd',
+    type: 'sbd',
     name: 'Deadlift',
     variation: 'Competition',
     prs: [],
