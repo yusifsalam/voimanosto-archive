@@ -15,9 +15,9 @@ const PRTable: React.FC = () => {
 
   const tabIndices = {
     0: '',
-    1: 'squat',
-    2: 'bench',
-    3: 'deadlift',
+    1: 'Squat',
+    2: 'Bench',
+    3: 'Deadlift',
     4: 'acc'
   }
 
@@ -28,7 +28,8 @@ const PRTable: React.FC = () => {
         username: user.username,
         token: user.token,
         type: type,
-        name: name
+        name: name,
+        current: 'current'
       })
       setData(res)
       setDataLoaded(true)

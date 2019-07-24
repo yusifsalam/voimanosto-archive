@@ -5,6 +5,7 @@ interface getPRProps {
   token: string
   type?: string
   name?: string
+  current: string
 }
 
 const getAll = async (props: getPRProps) => {
@@ -15,17 +16,22 @@ const getAll = async (props: getPRProps) => {
   if (props.type) {
     if (props.name) {
       result = await axios.get(
-        `/api/users/${props.username}/prs/${props.type}/${props.name}`,
+        `/api/users/${props.username}/prs/${props.type}/${props.name}/${
+          props.current
+        }`,
         config
       )
     } else {
       result = await axios.get(
-        `/api/users/${props.username}/prs/${props.type}`,
+        `/api/users/${props.username}/prs/${props.type}/${props.current}`,
         config
       )
     }
   } else {
-    result = await await axios.get(`/api/users/${props.username}/prs`, config)
+    result = await await axios.get(
+      `/api/users/${props.username}/prs/${props.current}`,
+      config
+    )
   }
   return result.data
 }
