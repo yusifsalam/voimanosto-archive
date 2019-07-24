@@ -4,6 +4,7 @@ import Notification from '../Notification'
 interface Notification {
   message: string
   iconName: string
+  id: string
 }
 
 interface NotificationGroupProps {
@@ -22,7 +23,7 @@ const NotificationGroup: React.FC<NotificationGroupProps> = ({
   return (
     <div className='ui bottom right toast-container'>
       {children.map(el => (
-        <Notification iconName={el.iconName} message={el.message} />
+        <Notification iconName={el.iconName} message={el.message} key={el.id} />
       ))}
     </div>
   )

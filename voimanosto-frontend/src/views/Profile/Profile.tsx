@@ -22,8 +22,8 @@ const UserProfile: React.FC = () => {
   const [data, setData] = useState<IBodyweight[]>([])
   const [dataLoaded, setDataLoaded] = useState(false)
   const [notifications, setNotifications] = useState([
-    { message: 'moi', iconName: 'info' },
-    { message: 'oho', iconName: 'trophy' }
+    { message: 'moi', iconName: 'info', id: '1' },
+    { message: 'oho', iconName: 'trophy', id: '2' }
   ])
 
   useEffect(() => {
@@ -105,7 +105,11 @@ const UserProfile: React.FC = () => {
       <Button
         onClick={() =>
           setNotifications(
-            notifications.concat({ message: 'uwu', iconName: 'trophy' })
+            notifications.concat({
+              message: 'uwu',
+              iconName: 'trophy',
+              id: '3'
+            })
           )
         }
       >
