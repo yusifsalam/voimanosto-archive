@@ -1,9 +1,7 @@
 const prRouter = require('express').Router({ mergeParams: true })
 const utils = require('../utils/middleware')
-const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const PR = require('../models/personalRecord')
-const Exercise = require('../models/exercise')
 
 prRouter.get('/:current', async (req, res, next) => {
   const verified = await utils.verifyIdentity(req)
@@ -15,7 +13,6 @@ prRouter.get('/:current', async (req, res, next) => {
       let prs
 
       if (req.params.current === 'current') {
-        console.log('moiu')
         prs = await PR.aggregate([
           {
             $match: {
@@ -51,7 +48,6 @@ prRouter.get('/:current', async (req, res, next) => {
           }
         ])
       } else if (req.params.current === 'all') {
-        console.log('ohoho')
         prs = await PR.aggregate([
           {
             $match: {
@@ -86,8 +82,6 @@ prRouter.get('/:current', async (req, res, next) => {
           }
         ])
       }
-
-      console.log(prs)
       res.json(prs)
     } catch (exception) {
       next(exception)
