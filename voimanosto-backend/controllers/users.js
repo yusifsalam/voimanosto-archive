@@ -18,6 +18,12 @@ usersRouter.use('/:username/notifications', notificationsRouter)
 
 usersRouter.post('/', async (req, res, next) => {
   try {
+    const usersInDb = await User.count({})
+    if (usersInDb > 4) {
+      return res.status(403).json({
+        error: 'User limit reached. Registration is closed for now'
+      })
+    }
     const body = req.body
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
@@ -34,7 +40,6 @@ usersRouter.post('/', async (req, res, next) => {
     })
     const savedUser = await user.save()
     const exercises = await exerciseBase(savedUser._id)
-    // console.log(exercises)
     savedUser.exercises = savedUser.exercises.concat(exercises)
     const updatedUser = await savedUser.save()
     res.json(updatedUser)
