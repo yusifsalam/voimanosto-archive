@@ -103,7 +103,7 @@ const RegistrationForm: React.FC = () => {
       ) : (
         <Message positive>{successMessage}</Message>
       )}
-      <Form onSubmit={handleSubmit}>
+      <Form inverted onSubmit={handleSubmit}>
         <Form.Input
           error={nameError}
           icon='user'
