@@ -17,7 +17,7 @@ const competitionSchema = mongoose.Schema({
   result: {
     squat: Number,
     bench: Number,
-    deadlfit: Number,
+    deadlift: Number,
     ipf: Number,
     wilks: Number
   },
