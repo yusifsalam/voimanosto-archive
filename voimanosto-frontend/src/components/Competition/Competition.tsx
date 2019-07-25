@@ -3,10 +3,12 @@ import { UserContext } from '../../context/userContext'
 import competitionService from '../../services/competitionService'
 import LoadingLottie from '../../animations/LoadingLottie'
 import CompetitionChart from './Chart'
+import CompetitionForm from './Form/'
 
 const Competition: React.FC = () => {
   const [data, setData] = useState<ICompetition[]>([])
   const [dataLoaded, setDataLoaded] = useState(false)
+  const [open, setOpen] = useState(false)
   const { user } = useContext(UserContext)
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +28,8 @@ const Competition: React.FC = () => {
   return (
     <div>
       {dataLoaded ? <CompetitionChart data={data} /> : <LoadingLottie />}
+      <button onClick={() => setOpen(!open)}>open portal</button>
+      <CompetitionForm open={open} setOpen={setOpen} date={new Date()} />
     </div>
   )
 }
