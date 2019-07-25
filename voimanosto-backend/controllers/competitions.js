@@ -5,14 +5,17 @@ const Exercise = require('../models/exercise')
 const PR = require('../models/personalRecord')
 const utils = require('../utils/middleware')
 
-competitionsRouter.get('/', async (req, res, next) => {
+competitionsRouter.get('/:type', async (req, res, next) => {
   const verified = await utils.verifyIdentity(req)
   if (verified !== true) {
     res.status(401).json({ error: verified })
   } else {
     try {
       const user = await User.findOne({ username: req.params.username })
-      const comps = await Competition.find({ user: user._id }).sort({ date: 1 })
+      const comps = await Competition.find({
+        user: user._id,
+        type: req.params.type
+      }).sort({ date: 1 })
       res.json(comps.map(comp => comp.toJSON()))
     } catch (exception) {
       next(exception)
@@ -54,7 +57,7 @@ competitionsRouter.post('/', async (req, res, next) => {
           name: ex,
           user: user._id
         }).populate('PersonalRecord')
-        const oldPR = await PR.findById(old.prs[0])
+        const oldPR = await PR.findById(old.prs[old.prs.length - 1])
         const weight =
           ex === 'Squat'
             ? body.squat
