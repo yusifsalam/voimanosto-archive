@@ -152,7 +152,11 @@ const CustomCalendar: React.FC = () => {
         setOpen={setBwPortalOpen}
         btnText='Add'
       />
-      <CompetitionForm open={compPortalOpen} setOpen={setCompPortalOpen} />
+      <CompetitionForm
+        open={compPortalOpen}
+        setOpen={setCompPortalOpen}
+        date={moment(selectedDay).toDate()}
+      />
       <Header inverted as='h4'>
         {selectedDay !== ''
           ? moment(selectedDay).format('MMMM D, YYYY') + ' selected'
