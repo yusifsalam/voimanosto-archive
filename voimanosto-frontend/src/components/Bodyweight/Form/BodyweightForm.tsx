@@ -1,5 +1,6 @@
 import React from 'react'
-import { TransitionablePortal, Segment, Form, Button } from 'semantic-ui-react'
+import { TransitionablePortal, Segment } from 'semantic-ui-react'
+import BodyweightPlainForm from './PlainForm'
 
 interface BodyweightFormProps {
   open: boolean
@@ -28,28 +29,12 @@ const BodyweightForm: React.FC<BodyweightFormProps> = ({
           border: '2px white solid'
         }}
       >
-        <Form>
-          <Form.Input
-            placeholder='Bodyweight'
-            type='number'
-            step='0.01'
-            min='0'
-            onChange={({ target }) => setBodyweight(Number(target.value))}
-          />
-          <Button.Group>
-            <Button
-              inverted
-              color='green'
-              type='submit'
-              onClick={addBodyweight}
-            >
-              {btnText} bodyiweght
-            </Button>
-            <Button inverted color='red' onClick={() => setOpen(false)}>
-              Cancel
-            </Button>
-          </Button.Group>
-        </Form>
+        <BodyweightPlainForm
+          setBodyweight={setBodyweight}
+          addBodyweight={addBodyweight}
+          btnText={btnText}
+          setOpen={setOpen}
+        />
       </Segment>
     </TransitionablePortal>
   )

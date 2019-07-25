@@ -12,10 +12,12 @@ import bodyweightService from '../../services/bodyweightService'
 import moment from 'moment'
 import { UserContext } from '../../context/userContext'
 import BodyweightForm from '../../components/Bodyweight/Form'
+import CompetitionForm from '../../components/Competition/Form'
 
 const CustomCalendar: React.FC = () => {
   const [portalOpen, setPortalOpen] = useState(false)
-  const [subPortalOpen, setSubPortalOpen] = useState(false)
+  const [bwPortalOpen, setBwPortalOpen] = useState(false)
+  const [compPortalOpen, setCompPortalOpen] = useState(false)
   const [popupTopPos, setPopupTopPos] = useState(0)
   const [popupLeftPos, setPopupLeftPos] = useState(0)
   const [selectedDay, setSelectedDay] = useState('')
@@ -76,7 +78,7 @@ const CustomCalendar: React.FC = () => {
       setTimeout(() => {
         setMsg(null)
       }, 3000)
-      setSubPortalOpen(false)
+      setBwPortalOpen(false)
     }
   }
 
@@ -119,17 +121,24 @@ const CustomCalendar: React.FC = () => {
             style={{ border: '2px white solid' }}
             onClick={() => {
               setPortalOpen(false)
-              setSubPortalOpen(true)
+              setBwPortalOpen(true)
             }}
           >
             Log bodyweight
           </Button>
 
           <Button size='mini' style={{ border: '2px white solid' }}>
-            New workouts
+            New workout
           </Button>
 
-          <Button size='mini' style={{ border: '2px white solid' }}>
+          <Button
+            size='mini'
+            style={{ border: '2px white solid' }}
+            onClick={() => {
+              setPortalOpen(false)
+              setCompPortalOpen(true)
+            }}
+          >
             New competition
           </Button>
 
@@ -139,10 +148,11 @@ const CustomCalendar: React.FC = () => {
       <BodyweightForm
         addBodyweight={addBodyweight}
         setBodyweight={setBodyweight}
-        open={subPortalOpen}
-        setOpen={setSubPortalOpen}
+        open={bwPortalOpen}
+        setOpen={setBwPortalOpen}
         btnText='Add'
       />
+      <CompetitionForm open={compPortalOpen} setOpen={setCompPortalOpen} />
       <Header inverted as='h4'>
         {selectedDay !== ''
           ? moment(selectedDay).format('MMMM D, YYYY') + ' selected'

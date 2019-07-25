@@ -89,6 +89,7 @@ const BodyweightTable: React.FC<IBodyweightTableProps> = ({
                           setBodyweight={setBodyweight}
                           addBodyweight={() => handleBodyweightEdit(bw)}
                           btnText='Edit'
+                          setOpen={setBwFormOpen}
                         />
                       }
                     />
