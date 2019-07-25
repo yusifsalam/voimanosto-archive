@@ -57,16 +57,34 @@ competitionsRouter.post('/', async (req, res, next) => {
           name: ex,
           user: user._id
         }).populate('PersonalRecord')
-        const oldPR = await PR.findById(old.prs[old.prs.length - 1])
+        let oldPR
+        if (old) {
+          if (old.prs.length > 0) {
+            oldPR = await PR.findById(old.prs[old.prs.length - 1])
+          }
+        }
         const weight =
           ex === 'Squat'
             ? body.squat
             : ex === 'Bench'
             ? body.bench
             : body.deadlift
-        if (!oldPR) {
+        if (oldPR === null || oldPR === undefined) {
+          let savedExercise
+          if (old === null || old === undefined) {
+            old = new Exercise({
+              type: 'sbd',
+              name: ex,
+              variation: 'Competition',
+              user: user._id,
+              prs: []
+            })
+            savedExercise = await old.save()
+            user.exercises = user.exercises.concat(savedExercise._id)
+            await user.save()
+          } else savedExercise = old
           let newPR = new PR({
-            exercise: old._id,
+            exercise: savedExercise._id,
             user: user._id,
             reps: 1,
             weight:
@@ -77,17 +95,34 @@ competitionsRouter.post('/', async (req, res, next) => {
                 : body.deadlift,
             date: body.date,
             isCurrentPR: true,
-            previousPR: oldPR ? oldPR._id : null
+            previousPR: null
           })
-          if (oldPR) {
-            oldPR.isCurrentPR = false
-            await oldPR.save()
-          }
           const savedPR = await newPR.save()
-          old.prs = old.prs.concat(savedPR._id)
-          await old.save()
-        } else if (oldPR.weight > weight) {
-          console.log('OLD', ex, ' PR is greater')
+          savedExercise.prs = savedExercise.prs.concat(savedPR._id)
+          await savedExercise.save()
+        } else if (oldPR.weight <= weight) {
+          oldPR.isCurrentPR = false
+          await oldPR.save()
+          let newPR = new PR({
+            exercise: oldPR.exercise,
+            user: user._id,
+            reps: 1,
+            weight:
+              ex === 'Squat'
+                ? body.squat
+                : ex === 'Bench'
+                ? body.bench
+                : body.deadlift,
+            date: body.date,
+            isCurrentPR: true,
+            previousPR: oldPR._id
+          })
+          const savedPR = await newPR.save()
+          const exercise = await Exercise.findById(oldPR.exercise)
+          exercise.prs = exercise.prs.concat(savedPR._id)
+          await exercise.save()
+        } else {
+          console.log('old PR was higher for ', ex)
         }
       }
 
