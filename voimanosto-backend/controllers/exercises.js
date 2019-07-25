@@ -91,9 +91,9 @@ exerciseRouter.post('/', async (req, res, next) => {
         weight: req.body.weight
       })
       const savedPR = await newPR.save()
-      savedExercise.prs = savedExercise.prs.concat(savedPR)
+      savedExercise.prs = savedExercise.prs.concat(savedPR._id)
       const exercise = await savedExercise.save()
-      user.exercises = user.exercises.concat(exercise)
+      user.exercises = user.exercises.concat(exercise._id)
       await user.save()
       res.json(exercise.toJSON())
     } catch (exception) {
