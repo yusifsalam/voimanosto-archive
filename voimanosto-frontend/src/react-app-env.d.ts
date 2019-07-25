@@ -14,6 +14,14 @@ interface IBodyweight {
   bodyweight: number
   id: string
 }
+interface IBodyweightProps {
+  data: IBodyweight[]
+}
+
+interface IBodyweightTableProps {
+  data: IBodyweight[]
+  setData: (data: IBodyweight[]) => void
+}
 
 interface IExercise {
   type: String
@@ -40,11 +48,19 @@ interface IPR {
   _id?: string
 }
 
-interface IBodyweightProps {
-  data: IBodyweight[]
+interface ICompetitionResult {
+  squat: Number
+  bench: Number
+  deadlfit: Number
+  ipf: Number
+  wilks: Number
 }
 
-interface IBodyweightTableProps {
-  data: IBodyweight[]
-  setData: (data: IBodyweight[]) => void
+interface ICompetition {
+  date: Date
+  type: String
+  name: String
+  venue: String
+  result: ICompetitionResult
+  bodyweight: Number
 }
