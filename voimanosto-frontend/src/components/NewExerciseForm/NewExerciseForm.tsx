@@ -43,9 +43,9 @@ const NewExerciseForm: React.FC<NewExerciseFormProps> = ({
     setType(data.value)
     if (data.value === 'sbd') {
       setCustomNames([
-        { key: 'squat', value: 'squat', text: 'Squat' },
-        { key: 'bench', value: 'bench', text: 'Bench' },
-        { key: 'deadlift', value: 'deadlift', text: 'Deadlift' }
+        { key: 'squat', value: 'Squat', text: 'Squat' },
+        { key: 'bench', value: 'Bench', text: 'Bench' },
+        { key: 'deadlift', value: 'Deadlift', text: 'Deadlift' }
       ])
     } else {
       setName('')
