@@ -12,6 +12,18 @@ This is a (incomplete) user manual for the Voimanosto fullstack application, an 
 
 `cd voimanosto-backend && npm install && npm run watch`
 
+You will also need to create an .env file in this folder. The .env file contains all your API keys. For all the app features to work, you're going to need your Mongo Atlas URI and a Cloudinary API key for custom profile pictures. Full API listing is given below. 
+
+| Name        |           Purpose           |
+| ----------- | :-------------------------: |
+| MONGODB_URI |     Mongo atlas cluster     |
+| PORT        |    port for the backend     |
+| SECRET      | secret key for jsonwebtoken |
+| API_KEY     |     cloudinary api key      |
+| CLOUD_NAME  |    cloudinary cloud name    |
+| API_SECRET  |  cloudinary api secret key  |
+
+
 3. Install frontend and launch it
 
 `cd ../voimanosto-frontend && npm install && npm start`
@@ -102,11 +114,11 @@ Navigate to My profile. On the bottom of the page you can see your exercise libr
 
 #### Viewing your personal records
 
-Navigate to Tools - PR Table. You will see a table taht contains all your most recent personal records for all the exercises in your exercise library. As you add workouts and competitions, the PR table will update automatically.
+Navigate to Tools - PR Table. You will see a table that contains all your most recent personal records for all the exercises in your exercise library. As you add workouts and competitions, the PR table will update automatically.
 
 <img src="https://github.com/yusifsalam/voimanosto/blob/master/docs/images/ex_3.png" alt="pr table" width="600">
 
-You can view all the PRs at once or show only select exercise/category.
+You can view all the PRs at once or show a select exercise/category.
 
 <img src="https://github.com/yusifsalam/voimanosto/blob/master/docs/images/ex_4.png" alt="pr table squat" width="600">
 
@@ -122,6 +134,6 @@ In the user settings, you can set a custom profile picture.
 
 #### Changing your profile picture
 
-Go to Settings from the sidebar on desktop or bottom navigation panel on mobile. To upload a picture, first select your desired image by clicking on the blue *Select image* button. Allowed formats are jpeg and png, maximum file size is 3mb. Select your desired image and then click the purple *Submit* button. You can verify that your profile picture has been changing by going to My Profile.
+Go to Settings from the sidebar on desktop or bottom navigation panel on mobile. To upload a picture, first select your desired image by clicking on the blue *Select image* button. Allowed formats are jpeg and png, maximum file size is 3mb. Select your desired image and then click the purple *Submit* button. You can verify that your profile picture has been changed by going to My Profile.
 
 <img src="https://github.com/yusifsalam/voimanosto/blob/master/docs/images/profile.png" alt="profile pic" width="600">
