@@ -7,6 +7,10 @@ MongoDB Atlas is used as the database provider and Cloudinary is used for image 
 
 The project is deployed to Heroku at [http://voimanosto.herokuapp.com](http://voimanosto.herokuapp.com).
 
+Hour log is [here](https://github.com/yusifsalam/voimanosto/blob/master/docs/hours.md). 
+
+User manual is found [here](https://github.com/yusifsalam/voimanosto/blob/master/docs/user_manual.md).
+
 ### Features:
 
 - track training volume
