@@ -10,48 +10,56 @@ import {
   Bar,
   Line
 } from 'recharts'
+import moment from 'moment'
 
 interface CompetitionChartProps {
   data: ICompetition[]
 }
 
 const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
-  const data2 = [
-    {
-      comp: 'May 2017',
-      squat: 175,
-      bench: 135,
-      deadlift: 225,
-      wilks: 378
-    },
-    {
-      comp: 'December 2017',
-      squat: 182.5,
-      bench: 132.5,
-      deadlift: 232.5,
-      wilks: 392
-    },
-    {
-      comp: 'April 2018',
-      squat: 185,
-      bench: 132.5,
-      deadlift: 245,
-      wilks: 410
-    },
-    {
-      comp: 'May 2019',
-      squat: 190,
-      bench: 150,
-      deadlift: 260,
-      wilks: 422
+  const results = data.map(row => ({
+    ...row.result,
+    bodyweight: row.bodyweight,
+    date: row.date
+  }))
+
+  const formatTooltip = (data: any): React.ReactElement | null => {
+    if (data.active) {
+      const value = data.payload[0].payload
+      return (
+        <div className='custom-tooltip' style={{ backgroundColor: 'white' }}>
+          <p className='label'>{`Date : ${moment(value.date).format(
+            'MMM DD, YY'
+          )}`}</p>
+          <p style={{ color: data.payload[0].color }}>{`Squat: ${
+            value.squat
+          } kg`}</p>
+          <p style={{ color: data.payload[1].color }}>{`Bench: ${
+            value.bench
+          } kg`}</p>
+          <p style={{ color: data.payload[2].color }}>{`Deadlift: ${
+            value.deadlift
+          } kg`}</p>
+          <p>{`Bodyweight: ${value.bodyweight} kg`}</p>
+          <p style={{ color: data.payload[3].color }}>{`IPF Points: ${
+            value.ipf
+          }`}</p>
+          <p style={{ color: data.payload[3].color }}>{`Wilks: ${
+            value.wilks
+          } points`}</p>
+        </div>
+      )
     }
-  ]
+    return null
+  }
+
   return (
     <ResponsiveContainer height={500} width='100%'>
-      <ComposedChart data={data2}>
+      <ComposedChart data={results}>
         <CartesianGrid stroke='#f5f5f5' opacity={0.3} />
         <XAxis
-          dataKey='comp'
+          dataKey='date'
+          tickFormatter={tick => moment(tick).format("MMM DD, 'YY")}
           label={{
             value: 'Competition',
             position: 'insideBottomRight',
@@ -76,19 +84,19 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
           yAxisId='right'
           orientation='right'
           label={{
-            value: 'Wilks',
+            value: 'IPF Points',
             angle: -90,
             position: 'insideRight',
             fill: 'white'
           }}
           stroke='white'
           type='number'
-          domain={[350, 450]}
+          domain={[600, 650]}
         />
-        <Tooltip />
+        <Tooltip content={formatTooltip} />
         <Legend
           formatter={(value, entry) => (
-            <span style={{ color: 'white' }}>{value}</span>
+            <span style={{ color: 'white' }}>{value.toUpperCase()}</span>
           )}
         />
 
@@ -113,12 +121,7 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
           fill='#ffc658'
           stackId='a'
         />
-        <Line
-          yAxisId='right'
-          type='monotone'
-          dataKey='wilks'
-          stroke='#ff7300'
-        />
+        <Line yAxisId='right' type='monotone' dataKey='ipf' stroke='#ff7300' />
       </ComposedChart>
     </ResponsiveContainer>
   )

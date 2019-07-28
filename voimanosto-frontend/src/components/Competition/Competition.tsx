@@ -10,6 +10,7 @@ const Competition: React.FC = () => {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [open, setOpen] = useState(false)
   const { user } = useContext(UserContext)
+
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -17,7 +18,7 @@ const Competition: React.FC = () => {
         const res = await competitionService.getCompsByType({
           username: user.username,
           token: user.token,
-          type: 'Powerlifting'
+          type: 'pl'
         })
         setData(res)
         setDataLoaded(true)
