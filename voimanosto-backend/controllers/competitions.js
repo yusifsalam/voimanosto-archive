@@ -2,6 +2,7 @@ const competitionsRouter = require('express').Router({ mergeParams: true })
 const User = require('../models/user')
 const Competition = require('../models/competition')
 const Exercise = require('../models/exercise')
+const Bodyweight = require('../models/bodyweight')
 const PR = require('../models/personalRecord')
 const utils = require('../utils/middleware')
 
@@ -50,6 +51,8 @@ competitionsRouter.post('/', async (req, res, next) => {
       user.competitions = user.competitions.concat(savedComp._id)
       await user.save()
       const sbd = ['Squat', 'Bench', 'Deadlift']
+
+      // Update old PRs if competition numbers are higher
       for (ex of sbd) {
         let old = await Exercise.findOne({
           type: 'sbd',
@@ -125,7 +128,15 @@ competitionsRouter.post('/', async (req, res, next) => {
           console.log('old PR was higher for ', ex)
         }
       }
-
+      // Add competition bodyweight to user's bodyweights
+      const bw = new Bodyweight({
+        date: body.date,
+        bodyweight: body.bodyweight,
+        user: user._id
+      })
+      const savedBw = await bw.save()
+      user.bodyweight = user.bodyweight.concat(savedBw._id)
+      await user.save()
       res.json(savedComp.toJSON())
     } catch (exception) {
       next(exception)
