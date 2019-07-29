@@ -5,9 +5,9 @@ This is a fullstack application for tracking powerlifting workouts. It was built
 The project was built using the MERN stack. The frontend utilizes the power of React and Typescript combo, while the backend is a Node application using Express and is written in Javascript. The backend API is RESTful.
 MongoDB Atlas is used as the database provider and Cloudinary is used for image storage.
 
-The project is deployed to Heroku at [http://voimanosto.herokuapp.com](http://voimanosto.herokuapp.com).
+The project is deployed to Heroku at [https://voimanosto.herokuapp.com](http://voimanosto.herokuapp.com).
 
-Hour log is [here](https://github.com/yusifsalam/voimanosto/blob/master/docs/hours.md). 
+Hour log is [here](https://github.com/yusifsalam/voimanosto/blob/master/docs/hours.md).
 
 User manual is found [here](https://github.com/yusifsalam/voimanosto/blob/master/docs/user_manual.md).
 
@@ -21,11 +21,12 @@ User manual is found [here](https://github.com/yusifsalam/voimanosto/blob/master
 
 ### Environment variables:
 
-| Name        |           Purpose           |
-| ----------- | :-------------------------: |
-| MONGODB_URI |     Mongo atlas cluster     |
-| PORT        |    port for the backend     |
-| SECRET      | secret key for jsonwebtoken |
-| API_KEY     |     cloudinary api key      |
-| CLOUD_NAME  |    cloudinary cloud name    |
-| API_SECRET  |  cloudinary api secret key  |
+| Name                  |             Purpose             |
+| --------------------- | :-----------------------------: |
+| MONGODB_URI           | Mongo Atlas development cluster |
+| MONGODB_PROD          | Mongo Atlas production cluster  |
+| PORT                  |      port for the backend       |
+| SECRET                |   secret key for jsonwebtoken   |
+| CLOUDINARY_API_KEY    |       cloudinary api key        |
+| CLOUDINARY_CLOUD_NAME |      cloudinary cloud name      |
+| CLOUDINARY_API_SECRET |    cloudinary api secret key    |
