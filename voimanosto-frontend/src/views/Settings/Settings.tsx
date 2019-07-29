@@ -22,10 +22,11 @@ const UserSettings: React.FC = () => {
     }
 
     await axios
-      .post('/img_upload', formData, {
+      .post(`/api/users/${user.username}/profile_pic`, formData, {
         onUploadProgress: progressEvent => {
           console.log(progressEvent.loaded / progressEvent.total)
-        }
+        },
+        headers: { Authorization: `bearer ${user.token}` }
       })
       .then(newUser => {
         newUser.data.loggedIn = true
