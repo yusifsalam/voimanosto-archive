@@ -88,7 +88,8 @@ exerciseRouter.post('/', async (req, res, next) => {
         exercise: savedExercise._id,
         user: user._id,
         reps: 1,
-        weight: req.body.weight
+        weight: req.body.weight,
+        isCurrentPR: true
       })
       const savedPR = await newPR.save()
       savedExercise.prs = savedExercise.prs.concat(savedPR._id)
