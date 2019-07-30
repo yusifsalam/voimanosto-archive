@@ -24,45 +24,46 @@ interface IBodyweightTableProps {
 }
 
 interface IExercise {
-  type: String
-  name: String
-  variation: String
+  type: string
+  name: string
+  variation: string
   prs: IPR[]
+  id?: string
 }
 
 interface IExerciseInstance {
   exercise: IExercise
-  reps: Number
-  sets: Number
-  weight: Number
-  intensity: Number
-  RPE: Number
+  reps: number
+  sets: number
+  weight: number
+  intensity: number
+  RPE: number
   isPR: boolean
 }
 
 interface IPR {
   date: Date
-  reps: Number
-  weight: Number
+  reps: number
+  weight: number
   exercise: IExercise
   _id?: string
 }
 
 interface ICompetitionResult {
-  squat: Number
-  bench: Number
-  deadlfit: Number
-  ipf: Number
-  wilks: Number
+  squat: number
+  bench: number
+  deadlfit: number
+  ipf: number
+  wilks: number
 }
 
 interface ICompetition {
   date: Date
-  type: String
-  name: String
-  venue: String
+  type: string
+  name: string
+  venue: string
   result: ICompetitionResult
-  bodyweight: Number
+  bodyweight: number
 }
 
 interface IWorkout {
