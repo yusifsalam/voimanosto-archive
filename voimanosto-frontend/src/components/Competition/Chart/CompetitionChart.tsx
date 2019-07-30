@@ -59,7 +59,7 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
         <CartesianGrid stroke='#f5f5f5' opacity={0.3} />
         <XAxis
           dataKey='date'
-          tickFormatter={tick => moment(tick).format("MMM DD, 'YY")}
+          tickFormatter={tick => moment(tick).format('MMM DD, YY')}
           label={{
             value: 'Competition',
             position: 'insideBottomRight',
@@ -78,7 +78,7 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
           }}
           stroke='white'
           type='number'
-          domain={[0, 650]}
+          domain={[0, 700]}
         />
         <YAxis
           yAxisId='right'
@@ -91,7 +91,7 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
           }}
           stroke='white'
           type='number'
-          domain={[600, 650]}
+          domain={[300, 800]}
         />
         <Tooltip content={formatTooltip} />
         <Legend
@@ -121,7 +121,7 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
           fill='#ffc658'
           stackId='a'
         />
-        <Line yAxisId='right' type='monotone' dataKey='ipf' stroke='#ff7300' />
+        <Line yAxisId='right' type='linear' dataKey='ipf' stroke='#ff7300' />
       </ComposedChart>
     </ResponsiveContainer>
   )

@@ -29,7 +29,7 @@ const Competition: React.FC = () => {
   return (
     <div>
       {dataLoaded ? <CompetitionChart data={data} /> : <LoadingLottie />}
-      <button onClick={() => setOpen(!open)}>open portal</button>
+      {/* <button onClick={() => setOpen(!open)}>open portal</button> */}
       <CompetitionForm open={open} setOpen={setOpen} date={new Date()} />
     </div>
   )
