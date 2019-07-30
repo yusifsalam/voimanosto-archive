@@ -59,10 +59,27 @@ const verifyIdentity = async req => {
   }
 }
 
+const decodeUser = req => {
+  const token = getTokenFrom(req)
+  try {
+    let decodedToken
+    if (token) {
+      decodedToken = jwt.verify(token, process.env.SECRET)
+    }
+    if (!token || !decodedToken.id) {
+      return 'token missing or invalid'
+    }
+    return decodedToken
+  } catch (exception) {
+    console.error(exception)
+  }
+}
+
 module.exports = {
   requstLogger,
   unknownEndpoint,
   errorHandler,
   getTokenFrom,
-  verifyIdentity
+  verifyIdentity,
+  decodeUser
 }

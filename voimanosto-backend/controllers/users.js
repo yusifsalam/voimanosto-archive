@@ -10,6 +10,7 @@ const statsRouters = require('./stats')
 const notificationsRouter = require('./notifications')
 const competitionsRouter = require('./competitions')
 const profilePictureRouter = require('./profilePicture')
+const utils = require('../utils/middleware')
 
 usersRouter.use('/:username/workouts', workoutsRouter)
 usersRouter.use('/:username/bodyweight', bodyweightsRouter)
@@ -53,19 +54,31 @@ usersRouter.post('/', async (req, res, next) => {
   }
 })
 
-usersRouter.get('/', async (req, res) => {
-  const users = await User.find({}).populate('workouts', {
-    workouts: 1,
-    name: 1,
-    username: 1
-  })
-  res.json(users.map(u => u.toJSON()))
+usersRouter.get('/', async (req, res, next) => {
+  try {
+    const userToken = utils.decodeUser(req)
+    const user = await User.findById(userToken.id)
+    if (user.isAdmin) {
+      const users = await User.find({})
+      res.json(users.map(u => u.toJSON()))
+    } else {
+      res.json({ error: 'Only admins can get user list' })
+    }
+  } catch (exception) {
+    next(exception)
+  }
 })
 
 usersRouter.get('/:username', async (req, res, next) => {
   try {
-    const newUser = await User.findOne({ username: req.params.username })
-    res.json(newUser.toJSON())
+    const userToken = utils.decodeUser(req)
+    const user = await User.findById(userToken.id)
+    if (user.isAdmin || user.username === req.params.username) {
+      const newUser = await User.findOne({ username: req.params.username })
+      res.json(newUser.toJSON())
+    } else {
+      res.json({ error: 'You are not authorized!' })
+    }
   } catch (exception) {
     next(exception)
   }
