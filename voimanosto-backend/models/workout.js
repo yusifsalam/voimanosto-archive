@@ -9,13 +9,14 @@ const workoutSchema = mongoose.Schema({
   exercises: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Exercise'
+      ref: 'ExerciseInstance'
     }
   ],
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  notes: String
 })
 
 workoutSchema.set('toJSON', {
