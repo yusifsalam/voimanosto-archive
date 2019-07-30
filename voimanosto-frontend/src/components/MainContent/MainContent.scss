@@ -2,7 +2,8 @@
 
 .main-content {
   margin-top: $header-nav-height;
-  margin-left: $sidebar-left-width;
+  margin-left: $sidebar-left-width + 2rem;
+  margin-right: 2rem;
   justify-content: center;
   &.mobile {
     margin-left: 0;
