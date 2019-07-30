@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react'
-import { Table, Button, Popup, Icon, Modal, Header } from 'semantic-ui-react'
 import moment from 'moment'
-import bodyweightService from '../../../services/bodyweightService'
+import React, { useContext, useState } from 'react'
+import { Button, Header, Icon, Modal, Popup, Table } from 'semantic-ui-react'
 import { UserContext } from '../../../context/userContext'
+import bodyweightService from '../../../services/bodyweightService'
 import BodyweightPlainForm from '../Form/PlainForm'
 
 const BodyweightTable: React.FC<IBodyweightTableProps> = ({
@@ -48,7 +48,7 @@ const BodyweightTable: React.FC<IBodyweightTableProps> = ({
 
   return (
     <div>
-      <Table inverted collapsing selectable columns={2}>
+      <Table unstackable inverted collapsing selectable columns={2}>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Date</Table.HeaderCell>

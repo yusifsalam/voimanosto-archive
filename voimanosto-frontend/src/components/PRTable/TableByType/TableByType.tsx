@@ -7,7 +7,7 @@ interface TableProps {
 
 const TableByType: React.FC<TableProps> = ({ data }) => {
   return (
-    <Table inverted selectable collapsing singleLine>
+    <Table inverted selectable collapsing singleLine unstackable>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Type</Table.HeaderCell>

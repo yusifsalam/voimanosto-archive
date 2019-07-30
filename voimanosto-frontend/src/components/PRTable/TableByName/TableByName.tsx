@@ -8,7 +8,7 @@ interface TableProps {
 const TableByName: React.FC<TableProps> = ({ data }) => {
   const reps = Array.from({ length: 10 }, (x, i) => i + 1)
   return (
-    <Table inverted selectable collapsing singleLine>
+    <Table inverted selectable collapsing singleLine unstackable>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>Variation</Table.HeaderCell>

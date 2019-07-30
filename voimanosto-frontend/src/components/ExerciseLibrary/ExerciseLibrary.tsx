@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dropdown, Table, Button, Icon, Header } from 'semantic-ui-react'
+import { Button, Dropdown, Header, Icon, Table } from 'semantic-ui-react'
 import exerciseLibraryService from '../../services/exerciseLibraryService'
 import NewExerciseForm from '../NewExerciseForm'
 
@@ -8,14 +8,7 @@ interface ExerciseLibraryProps {
 }
 
 const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
-  interface exercise {
-    type: string
-    name: string
-    variation: string
-    id: string
-  }
-
-  const [exercises, setExercises] = useState<exercise[]>([])
+  const [exercises, setExercises] = useState<IExercise[]>([])
   const [exerciseType, setExerciseType] = useState('')
   const [exerciseName, setExerciseName] = useState('')
   const [portalOpen, setPortalOpen] = useState(false)
@@ -83,7 +76,7 @@ const ExerciseLibrary: React.FC<ExerciseLibraryProps> = ({ user }) => {
         className='inverted'
       />
 
-      <Table inverted celled collapsing selectable>
+      <Table inverted celled collapsing selectable unstackable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Exercise</Table.HeaderCell>
