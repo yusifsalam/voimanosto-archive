@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { Form, Dropdown } from 'semantic-ui-react'
+import React, { useContext, useState } from 'react'
+import { Dropdown, Form } from 'semantic-ui-react'
 import { UserContext } from '../../../../context/userContext'
 import competitionService from '../../../../services/competitionService'
 import { calculatePoints, calculateWilks } from '../../../../util'

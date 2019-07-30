@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react'
 import moment from 'moment'
-import { UserContext } from '../../context/userContext'
-import { Header, Checkbox } from 'semantic-ui-react'
-import Workout from '../../components/Workouts/Workout'
+import React, { useContext, useState } from 'react'
+import { Checkbox, Header } from 'semantic-ui-react'
 import Workouts from '../../components/Workouts'
+import Workout from '../../components/Workouts/Workout'
+import { UserContext } from '../../context/userContext'
 
 const Dashboard: React.FC = () => {
   const { user } = useContext(UserContext)
