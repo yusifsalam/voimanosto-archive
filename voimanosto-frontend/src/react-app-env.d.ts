@@ -64,3 +64,8 @@ interface ICompetition {
   result: ICompetitionResult
   bodyweight: Number
 }
+
+interface IWorkout {
+  date: Date
+  exercises: IExerciseInstance[]
+}
