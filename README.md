@@ -7,7 +7,7 @@ MongoDB Atlas is used as the database provider and Cloudinary is used for image 
 
 The project is deployed to Heroku at [https://voimanosto.herokuapp.com](http://voimanosto.herokuapp.com).
 
-Please note that the Heroku deployment is intended for demonstration purposes only and the database will be cleared periodically. If you intend to use the app regularly, you will need to set up your own instance of the app (consult the user manual for instructions). 
+Please note that the Heroku deployment is intended for demonstration purposes only and the database will be cleared periodically. If you intend to use the app regularly, you will need to set up your own instance of the app (consult the user manual for instructions).
 
 Hour log is [here](https://github.com/yusifsalam/voimanosto/blob/master/docs/hours.md).
 
@@ -32,3 +32,7 @@ User manual is found [here](https://github.com/yusifsalam/voimanosto/blob/master
 | CLOUDINARY_API_KEY    |       cloudinary api key        |
 | CLOUDINARY_CLOUD_NAME |      cloudinary cloud name      |
 | CLOUDINARY_API_SECRET |    cloudinary api secret key    |
+
+### Known Issues
+
+Firefox does not render some elements correctly and the animations can be choppy even on powerful machines, so the use of Firefox is discouraged for now; Chrome and Safari are recommended instead.
