@@ -23,7 +23,7 @@ usersRouter.use('/:username/profile_pic', profilePictureRouter)
 usersRouter.post('/', async (req, res, next) => {
   try {
     const usersInDb = await User.count({})
-    if (usersInDb > 4) {
+    if (usersInDb >= 50) {
       return res.status(403).json({
         error: 'User limit reached. Registration is closed for now'
       })
