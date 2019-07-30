@@ -1,22 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react'
+import moment from 'moment'
+import React, { useContext, useEffect, useState } from 'react'
 import Calendar from 'react-calendar'
 import {
-  TransitionablePortal,
   Button,
-  Message,
   Container,
-  Header
+  Header,
+  Message,
+  TransitionablePortal
 } from 'semantic-ui-react'
-import './CustomCalendar.scss'
-import bodyweightService from '../../services/bodyweightService'
-import moment from 'moment'
-import { UserContext } from '../../context/userContext'
 import BodyweightForm from '../../components/Bodyweight/Form'
 import CompetitionForm from '../../components/Competition/Form'
+import WorkoutForm from '../../components/Workouts/Form'
+import { UserContext } from '../../context/userContext'
+import bodyweightService from '../../services/bodyweightService'
+import './CustomCalendar.scss'
 
 const CustomCalendar: React.FC = () => {
   const [portalOpen, setPortalOpen] = useState(false)
   const [bwPortalOpen, setBwPortalOpen] = useState(false)
+  const [workoutPortalOpen, setWorkoutPortalOpen] = useState(false)
   const [compPortalOpen, setCompPortalOpen] = useState(false)
   const [popupTopPos, setPopupTopPos] = useState(0)
   const [popupLeftPos, setPopupLeftPos] = useState(0)
@@ -127,7 +129,14 @@ const CustomCalendar: React.FC = () => {
             Log bodyweight
           </Button>
 
-          <Button size='mini' style={{ border: '2px white solid' }}>
+          <Button
+            size='mini'
+            style={{ border: '2px white solid' }}
+            onClick={() => {
+              setPortalOpen(false)
+              setWorkoutPortalOpen(true)
+            }}
+          >
             New workout
           </Button>
 
@@ -155,6 +164,11 @@ const CustomCalendar: React.FC = () => {
       <CompetitionForm
         open={compPortalOpen}
         setOpen={setCompPortalOpen}
+        date={moment(selectedDay).toDate()}
+      />
+      <WorkoutForm
+        setOpen={setWorkoutPortalOpen}
+        open={workoutPortalOpen}
         date={moment(selectedDay).toDate()}
       />
       <Header inverted as='h4'>
