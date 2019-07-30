@@ -50,6 +50,7 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
         </div>
       )
     }
+
     return null
   }
 
@@ -93,7 +94,7 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
           type='number'
           domain={[300, 800]}
         />
-        <Tooltip content={formatTooltip} />
+        <Tooltip content={data.length > 0 ? formatTooltip : undefined} />
         <Legend
           formatter={(value, entry) => (
             <span style={{ color: 'white' }}>{value.toUpperCase()}</span>
