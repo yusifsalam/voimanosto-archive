@@ -36,4 +36,26 @@ const getAll = async (props: getPRProps) => {
   return result.data
 }
 
-export default { getAll }
+interface getOnePRProps {
+  username: string
+  token: string
+  type: string
+  name: string
+  variation: string
+  current: string
+}
+
+const getOne = async (props: getOnePRProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.get(
+    `/api/users/${props.username}/prs/${props.type}/${props.name}/${
+      props.variation
+    }/${props.current}`,
+    config
+  )
+  return res.data
+}
+
+export default { getAll, getOne }
