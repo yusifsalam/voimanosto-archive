@@ -5,9 +5,15 @@ const exerciseInstanceSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Exercise'
   },
-  reps: Number,
-  sets: Number,
-  weight: Number,
+  reps: {
+    type: Number,
+    required: true
+  },
+  sets: {
+    type: Number,
+    required: true
+  },
+  weight: { type: Number, required: true },
   intensity: {
     type: Number,
     min: 0,
