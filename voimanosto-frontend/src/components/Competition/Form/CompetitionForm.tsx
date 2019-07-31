@@ -1,6 +1,6 @@
 import React from 'react'
+import { Modal, TransitionablePortal } from 'semantic-ui-react'
 import CompetitionPlainForm from './PlainForm'
-import { TransitionablePortal, Segment } from 'semantic-ui-react'
 
 interface CompetitionFormProps {
   open: boolean
@@ -15,18 +15,12 @@ const CompetitionForm: React.FC<CompetitionFormProps> = ({
 }) => {
   return (
     <TransitionablePortal open={open}>
-      <Segment
-        inverted
-        style={{
-          left: '40%',
-          position: 'fixed',
-          top: '20%',
-          zIndex: 1200,
-          border: '2px white solid'
-        }}
-      >
-        <CompetitionPlainForm setOpen={setOpen} date={date} />
-      </Segment>
+      <Modal open={true} className='inverted' centered={false}>
+        <Modal.Header>Add competition</Modal.Header>
+        <Modal.Content>
+          <CompetitionPlainForm setOpen={setOpen} date={date} />
+        </Modal.Content>
+      </Modal>
     </TransitionablePortal>
   )
 }
