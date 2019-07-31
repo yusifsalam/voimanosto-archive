@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import TopMenu from './components/TopMenu'
-import SideBar from './components/SideBar'
+import 'fomantic-ui-css/semantic.css'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Container } from 'semantic-ui-react'
+import useReactRouter from 'use-react-router'
 import MainContent from './components/MainContent'
 import logo from './components/PointCalculator/new_logo.svg'
-import workoutService from './services/workoutService'
-import loginService from './services/loginService'
-import useReactRouter from 'use-react-router'
-import { Container } from 'semantic-ui-react'
-import 'fomantic-ui-css/semantic.css'
-import './styles/basic_labels.css'
+import SideBar from './components/SideBar'
+import TopMenu from './components/TopMenu'
 import { UserContext } from './context/userContext'
+import loginService from './services/loginService'
+import './styles/basic_labels.css'
 
 const App: React.FC = () => {
   const [user, setUser] = useState<IUser>({
@@ -40,7 +39,6 @@ const App: React.FC = () => {
         user.token = loggedUserToken
         user.loggedIn = true
         setUser(user)
-        workoutService.setToken(loggedUserToken)
       }
     }
 

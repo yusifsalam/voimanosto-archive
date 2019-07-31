@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react'
-import './MainContent.scss'
-import RouterLinks from '../Router'
-import loginService from '../../services/loginService'
-import workoutService from '../../services/workoutService'
+import React, { useContext, useState } from 'react'
 import { Route } from 'react-router-dom'
-import LoginForm from '../LoginForm'
 import { UserContext } from '../../context/userContext'
+import loginService from '../../services/loginService'
+import LoginForm from '../LoginForm'
+import RouterLinks from '../Router'
+import './MainContent.scss'
 
 interface IMainContentProps {
   isMobile: boolean
@@ -30,7 +29,6 @@ const MainContent: React.FC<IMainContentProps> = ({
       })
       user.loggedIn = true
       window.localStorage.setItem('loggedUser', user.token)
-      workoutService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
