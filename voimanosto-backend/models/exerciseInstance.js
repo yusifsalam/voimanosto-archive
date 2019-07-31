@@ -5,6 +5,10 @@ const exerciseInstanceSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Exercise'
   },
+  workout: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Workout'
+  },
   reps: {
     type: Number,
     required: true
