@@ -136,10 +136,10 @@ const CompetitionPlainForm: React.FC<CompetitionPlainFormProps> = ({
           onChange={(e, data) => setDl(Number(data.value))}
         />
         <Form.Group>
-          <Form.Button basic color='green' onClick={handleSubmit}>
+          <Form.Button inverted color='green' onClick={handleSubmit}>
             Add competition
           </Form.Button>
-          <Form.Button basic color='red' onClick={() => setOpen(false)}>
+          <Form.Button inverted color='red' onClick={() => setOpen(false)}>
             Cancel
           </Form.Button>
         </Form.Group>
