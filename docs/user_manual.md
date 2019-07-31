@@ -137,3 +137,7 @@ In the user settings, you can set a custom profile picture.
 Go to Settings from the sidebar on desktop or bottom navigation panel on mobile. To upload a picture, first select your desired image by clicking on the blue _Select image_ button. Allowed formats are jpeg and png, maximum file size is 3mb. Select your desired image and then click the purple _Submit_ button. You can verify that your profile picture has been changed by going to My Profile.
 
 <img src="https://github.com/yusifsalam/voimanosto/blob/master/docs/images/profile.png" alt="profile pic" width="600">
+
+## Backend
+
+<img src="https://github.com/yusifsalam/voimanosto/blob/master/docs/images/db.jpg" alt="db diagram" width="600">
