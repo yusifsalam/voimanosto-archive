@@ -45,7 +45,7 @@ const CompetitionPlainForm: React.FC<CompetitionPlainFormProps> = ({
       wilks: wilks,
       ipf: ipf
     })
-    console.log(res)
+    setOpen(false)
   }
 
   const handleTypeSelect = (e: any, data: any) => {
