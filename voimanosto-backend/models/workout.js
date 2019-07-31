@@ -16,7 +16,12 @@ const workoutSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  notes: String
+  notes: String,
+  readiness: {
+    type: Number,
+    min: 1,
+    max: 5
+  }
 })
 
 workoutSchema.set('toJSON', {
