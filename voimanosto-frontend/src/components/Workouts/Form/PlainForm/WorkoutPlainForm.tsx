@@ -12,7 +12,7 @@ interface ExerciseTable {
   reps: number[]
   weight: number[]
   intensity: number[]
-  rpe?: number[]
+  rpe: number[]
 }
 
 interface WorkoutPlainFormProps {
@@ -92,6 +92,7 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
             )
           : oldSet.weight.concat(0)
         oldSet.intensity = oldSet.intensity.concat(intensity)
+        oldSet.rpe = oldSet.rpe.concat(RPE)
         addedCopy[index] = oldSet
         console.log(addedCopy)
         setAdded(addedCopy)
@@ -105,7 +106,8 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
         weight: pr
           ? [2.5 * Math.ceil((pr.weight * intensity) / 100 / 2.5)]
           : [],
-        intensity: [intensity]
+        intensity: [intensity],
+        rpe: [RPE]
       }
       setAdded(added.concat(newSet))
     }
@@ -221,9 +223,15 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
                     <Table.Row key={i}>
                       <Table.Cell>{set}</Table.Cell>
                       <Table.Cell>{ex.reps[i]}</Table.Cell>
-                      <Table.Cell>{ex.weight[i]} kg</Table.Cell>
-                      <Table.Cell>{ex.intensity[i]}%</Table.Cell>
-                      <Table.Cell>{ex.rpe ? ex.rpe[i] : null}</Table.Cell>
+                      <Table.Cell>
+                        {ex.weight[i] === 0 ? '-' : ex.weight[i] + 'kg'}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {ex.intensity[i] === 0 ? '-' : ex.intensity[i] + '%'}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {ex.rpe[i] === 0 ? '-' : ex.rpe[i]}
+                      </Table.Cell>
                     </Table.Row>
                   ))}
                 </Table.Body>
