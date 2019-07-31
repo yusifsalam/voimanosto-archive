@@ -1,16 +1,16 @@
+import moment from 'moment'
 import React from 'react'
 import {
-  ResponsiveContainer,
-  ComposedChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
   Bar,
-  Line
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis
 } from 'recharts'
-import moment from 'moment'
 
 interface CompetitionChartProps {
   data: ICompetition[]
@@ -27,7 +27,14 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
     if (data.active) {
       const value = data.payload[0].payload
       return (
-        <div className='custom-tooltip' style={{ backgroundColor: 'white' }}>
+        <div
+          className='custom-tooltip'
+          style={{
+            backgroundColor: 'white',
+            borderRadius: '5px',
+            opacity: 0.8
+          }}
+        >
           <p className='label'>{`Date : ${moment(value.date).format(
             'MMM DD, YY'
           )}`}</p>
@@ -40,13 +47,14 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
           <p style={{ color: data.payload[2].color }}>{`Deadlift: ${
             value.deadlift
           } kg`}</p>
-          <p>{`Bodyweight: ${value.bodyweight} kg`}</p>
-          <p style={{ color: data.payload[3].color }}>{`IPF Points: ${
-            value.ipf
-          }`}</p>
-          <p style={{ color: data.payload[3].color }}>{`Wilks: ${
-            value.wilks
-          } points`}</p>
+          <p style={{ color: '#ff453a' }}>
+            Total: {value.squat + value.bench + value.deadlift} kg
+          </p>
+          <p style={{ color: '#32d74b' }}>{`Bodyweight: ${
+            value.bodyweight
+          } kg`}</p>
+          <p style={{ color: '#bf5af2' }}>{`IPF Points: ${value.ipf}`}</p>
+          <p style={{ color: '#bf5af2' }}>{`Wilks: ${value.wilks} points`}</p>
         </div>
       )
     }
@@ -105,24 +113,24 @@ const CompetitionChart: React.FC<CompetitionChartProps> = ({ data }) => {
           yAxisId='left'
           dataKey='squat'
           barSize={20}
-          fill='#413ea0'
+          fill='#ff375f'
           stackId='a'
         />
         <Bar
           yAxisId='left'
           dataKey='bench'
           barSize={20}
-          fill='#82ca9d'
+          fill='#ff9f0a'
           stackId='a'
         />
         <Bar
           yAxisId='left'
           dataKey='deadlift'
           barSize={20}
-          fill='#ffc658'
+          fill='#5e5ce6'
           stackId='a'
         />
-        <Line yAxisId='right' type='linear' dataKey='ipf' stroke='#ff7300' />
+        <Line yAxisId='right' type='linear' dataKey='ipf' stroke='white' />
       </ComposedChart>
     </ResponsiveContainer>
   )
