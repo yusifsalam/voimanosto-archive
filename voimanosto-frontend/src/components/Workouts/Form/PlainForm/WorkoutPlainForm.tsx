@@ -1,5 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Form, Icon, Segment, Statistic, Table } from 'semantic-ui-react'
+import {
+  Button,
+  Form,
+  Header,
+  Icon,
+  Rating,
+  Segment,
+  Statistic,
+  Table
+} from 'semantic-ui-react'
 import { UserContext } from '../../../../context/userContext'
 import exerciseLibraryService from '../../../../services/exerciseLibraryService'
 import prService from '../../../../services/prService'
@@ -33,6 +42,7 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
   const [reps, setReps] = useState(0)
   const [intensity, setIntensity] = useState(0)
   const [RPE, setRPE] = useState(0)
+  const [rating, setRating] = useState(3)
 
   const variations = exVariations.map(ex => ({
     key: ex.id,
@@ -240,6 +250,17 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
           ))}
         </Segment.Group>
         <Form.TextArea placeholder='Workout notes' />
+        <Header inverted as='h4' content='Rate your readiness' />
+        <Rating
+          as={Button}
+          inverted
+          icon='heart'
+          size='massive'
+          rating={rating}
+          maxRating={5}
+          onRate={(e, data) => setRating(Number(data.rating))}
+        />
+        <p />
         <Form.Group inline>
           <Form.Button inverted color='green'>
             Save
