@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const exerciseInstanceSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   exercise: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Exercise'
@@ -31,10 +35,6 @@ const exerciseInstanceSchema = mongoose.Schema({
   isPR: {
     type: Boolean,
     default: false
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
   }
 })
 
