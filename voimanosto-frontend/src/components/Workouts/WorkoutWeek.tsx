@@ -3,9 +3,13 @@ import React from 'react'
 import { Accordion } from 'semantic-ui-react'
 import Workout from './Workout'
 
-const WorkoutWeek: React.FC = () => {
+interface WorkoutWeekProps {
+  startDate: Date
+}
+
+const WorkoutWeek: React.FC<WorkoutWeekProps> = ({ startDate }) => {
   let currentWeek = []
-  let weekStart = moment().startOf('week')
+  let weekStart = moment(startDate).startOf('week')
   for (let i = 1; i <= 7; i++) {
     currentWeek.push(moment(weekStart).add(i, 'days'))
   }
