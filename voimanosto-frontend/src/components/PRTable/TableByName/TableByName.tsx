@@ -2,7 +2,12 @@ import React from 'react'
 import { Table } from 'semantic-ui-react'
 
 interface TableProps {
-  data: IPR[]
+  data: {
+    date: Date
+    exercise: IExercise
+    reps: number[]
+    weight: number[]
+  }[]
 }
 
 const TableByName: React.FC<TableProps> = ({ data }) => {
@@ -18,16 +23,19 @@ const TableByName: React.FC<TableProps> = ({ data }) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {data.map(row => (
-          <Table.Row key={row._id}>
-            <Table.Cell> {row.exercise.variation}</Table.Cell>
-            {reps.map(rep => {
-              if (row.reps === rep) {
-                return <Table.Cell key={rep}> {row.weight}</Table.Cell>
-              } else return <Table.Cell key={rep}> -</Table.Cell>
-            })}
-          </Table.Row>
-        ))}
+        {data.map(row => {
+          return (
+            <Table.Row key={row.exercise.variation}>
+              <Table.Cell> {row.exercise.variation}</Table.Cell>
+              {reps.map(rep => {
+                let index = row.reps.indexOf(rep)
+                if (index !== -1) {
+                  return <Table.Cell key={rep}>{row.weight[index]}</Table.Cell>
+                } else return <Table.Cell key={rep}>-</Table.Cell>
+              })}
+            </Table.Row>
+          )
+        })}
       </Table.Body>
     </Table>
   )

@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Header, Tab } from 'semantic-ui-react'
+import LoadingLottie from '../../animations/LoadingLottie'
 import { UserContext } from '../../context/userContext'
 import prService from '../../services/prService'
 import TableByName from './TableByName'
 import TableByType from './TableByType'
-import LoadingLottie from '../../animations/LoadingLottie'
 
 const PRTable: React.FC = () => {
   const { user } = useContext(UserContext)
@@ -36,6 +36,41 @@ const PRTable: React.FC = () => {
     }
     fetchData()
   }, [user, type, name])
+
+  const groupData = (data: IPR[]) => {
+    interface groupArrayProps {
+      date: Date
+      exercise: IExercise
+      reps: number[]
+      weight: number[]
+    }
+    let groupedArray: groupArrayProps[] = []
+    data.forEach((entry, i) => {
+      if (
+        !groupedArray.some(
+          (item: any) => item.exercise.variation === entry.exercise.variation
+        )
+      ) {
+        let newEntry = {
+          date: entry.date,
+          exercise: entry.exercise,
+          reps: [entry.reps],
+          weight: [entry.weight]
+        }
+        groupedArray.push(newEntry)
+      } else {
+        let oldEntry = groupedArray.pop()
+        let newEntry = {
+          date: entry.date,
+          exercise: entry.exercise,
+          reps: oldEntry ? oldEntry.reps.concat(entry.reps) : [],
+          weight: oldEntry ? oldEntry.weight.concat(entry.weight) : []
+        }
+        groupedArray.push(newEntry)
+      }
+    })
+    return groupedArray
+  }
 
   const handleTabChange = (e: any, data: any) => {
     const i = data.activeIndex
@@ -96,7 +131,7 @@ const PRTable: React.FC = () => {
         name === '' ? (
           <TableByType data={data} />
         ) : (
-          <TableByName data={data} />
+          <TableByName data={groupData(data)} />
         )
       ) : (
         <LoadingLottie />
