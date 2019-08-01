@@ -31,7 +31,7 @@ const CompetitionPlainForm: React.FC<CompetitionPlainFormProps> = ({
   const handleSubmit = async () => {
     const ipf = calculatePoints(sq + bp + dl, bw, 'M', 'Raw', 'SBD')
     const wilks = calculateWilks(sq + bp + dl, bw, 'M')
-    const res = await competitionService.addComp({
+    await competitionService.addComp({
       username: user.username,
       token: user.token,
       name: name,
@@ -45,6 +45,7 @@ const CompetitionPlainForm: React.FC<CompetitionPlainFormProps> = ({
       wilks: wilks,
       ipf: ipf
     })
+
     setOpen(false)
   }
 
