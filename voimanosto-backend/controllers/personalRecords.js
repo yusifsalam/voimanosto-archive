@@ -35,11 +35,13 @@ prRouter.get('/:current', async (req, res, next) => {
               'exercise.type': 1,
               'exercise.name': 1,
               'exercise.variation': 1,
+              reps: 1,
               weight: -1
             }
           },
           {
             $project: {
+              date: 1,
               reps: 1,
               weight: 1,
               'exercise.type': 1,
@@ -69,11 +71,13 @@ prRouter.get('/:current', async (req, res, next) => {
               'exercise.type': 1,
               'exercise.name': 1,
               'exercise.variation': 1,
+              reps: 1,
               weight: -1
             }
           },
           {
             $project: {
+              date: 1,
               reps: 1,
               weight: 1,
               'exercise.type': 1,
@@ -116,11 +120,13 @@ prRouter.get('/:type/:current', async (req, res, next) => {
               'exercise.type': 1,
               'exercise.name': 1,
               'exercise.variation': 1,
-              reps: 1
+              reps: 1,
+              weight: -1
             }
           },
           {
             $project: {
+              date: 1,
               reps: 1,
               weight: 1,
               'exercise.type': 1,
@@ -147,11 +153,13 @@ prRouter.get('/:type/:current', async (req, res, next) => {
               'exercise.type': 1,
               'exercise.name': 1,
               'exercise.variation': 1,
-              reps: 1
+              reps: 1,
+              weight: -1
             }
           },
           {
             $project: {
+              date: 1,
               reps: 1,
               weight: 1,
               'exercise.type': 1,
@@ -198,11 +206,14 @@ prRouter.get('/:type/:name/:current', async (req, res, next) => {
             $sort: {
               'exercise.type': 1,
               'exercise.name': 1,
-              'exercise.variation': 1
+              'exercise.variation': 1,
+              reps: 1,
+              weight: -1
             }
           },
           {
             $project: {
+              date: 1,
               reps: 1,
               weight: 1,
               'exercise.type': 1,
@@ -233,11 +244,14 @@ prRouter.get('/:type/:name/:current', async (req, res, next) => {
             $sort: {
               'exercise.type': 1,
               'exercise.name': 1,
-              'exercise.variation': 1
+              'exercise.variation': 1,
+              reps: 1,
+              weight: -1
             }
           },
           {
             $project: {
+              date: 1,
               reps: 1,
               weight: 1,
               'exercise.type': 1,
