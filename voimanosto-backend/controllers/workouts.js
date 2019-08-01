@@ -38,6 +38,7 @@ workoutsRouter.post('/', async (req, res, next) => {
         // loop through all sets
         for ([i, rep] of ex.reps.entries()) {
           // find previous PR
+          let isThisSetAPR = false
           const oldPR = await PR.findOne({
             exercise: exercise._id,
             isCurrentPR: true,
@@ -68,6 +69,7 @@ workoutsRouter.post('/', async (req, res, next) => {
               const savedNewPR = await newPR.save()
               exercise.prs = exercise.prs.concat(savedNewPR._id)
               await exercise.save()
+              isThisSetAPR = true
             } else {
               // do nothing
               console.log('does not exceed previous PR of', oldPR.weight)
@@ -90,6 +92,7 @@ workoutsRouter.post('/', async (req, res, next) => {
             const savedNewPR = await newPR.save()
             exercise.prs = exercise.prs.concat(savedNewPR._id)
             await exercise.save()
+            isThisSetAPR = true
           }
 
           // create new exercise instance
@@ -101,7 +104,8 @@ workoutsRouter.post('/', async (req, res, next) => {
             sets: ex.sets[i],
             weight: ex.weight[i] === 0 ? null : ex.weight[i],
             intensity: ex.intensity[i] === 0 ? null : ex.intensity[i],
-            RPE: ex.RPE[i] === 0 ? null : ex.RPE[i]
+            RPE: ex.RPE[i] === 0 ? null : ex.RPE[i],
+            isPR: isThisSetAPR
           })
           console.log(
             `saving exercise instance for ${ex.name + ' ' + ex.variation}`
