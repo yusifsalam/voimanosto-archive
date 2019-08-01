@@ -1,34 +1,69 @@
 import axios from 'axios'
-const baseUrl: string = '/api/workouts'
 
-let token: string | null = null
-
-interface IWorkout {
-  user: string
-  exercises: [string]
-  date: Date
+interface getAllProps {
+  username: string
+  token: string
 }
 
-const setToken = (newToken: string) => {
-  token = `bearer ${newToken}`
-}
-
-const getAll = () => {
-  const req = axios.get(baseUrl)
-  return req.then(res => res.data)
-}
-
-const create = async (newObject: IWorkout) => {
+const getAll = async (props: getAllProps) => {
   const config = {
-    headers: { Authorization: token }
+    headers: { Authorization: `bearer ${props.token}` }
   }
-  const res = await axios.post(baseUrl, newObject, config)
+  const res = await axios.get(`/api/users/${props.username}/workouts`, config)
   return res.data
 }
 
-const update = (id: string, newObject: IWorkout) => {
-  const req = axios.put(`${baseUrl}/${id}`, newObject)
-  return req.then(res => res.data)
+interface getByDateProps {
+  username: string
+  token: string
+  date: Date
 }
 
-export default { getAll, create, update, setToken }
+const getByDate = async (props: getByDateProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.get(
+    `/api/users/${props.username}/workouts/${props.date}`,
+    config
+  )
+  return res.data
+}
+
+interface newWorkoutExercise {
+  type: string
+  name: string
+  variation: string
+  reps: number[]
+  sets: number[]
+  intensity?: number[]
+  RPE: number[]
+}
+
+interface newWorkoutProps {
+  date: Date
+  notes: string
+  readiness: number
+  exercises: newWorkoutExercise[]
+  username: string
+  token: string
+}
+
+const create = async (props: newWorkoutProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.post(
+    `/api/users/${props.username}/workouts`,
+    props,
+    config
+  )
+  return res.data
+}
+
+// const update = (id: string, newObject: IWorkout) => {
+//   const req = axios.put(`${baseUrl}/${id}`, newObject)
+//   return req.then(res => res.data)
+// }
+
+export default { getAll, getByDate, create }
