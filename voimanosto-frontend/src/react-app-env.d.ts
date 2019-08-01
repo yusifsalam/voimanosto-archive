@@ -69,4 +69,6 @@ interface ICompetition {
 interface IWorkout {
   date: Date
   exercises: IExerciseInstance[]
+  notes: string
+  readiness: number
 }
