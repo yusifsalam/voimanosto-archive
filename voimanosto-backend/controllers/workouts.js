@@ -151,8 +151,12 @@ workoutsRouter.get('/:date', async (req, res, next) => {
       const workout = await Workout.findOne({
         date: req.params.date,
         user: user._id
-      })
-      res.json(workout.toJSON())
+      }).populate({ path: 'exercises', populate: 'exercise' })
+      if (workout) {
+        res.json(workout.toJSON())
+      } else {
+        res.json([{ exercises: null }])
+      }
     } catch (exception) {
       next(exception)
     }
