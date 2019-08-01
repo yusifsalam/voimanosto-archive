@@ -3,7 +3,7 @@
 .react-calendar {
   min-width: 100px;
   max-width: auto;
-  // height: 100%;
+  height: auto;
   width: auto;
   background: $gray6;
   border-color: $gray2;
@@ -11,6 +11,11 @@
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.15em;
   font-size: 1.35em;
+  &.mini {
+    .react-calendar__tile {
+      height: 30px;
+    }
+  }
 
   .react-calendar__tile {
     height: 100px;
