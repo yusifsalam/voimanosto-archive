@@ -1,41 +1,30 @@
-import React, { useState } from 'react'
-import { Header, Accordion, Icon, Segment, Table } from 'semantic-ui-react'
 import moment from 'moment'
+import React, { useContext, useEffect, useState } from 'react'
+import { Accordion, Header, Icon, Table } from 'semantic-ui-react'
+import { UserContext } from '../../../context/userContext'
+import workoutService from '../../../services/workoutService'
 
-const Workout: React.FC<IWorkout> = ({ date, exercises }) => {
+interface WorkoutProps {
+  date: Date
+}
+
+const Workout: React.FC<WorkoutProps> = ({ date }) => {
   const [activeExerciseIndex, setActiveExerciseIndex] = useState([-1])
-  const ex = [
-    {
-      exercise: 'Competition Squat',
-      reps: 4,
-      sets: 6,
-      weight: 150,
-      intensity: 0.8,
-      RPE: null,
-      isPR: false,
-      id: 1
-    },
-    {
-      exercise: 'Competition Bench press',
-      reps: 6,
-      sets: 6,
-      weight: 120,
-      intensity: 0.8,
-      RPE: null,
-      isPR: false,
-      id: 2
-    },
-    {
-      exercise: 'Conventional Deadlift',
-      reps: 2,
-      sets: 5,
-      weight: 210,
-      intensity: 0.8,
-      RPE: null,
-      isPR: false,
-      id: 3
+  const [exercises, setExercises] = useState<IExerciseInstance[]>([])
+  const { user } = useContext(UserContext)
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        const res = await workoutService.getByDate({
+          username: user.username,
+          token: user.token,
+          date: date
+        })
+        setExercises(res.exercises)
+      }
     }
-  ]
+    fetchData()
+  }, [user, date])
 
   const handleClick = (index: number) => {
     if (activeExerciseIndex.includes(index)) {
@@ -46,18 +35,13 @@ const Workout: React.FC<IWorkout> = ({ date, exercises }) => {
   }
   return (
     <div>
-      <Header inverted>
-        Workout for the day: {moment(date).format('MMMM Do')}
-      </Header>
-      <Segment compact>
-        <Accordion
-          styled
-          inverted
-          exclusive={false}
-          activeIndex={activeExerciseIndex}
-        >
-          {ex.map((ex, i) => (
-            <div>
+      <Header inverted>{moment(date).format('MMMM Do')}</Header>
+      <Accordion styled inverted exclusive={false}>
+        {!exercises ? (
+          <p>No workout </p>
+        ) : (
+          exercises.map((ex, i) => (
+            <div key={i}>
               <Accordion.Title
                 as={Header}
                 // inverted
@@ -67,35 +51,34 @@ const Workout: React.FC<IWorkout> = ({ date, exercises }) => {
                 onClick={() => handleClick(i)}
               >
                 <Icon name='dropdown' />
-                {ex.exercise}
+                {ex.exercise.name} ({ex.exercise.variation})
               </Accordion.Title>
               <Accordion.Content active={activeExerciseIndex.includes(i)}>
-                {/* <Table inverted>
+                <Table inverted>
                   <Table.Header>
-                    <Table.HeaderCell>Exercise</Table.HeaderCell>
-                    <Table.HeaderCell>Sets</Table.HeaderCell>
-                    <Table.HeaderCell>Reps</Table.HeaderCell>
-                    <Table.HeaderCell>Weight</Table.HeaderCell>
-                    <Table.HeaderCell>Intensity</Table.HeaderCell>
+                    <Table.Row>
+                      <Table.HeaderCell>Exercise</Table.HeaderCell>
+                      <Table.HeaderCell>Sets</Table.HeaderCell>
+                      <Table.HeaderCell>Reps</Table.HeaderCell>
+                      <Table.HeaderCell>Weight</Table.HeaderCell>
+                      <Table.HeaderCell>Intensity</Table.HeaderCell>
+                    </Table.Row>
                   </Table.Header>
                   <Table.Body>
-                    <Table.Cell>{ex.exercise}</Table.Cell>
-                    <Table.Cell>{ex.sets}</Table.Cell>
-                    <Table.Cell>{ex.reps}</Table.Cell>
-                    <Table.Cell>{ex.weight}</Table.Cell>
-                    <Table.Cell>{ex.intensity}</Table.Cell>
+                    <Table.Row>
+                      <Table.Cell>{ex.exercise.name}</Table.Cell>
+                      <Table.Cell>{ex.sets}</Table.Cell>
+                      <Table.Cell>{ex.reps}</Table.Cell>
+                      <Table.Cell>{ex.weight}</Table.Cell>
+                      <Table.Cell>{ex.intensity}</Table.Cell>
+                    </Table.Row>
                   </Table.Body>
-                </Table> */}
-                <p>Reps: {ex.reps}</p>
-                <p>Sets: {ex.sets}</p>
-                <p>Weight: {ex.weight} kg</p>
-                <p>Intensity: {ex.intensity * 100}%</p>
-                <p>RPE: {ex.RPE}</p>
+                </Table>
               </Accordion.Content>
             </div>
-          ))}
-        </Accordion>
-      </Segment>
+          ))
+        )}
+      </Accordion>
     </div>
   )
 }
