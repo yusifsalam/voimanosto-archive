@@ -39,6 +39,7 @@ interface IExerciseInstance {
   intensity: number
   RPE: number
   isPR: boolean
+  id: string
 }
 
 interface IPR {
