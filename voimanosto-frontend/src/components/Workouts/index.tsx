@@ -1,2 +1,2 @@
-import Workouts from './Workouts'
-export default Workouts
+import WorkoutWeek from './WorkoutWeek'
+export default WorkoutWeek
