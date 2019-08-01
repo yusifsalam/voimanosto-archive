@@ -85,6 +85,7 @@ exerciseRouter.post('/', async (req, res, next) => {
       })
       const savedExercise = await newExercise.save()
       const newPR = new PR({
+        date: new Date(),
         exercise: savedExercise._id,
         user: user._id,
         reps: 1,
