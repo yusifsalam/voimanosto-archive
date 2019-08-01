@@ -12,16 +12,18 @@ import {
 import { UserContext } from '../../../../context/userContext'
 import exerciseLibraryService from '../../../../services/exerciseLibraryService'
 import prService from '../../../../services/prService'
+import workoutService from '../../../../services/workoutService'
 
 interface ExerciseTable {
+  type: string
   name: string
-  variation?: string
+  variation: string
   pr?: number
   sets: number[]
   reps: number[]
   weight: number[]
   intensity: number[]
-  rpe: number[]
+  RPE: number[]
 }
 
 interface WorkoutPlainFormProps {
@@ -102,13 +104,14 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
             )
           : oldSet.weight.concat(0)
         oldSet.intensity = oldSet.intensity.concat(intensity)
-        oldSet.rpe = oldSet.rpe.concat(RPE)
+        oldSet.RPE = oldSet.RPE.concat(RPE)
         addedCopy[index] = oldSet
         console.log(addedCopy)
         setAdded(addedCopy)
       }
     } else {
       const newSet: ExerciseTable = {
+        type: exName === 'Accessories' ? 'acc' : 'sbd',
         name: exName,
         variation: exVariation,
         sets: [sets],
@@ -117,11 +120,26 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
           ? [2.5 * Math.ceil((pr.weight * intensity) / 100 / 2.5)]
           : [],
         intensity: [intensity],
-        rpe: [RPE]
+        RPE: [RPE]
       }
       setAdded(added.concat(newSet))
     }
   }
+
+  const handleSubmit = async (event: React.SyntheticEvent<HTMLElement>) => {
+    console.log('posting now')
+    const res = await workoutService.create({
+      username: user.username,
+      token: user.token,
+      date: date,
+      notes: 'notes',
+      readiness: rating,
+      exercises: added
+    })
+    setOpen(false)
+    console.log(res)
+  }
+
   return (
     <div>
       <Form inverted>
@@ -240,7 +258,7 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
                         {ex.intensity[i] === 0 ? '-' : ex.intensity[i] + '%'}
                       </Table.Cell>
                       <Table.Cell>
-                        {ex.rpe[i] === 0 ? '-' : ex.rpe[i]}
+                        {ex.RPE[i] === 0 ? '-' : ex.RPE[i]}
                       </Table.Cell>
                     </Table.Row>
                   ))}
@@ -262,7 +280,7 @@ const WorkoutPlainForm: React.FC<WorkoutPlainFormProps> = ({
         />
         <p />
         <Form.Group inline>
-          <Form.Button inverted color='green'>
+          <Form.Button inverted color='green' onClick={handleSubmit}>
             Save
           </Form.Button>
           <Form.Button inverted color='red' onClick={() => setOpen(false)}>
