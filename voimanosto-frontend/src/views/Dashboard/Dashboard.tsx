@@ -1,13 +1,20 @@
 import moment from 'moment'
 import React, { useContext, useState } from 'react'
-import { Checkbox, Header } from 'semantic-ui-react'
-import Workouts from '../../components/Workouts'
+import Calendar from 'react-calendar'
+import { Button, Checkbox, Form, Header } from 'semantic-ui-react'
+import WorkoutWeek from '../../components/Workouts'
 import Workout from '../../components/Workouts/Workout'
 import { UserContext } from '../../context/userContext'
 
 const Dashboard: React.FC = () => {
   const { user } = useContext(UserContext)
   const [checked, setChecked] = useState(false)
+  const [startDate, setStartDate] = useState<Date>(
+    moment()
+      .startOf('day')
+      .toDate()
+  )
+  const [showCalendar, setShowCalendar] = useState(false)
   return (
     <div>
       <Header inverted as='h3'>
@@ -16,20 +23,39 @@ const Dashboard: React.FC = () => {
       <Header inverted as='h5'>
         Today is {moment().format('MMMM DD, YYYY')}
       </Header>
-      {/* <Workout date={moment().toDate()} exercises={[]} /> */}
-      <Header inverted as='h5'>
-        Daily
-        <Checkbox
-          slider
-          checked={checked}
-          onChange={() => setChecked(!checked)}
-        />
-        Weekly
-      </Header>
-      {!checked ? (
-        <Workout date={moment().toDate()} exercises={[]} />
+      <Form>
+        <Form.Field inline>
+          <div>
+            <label style={{ color: 'white', marginRight: '1em' }}> Daily</label>
+            <Checkbox
+              toggle
+              checked={checked}
+              onChange={() => setChecked(!checked)}
+              className='inverted'
+              label='Weekly'
+            />
+          </div>
+        </Form.Field>
+      </Form>
+      <p />
+      <Button
+        inverted
+        color='blue'
+        content={showCalendar ? 'Hide calendar' : 'Show calendar'}
+        onClick={() => setShowCalendar(!showCalendar)}
+      />
+      {showCalendar ? (
+        <div style={{ width: '400px', marginTop: '10px' }}>
+          <Calendar className='mini' onClickDay={setStartDate} />
+        </div>
       ) : (
-        <Workouts />
+        <div />
+      )}
+      <p />
+      {!checked ? (
+        <Workout date={startDate} />
+      ) : (
+        <WorkoutWeek startDate={startDate} />
       )}
     </div>
   )
