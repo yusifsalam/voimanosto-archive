@@ -1,5 +1,7 @@
 # Timeline and hour bookkeeping
 
+This file is no longer updated as of Aug 2, 2019.
+
 | date  | time (h) | tasks                                                                                                                                                                                                                                                                   |
 | :---: | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 17.5. | 5        | research available technology and create skeletons                                                                                                                                                                                                                      |
@@ -32,5 +34,9 @@
 | 24.7  | 8        | backend: define API routes for PR table and add schema and router for competitions; frontend: implement PR table component                                                                                                                                              |
 | 25.7  | 8        | frontend: implement Competition component, including chart with hardcoded data, implement competition service, refactor Bodyweight form                                                                                                                                 |
 | 28.7  | 5        | backend: fix bug where adding new exercise did not mark it as current PR; frontend: Competition component now gets real data from backend; write user manual                                                                                                            |
-| 29.7 | 6 | frontend: fix css issues, add skeletons for Workout components using hardcoded data |
-| total | 197      |                                                                                                                                                                                                                                                                         |
+| 29.7  | 6        | frontend: fix css issues, add skeletons for Workout components using hardcoded data                                                                                                                                                                                     |
+| 30.7  | 5        | start to implement ability to add workouts on frontend and backend                                                                                                                                                                                                      |
+| 31.7  | 10       | color overhaul, continue working on the workout addition feature                                                                                                                                                                                                        |
+|  1.8  | 5        | frontend can now add and show workouts                                                                                                                                                                                                                                  |
+|  2.8  | 3        | move away from React App as title and its favicon 😂                                                                                                                                                                                                                    |
+| total | 220      |                                                                                                                                                                                                                                                                         |
