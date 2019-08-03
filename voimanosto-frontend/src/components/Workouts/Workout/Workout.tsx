@@ -43,7 +43,9 @@ const Workout: React.FC<WorkoutProps> = ({ date }) => {
         style={{ backgroundColor: '#1C1C1E' }}
       >
         {!exercises ? (
-          <p>No workout </p>
+          <Header inverted as='h5'>
+            No workout planned
+          </Header>
         ) : (
           exercises.map((ex, i) => (
             <div key={i}>
@@ -71,7 +73,7 @@ const Workout: React.FC<WorkoutProps> = ({ date }) => {
                 {ex.exercise.name} ({ex.exercise.variation})
               </Accordion.Title>
               <Accordion.Content active={activeExerciseIndex.includes(i)}>
-                <Table inverted unstackable collapsing>
+                <Table inverted unstackable collapsing textAlign='center'>
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell>Sets</Table.HeaderCell>

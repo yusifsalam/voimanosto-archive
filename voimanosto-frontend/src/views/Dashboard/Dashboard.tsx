@@ -34,16 +34,18 @@ const Dashboard: React.FC = () => {
               className='inverted'
               label='Weekly'
             />
+            <Button
+              inverted
+              color='blue'
+              content={showCalendar ? 'Hide calendar' : 'Show calendar'}
+              onClick={() => setShowCalendar(!showCalendar)}
+              style={{ marginLeft: '10px' }}
+            />
           </div>
         </Form.Field>
       </Form>
       <p />
-      <Button
-        inverted
-        color='blue'
-        content={showCalendar ? 'Hide calendar' : 'Show calendar'}
-        onClick={() => setShowCalendar(!showCalendar)}
-      />
+
       {showCalendar ? (
         <div style={{ width: '400px', marginTop: '10px' }}>
           <Calendar className='mini' onClickDay={setStartDate} />
