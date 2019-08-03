@@ -13,6 +13,10 @@ workoutsRouter.post('/', async (req, res, next) => {
   } else {
     try {
       const body = req.body
+      const sameDayWorkout = await Workout.findOne({ date: body.date })
+      if (sameDayWorkout) {
+        return res.json({ error: 'You already have a workout on this day' })
+      }
       const user = await User.findOne({ username: req.params.username })
       // create a new workout object and link it to user
       const workout = new Workout({
