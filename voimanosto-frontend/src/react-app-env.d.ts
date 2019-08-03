@@ -73,3 +73,14 @@ interface IWorkout {
   notes: string
   readiness: number
 }
+
+interface IGroupedExerciseInstances {
+  id: string
+  exercise: IExercise
+  reps: number[]
+  sets: number[]
+  intensity: number[]
+  RPE: number[]
+  weight: number[]
+  isPR: boolean[]
+}

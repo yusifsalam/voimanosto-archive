@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { useContext, useEffect, useState } from 'react'
-import { Accordion, Header, Icon, Table } from 'semantic-ui-react'
+import { Accordion, Header, Icon, Segment, Table } from 'semantic-ui-react'
 import { UserContext } from '../../../context/userContext'
 import workoutService from '../../../services/workoutService'
 
@@ -10,7 +10,7 @@ interface WorkoutProps {
 
 const Workout: React.FC<WorkoutProps> = ({ date }) => {
   const [activeExerciseIndex, setActiveExerciseIndex] = useState([-1])
-  const [exercises, setExercises] = useState<IExerciseInstance[]>([])
+  const [exercises, setExercises] = useState<IGroupedExerciseInstances[]>([])
   const { user } = useContext(UserContext)
   useEffect(() => {
     const fetchData = async () => {
@@ -20,11 +20,57 @@ const Workout: React.FC<WorkoutProps> = ({ date }) => {
           token: user.token,
           date: date
         })
-        setExercises(res.exercises)
+        const groupedExercises = groupData(res.exercises)
+        setExercises(groupedExercises)
       }
     }
     fetchData()
   }, [user, date])
+
+  const groupData = (
+    data: IExerciseInstance[]
+  ): IGroupedExerciseInstances[] => {
+    let groupedArray: IGroupedExerciseInstances[] = []
+    if (data) {
+      data.forEach((entry, i) => {
+        if (
+          !groupedArray.some(
+            (item: any) =>
+              item.exercise.variation === entry.exercise.variation &&
+              item.exercise.name === entry.exercise.name
+          )
+        ) {
+          let newEntry = {
+            exercise: entry.exercise,
+            id: entry.id,
+            reps: [entry.reps],
+            sets: [entry.sets],
+            intensity: [entry.intensity],
+            RPE: [entry.RPE],
+            weight: [entry.weight],
+            isPR: [entry.isPR]
+          }
+          groupedArray.push(newEntry)
+        } else {
+          let oldEntry = groupedArray.pop()
+          let newEntry = {
+            exercise: entry.exercise,
+            id: entry.id,
+            reps: oldEntry ? oldEntry.reps.concat(entry.reps) : [],
+            sets: oldEntry ? oldEntry.sets.concat(entry.sets) : [],
+            intensity: oldEntry
+              ? oldEntry.intensity.concat(entry.intensity)
+              : [],
+            RPE: oldEntry ? oldEntry.RPE.concat(entry.RPE) : [],
+            weight: oldEntry ? oldEntry.weight.concat(entry.weight) : [],
+            isPR: oldEntry ? oldEntry.isPR.concat(entry.isPR) : []
+          }
+          groupedArray.push(newEntry)
+        }
+      })
+    }
+    return groupedArray
+  }
 
   const handleClick = (index: number) => {
     if (activeExerciseIndex.includes(index)) {
@@ -34,7 +80,7 @@ const Workout: React.FC<WorkoutProps> = ({ date }) => {
     }
   }
   return (
-    <div>
+    <Segment compact inverted style={{ border: '2px solid white' }}>
       <Header inverted>{moment(date).format('MMMM Do')}</Header>
       <Accordion
         styled
@@ -42,7 +88,7 @@ const Workout: React.FC<WorkoutProps> = ({ date }) => {
         exclusive={false}
         style={{ backgroundColor: '#1C1C1E' }}
       >
-        {!exercises ? (
+        {exercises.length === 0 ? (
           <Header inverted as='h5'>
             No workout planned
           </Header>
@@ -85,16 +131,18 @@ const Workout: React.FC<WorkoutProps> = ({ date }) => {
                     </Table.Row>
                   </Table.Header>
                   <Table.Body>
-                    <Table.Row>
-                      <Table.Cell>{ex.sets}</Table.Cell>
-                      <Table.Cell>{ex.reps}</Table.Cell>
-                      <Table.Cell>{ex.weight}</Table.Cell>
-                      <Table.Cell>{ex.intensity}</Table.Cell>
-                      <Table.Cell>{ex.RPE}</Table.Cell>
-                      <Table.Cell>
-                        {ex.isPR ? <Icon name='check' /> : <div />}
-                      </Table.Cell>
-                    </Table.Row>
+                    {ex.sets.map((set, i) => (
+                      <Table.Row key={ex.id + i}>
+                        <Table.Cell>{ex.sets[i]}</Table.Cell>
+                        <Table.Cell>{ex.reps[i]}</Table.Cell>
+                        <Table.Cell>{ex.weight[i]}</Table.Cell>
+                        <Table.Cell>{ex.intensity[i]}</Table.Cell>
+                        <Table.Cell>{ex.RPE[i]}</Table.Cell>
+                        <Table.Cell>
+                          {ex.isPR[i] ? <Icon name='check' /> : <div />}
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
                   </Table.Body>
                 </Table>
               </Accordion.Content>
@@ -102,7 +150,7 @@ const Workout: React.FC<WorkoutProps> = ({ date }) => {
           ))
         )}
       </Accordion>
-    </div>
+    </Segment>
   )
 }
 
