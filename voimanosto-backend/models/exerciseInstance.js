@@ -24,8 +24,7 @@ const exerciseInstanceSchema = mongoose.Schema({
   weight: { type: Number, required: true },
   intensity: {
     type: Number,
-    min: 0,
-    max: 100
+    min: 0
   },
   RPE: {
     type: Number,
