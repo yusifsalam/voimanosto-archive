@@ -1,18 +1,19 @@
-import React, { useEffect, useContext } from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
-import Tools from '../../views/Tools'
-import PointCalculator from '../../components/PointCalculator'
+import React, { useContext, useEffect } from 'react'
+import { Link, Route, Switch } from 'react-router-dom'
+import { Header } from 'semantic-ui-react'
+import useReactRouter from 'use-react-router'
 import Bodyweight from '../../components/Bodyweight'
 import Competition from '../../components/Competition'
+import PointCalculator from '../../components/PointCalculator'
 import PRTable from '../../components/PRTable'
+import VolumePieChart from '../../components/VolumeCharts/Piechart'
+import { UserContext } from '../../context/userContext'
+import CustomCalendar from '../../views/Calendar'
+import Dashboard from '../../views/Dashboard'
 import UserProfile from '../../views/Profile'
 import UserSettings from '../../views/Settings'
-import CustomCalendar from '../../views/Calendar'
+import Tools from '../../views/Tools'
 import RegistrationForm from '../RegistrationForm'
-import Dashboard from '../../views/Dashboard'
-import useReactRouter from 'use-react-router'
-import { UserContext } from '../../context/userContext'
-import { Header } from 'semantic-ui-react'
 
 interface IRouter {
   redirectURL: string
@@ -47,6 +48,7 @@ const RouterLinks: React.FC<IRouter> = ({ redirectURL }) => {
             <Route exact path='/tools/bodyweight' component={Bodyweight} />
             <Route exact path='/tools/prs' component={PRTable} />
             <Route exact path='/tools/competitions' component={Competition} />
+            <Route exact path='/tools/volume' component={VolumePieChart} />
           </Switch>
         </div>
       ) : (
