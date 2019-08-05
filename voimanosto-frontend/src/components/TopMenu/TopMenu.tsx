@@ -16,10 +16,10 @@ const TopMenu: React.FC<TopMenuProps> = ({ logo }) => {
   return (
     <Menu inverted fixed='top' borderless className='top-menu'>
       <Menu.Item header className='logo'>
-        <Image src={logo} size='tiny' />
         <Header className='headerInLogo' as={NavLink} to='/'>
           Voimanosto
         </Header>
+        <Image src={logo} size='mini' />
       </Menu.Item>
       <Menu.Menu position='right'>
         <Menu.Item>
