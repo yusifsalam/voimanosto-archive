@@ -48,7 +48,11 @@ const Dashboard: React.FC = () => {
 
       {showCalendar ? (
         <div style={{ width: '400px', marginTop: '10px' }}>
-          <Calendar className='mini' onClickDay={setStartDate} />
+          <Calendar
+            className='mini'
+            onClickDay={setStartDate}
+            minDetail='month'
+          />
         </div>
       ) : (
         <div />

@@ -68,29 +68,23 @@
     background-color: rgb(29, 28, 31);
     .react-calendar__navigation__label {
       color: whitesmoke;
+      background-color: rgb(29, 28, 31);
+      &:hover {
+        background-color: $green;
+      }
     }
     .react-calendar__navigation__arrow {
       color: whitesmoke;
+      &:hover {
+        background-color: lighten($green, 20%);
+      }
+    }
+    &:hover {
+      background-color: $green;
     }
   }
 
   .react-calendar__month-view__weekdays__weekday {
     color: whitesmoke;
-  }
-
-  .react-calendar__navigation {
-    &:hover {
-      background-color: $green;
-    }
-    .react-calendar__navigation__arrow {
-      &:hover {
-        background-color: lighten($green, 20%);
-      }
-    }
-    .react-calendar__navigation__label {
-      &:hover {
-        background-color: $green;
-      }
-    }
   }
 }
