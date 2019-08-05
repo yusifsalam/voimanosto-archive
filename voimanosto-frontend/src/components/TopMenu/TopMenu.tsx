@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import './TopMenu.scss'
-import { Menu, Image, Button, Icon, Header } from 'semantic-ui-react'
-import useReactRouter from 'use-react-router'
 import { NavLink } from 'react-router-dom'
+import { Button, Header, Icon, Image, Menu } from 'semantic-ui-react'
+import useReactRouter from 'use-react-router'
 import { UserContext } from '../../context/userContext'
+import './TopMenu.scss'
 
 interface TopMenuProps {
   logo: string

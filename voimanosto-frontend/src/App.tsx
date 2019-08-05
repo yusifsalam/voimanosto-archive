@@ -3,12 +3,12 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Container } from 'semantic-ui-react'
 import useReactRouter from 'use-react-router'
 import MainContent from './components/MainContent'
-import logo from './components/PointCalculator/new_logo.svg'
 import SideBar from './components/SideBar'
 import TopMenu from './components/TopMenu'
 import { UserContext } from './context/userContext'
 import loginService from './services/loginService'
 import './styles/basic_labels.css'
+import logo from './styles/logo.svg'
 
 const App: React.FC = () => {
   const [user, setUser] = useState<IUser>({
