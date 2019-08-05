@@ -5,6 +5,7 @@ const utils = require('../utils/middleware')
 const Exercise = require('../models/exercise')
 const PR = require('../models/personalRecord')
 const ExerciseInstance = require('../models/exerciseInstance')
+const moment = require('moment')
 
 workoutsRouter.post('/', async (req, res, next) => {
   const verified = await utils.verifyIdentity(req)
@@ -160,6 +161,36 @@ workoutsRouter.get('/:date', async (req, res, next) => {
         res.json(workout.toJSON())
       } else {
         res.json([{ exercises: null }])
+      }
+    } catch (exception) {
+      next(exception)
+    }
+  }
+})
+
+workoutsRouter.get('/:date/month', async (req, res, next) => {
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      const user = await User.findOne({ username: req.params.username })
+      const day = req.params.date
+      const start = moment(day).startOf('month')
+      const end = moment(day).endOf('month')
+      console.log(start, end)
+      const workouts = await Workout.find({
+        date: {
+          $gte: start,
+          $lte: end
+        },
+        user: user._id
+      }).select({ _id: 1, date: 1 })
+      console.log('workouts', workouts)
+      if (workouts && workouts.length !== 0) {
+        res.json(workouts)
+      } else {
+        res.json([{ error: 'no exercises during period' }])
       }
     } catch (exception) {
       next(exception)
