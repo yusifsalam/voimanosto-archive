@@ -176,9 +176,12 @@ workoutsRouter.get('/:date/month', async (req, res, next) => {
     try {
       const user = await User.findOne({ username: req.params.username })
       const day = req.params.date
-      const start = moment(day).startOf('month')
-      const end = moment(day).endOf('month')
-      console.log(start, end)
+      const start = moment(day)
+        .startOf('month')
+        .subtract(6, 'days')
+      const end = moment(day)
+        .endOf('month')
+        .add(6, 'days')
       const workouts = await Workout.find({
         date: {
           $gte: start,
@@ -186,7 +189,6 @@ workoutsRouter.get('/:date/month', async (req, res, next) => {
         },
         user: user._id
       }).select({ _id: 1, date: 1 })
-      console.log('workouts', workouts)
       if (workouts && workouts.length !== 0) {
         res.json(workouts)
       } else {
