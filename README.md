@@ -1,5 +1,7 @@
 # Voimanosto
 
+<img src="https://github.com/yusifsalam/voimanosto/blob/master/docs/images/logo.png" alt="app_logo" width="600">
+
 This is a fullstack application for tracking powerlifting workouts. It was built as part of the course _Full Stack -websovelluskehitys harjoitustyö_ at the University of Helsinki.
 
 The project was built using the MERN stack. The frontend utilizes the power of React and Typescript combo, while the backend is a Node application using Express and is written in Javascript. The backend API is RESTful.
@@ -10,8 +12,6 @@ The project is deployed to Heroku at [https://voimanosto.herokuapp.com](http://v
 Please note that the Heroku deployment is intended for demonstration purposes only and the database will be cleared periodically. If you intend to use the app regularly, you will need to set up your own instance of the app (consult the user manual for instructions).
 
 Hour log is [here](https://github.com/yusifsalam/voimanosto/blob/master/docs/hours.md).
-
-User manual is found [here](https://github.com/yusifsalam/voimanosto/blob/master/docs/user_manual.md).
 
 ### Features:
 
