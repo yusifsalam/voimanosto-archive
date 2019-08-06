@@ -108,7 +108,7 @@ const VolumePiechart: React.FC = () => {
   }
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', overflow: 'auto' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       <div style={{ border: '1px solid white' }}>
         <Header inverted content='Volume' style={{ textAlign: 'center' }} />
 
