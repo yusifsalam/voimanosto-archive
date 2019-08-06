@@ -192,7 +192,7 @@ workoutsRouter.get('/:date/month', async (req, res, next) => {
       if (workouts && workouts.length !== 0) {
         res.json(workouts)
       } else {
-        res.json([{ error: 'no exercises during period' }])
+        res.json([])
       }
     } catch (exception) {
       next(exception)

@@ -68,7 +68,7 @@ bodyweightsRouter.get('/:date/month', async (req, res, next) => {
       if (bodyweigts && bodyweigts.length !== 0) {
         res.json(bodyweigts)
       } else {
-        res.json([{ error: 'no bodyweights during period' }])
+        res.json([])
       }
     } catch (exception) {
       next(exception)

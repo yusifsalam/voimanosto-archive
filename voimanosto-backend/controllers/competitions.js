@@ -48,7 +48,7 @@ competitionsRouter.get('/:date/month', async (req, res, next) => {
       if (comps && comps.length !== 0) {
         res.json(comps)
       } else {
-        res.json([{ error: 'no competitions during period' }])
+        res.json([])
       }
     } catch (exception) {
       next(exception)
