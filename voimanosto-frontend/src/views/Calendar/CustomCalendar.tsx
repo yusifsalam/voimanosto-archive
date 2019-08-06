@@ -28,6 +28,7 @@ const CustomCalendar: React.FC = () => {
   const [startOfMonth, setStartOfMonth] = useState(
     moment()
       .startOf('month')
+      .add(1, 'days')
       .toDate()
   )
   const [workouts, setWorkouts] = useState<number[]>([])
