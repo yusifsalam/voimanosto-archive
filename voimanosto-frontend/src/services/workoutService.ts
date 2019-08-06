@@ -61,9 +61,21 @@ const create = async (props: newWorkoutProps) => {
   return res.data
 }
 
-// const update = (id: string, newObject: IWorkout) => {
-//   const req = axios.put(`${baseUrl}/${id}`, newObject)
-//   return req.then(res => res.data)
-// }
+interface getMonthProps {
+  username: string
+  token: string
+  date: Date
+}
 
-export default { getAll, getByDate, create }
+const getMonth = async (props: getMonthProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.get(
+    `/api/users/${props.username}/workouts/${props.date}/month`,
+    config
+  )
+  return res.data
+}
+
+export default { getAll, getByDate, getMonth, create }

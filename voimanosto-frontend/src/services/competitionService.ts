@@ -45,4 +45,21 @@ const addComp = async (props: addCompProps) => {
   return res.data
 }
 
-export default { getCompsByType, addComp }
+interface getMonthProps {
+  username: string
+  token: string
+  date: Date
+}
+
+const getMonth = async (props: getMonthProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.get(
+    `/api/users/${props.username}/competitions/${props.date}/month`,
+    config
+  )
+  return res.data
+}
+
+export default { getCompsByType, addComp, getMonth }

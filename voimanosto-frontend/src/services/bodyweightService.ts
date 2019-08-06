@@ -72,4 +72,21 @@ const editBw = async (props: editBwProps) => {
   return res.data
 }
 
-export default { addBw, getBw, deleteBw, editBw }
+interface getMonthProps {
+  username: string
+  token: string
+  date: Date
+}
+
+const getMonth = async (props: getMonthProps) => {
+  const config = {
+    headers: { Authorization: `bearer ${props.token}` }
+  }
+  const res = await axios.get(
+    `/api/users/${props.username}/bodyweight/${props.date}/month`,
+    config
+  )
+  return res.data
+}
+
+export default { addBw, getBw, deleteBw, editBw, getMonth }
