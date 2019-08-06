@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node voimanosto-backend/index.js",
     "watch": "nodemon voimanosto-backend/index.js",
-    "heroku-prebuild": "cd voimanosto-frontend && npm i && rm -rf build && npm run build && cp -r build ../voimanosto-backend && cd ..",
     "build": "cd voimanosto-backend && npm i"
   },
   "author": "Yusif Salam-zade"
