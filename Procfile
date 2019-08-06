@@ -1,0 +1,1 @@
+web: node voimanosto-backend/index.js
