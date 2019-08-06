@@ -94,6 +94,7 @@ const CustomCalendar: React.FC = () => {
     setSelectedDay(event)
     let monthStart = moment(event)
       .startOf('month')
+      .add(1, 'days')
       .toDate()
     if (monthStart.getTime() !== startOfMonth.getTime()) {
       setStartOfMonth(monthStart)
@@ -181,7 +182,11 @@ const CustomCalendar: React.FC = () => {
         className='react-calendar'
         tileContent={drawWorkoutIcons}
         onActiveDateChange={({ activeStartDate }) =>
-          setStartOfMonth(activeStartDate)
+          setStartOfMonth(
+            moment(activeStartDate)
+              .add(1, 'days')
+              .toDate()
+          )
         }
       />
       <TransitionablePortal
