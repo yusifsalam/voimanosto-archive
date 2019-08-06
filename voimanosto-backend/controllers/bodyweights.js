@@ -2,6 +2,7 @@ const bodyweightsRouter = require('express').Router({ mergeParams: true })
 const utils = require('../utils/middleware')
 const User = require('../models/user')
 const Bodyweight = require('../models/bodyweight')
+const moment = require('moment')
 
 bodyweightsRouter.post('/', async (req, res, next) => {
   const verified = await utils.verifyIdentity(req)
@@ -37,6 +38,38 @@ bodyweightsRouter.get('/', async (req, res, next) => {
       }).sort({ date: 'asc' })
 
       res.json(bodyweights.map(bw => bw.toJSON()))
+    } catch (exception) {
+      next(exception)
+    }
+  }
+})
+
+bodyweightsRouter.get('/:date/month', async (req, res, next) => {
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      const user = await User.findOne({ username: req.params.username })
+      const day = req.params.date
+      const start = moment(day)
+        .startOf('month')
+        .subtract(6, 'days')
+      const end = moment(day)
+        .endOf('month')
+        .add(6, 'days')
+      const bodyweigts = await Bodyweight.find({
+        date: {
+          $gte: start,
+          $lte: end
+        },
+        user: user._id
+      }).select({ _id: 1, date: 1 })
+      if (bodyweigts && bodyweigts.length !== 0) {
+        res.json(bodyweigts)
+      } else {
+        res.json([{ error: 'no bodyweights during period' }])
+      }
     } catch (exception) {
       next(exception)
     }
