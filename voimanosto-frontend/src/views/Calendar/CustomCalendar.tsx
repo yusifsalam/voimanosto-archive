@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { useContext, useEffect, useState } from 'react'
-import Calendar from 'react-calendar'
+import Calendar, { CalendarTileProperties } from 'react-calendar'
 import {
   Button,
   Container,
@@ -13,6 +13,8 @@ import CompetitionForm from '../../components/Competition/Form'
 import WorkoutForm from '../../components/Workouts/Form'
 import { UserContext } from '../../context/userContext'
 import bodyweightService from '../../services/bodyweightService'
+import competitionService from '../../services/competitionService'
+import workoutService from '../../services/workoutService'
 import './CustomCalendar.scss'
 
 const CustomCalendar: React.FC = () => {
@@ -22,12 +24,56 @@ const CustomCalendar: React.FC = () => {
   const [compPortalOpen, setCompPortalOpen] = useState(false)
   const [popupTopPos, setPopupTopPos] = useState(0)
   const [popupLeftPos, setPopupLeftPos] = useState(0)
-  const [selectedDay, setSelectedDay] = useState('')
+  const [selectedDay, setSelectedDay] = useState(moment().toDate())
+  const [startOfMonth, setStartOfMonth] = useState(
+    moment()
+      .startOf('month')
+      .toDate()
+  )
+  const [workouts, setWorkouts] = useState<number[]>([])
+  const [bodyweights, setBodyweights] = useState<number[]>([])
+  const [competitions, setCompetitions] = useState<number[]>([])
   const [bodyweight, setBodyweight] = useState(0)
   const [msg, setMsg] = useState<null | string>(null)
   const { user } = useContext(UserContext)
 
   useEffect(() => {
+    const fetchData = async () => {
+      const props = {
+        username: user.username,
+        token: user.token,
+        date: startOfMonth
+      }
+      const workouts = await workoutService.getMonth(props)
+      setWorkouts(
+        workouts.map((entry: any) =>
+          moment(entry.date)
+            .startOf('day')
+            .toDate()
+            .getTime()
+        )
+      )
+      const bws = await bodyweightService.getMonth(props)
+
+      setBodyweights(
+        bws.map((bw: any) =>
+          moment(bw.date)
+            .startOf('day')
+            .toDate()
+            .getTime()
+        )
+      )
+      const comps = await competitionService.getMonth(props)
+      setCompetitions(
+        comps.map((comp: any) =>
+          moment(comp.date)
+            .startOf('day')
+            .toDate()
+            .getTime()
+        )
+      )
+    }
+    fetchData()
     let icon = document.createElement('i')
     icon.classList.add('icon', 'trophy')
     const test = document
@@ -40,11 +86,17 @@ const CustomCalendar: React.FC = () => {
         test.appendChild(icon)
       }
     }
-  })
+  }, [user, startOfMonth])
 
   const handleClick = (event: any) => {
     setPortalOpen(true)
     setSelectedDay(event)
+    let monthStart = moment(event)
+      .startOf('month')
+      .toDate()
+    if (monthStart.getTime() !== startOfMonth.getTime()) {
+      setStartOfMonth(monthStart)
+    }
     const btnEl = document.getElementsByClassName(
       'react-calendar__tile--active'
     )
@@ -61,6 +113,35 @@ const CustomCalendar: React.FC = () => {
       if (btnPos.left + 150 > boxPos.right) setPopupLeftPos(boxPos.right - 150)
       else setPopupLeftPos(btnPos.left)
     }
+  }
+
+  const drawWorkoutIcons = (
+    props: CalendarTileProperties
+  ): React.ReactElement => {
+    const { date } = props
+    let arr = []
+    if (workouts.includes(date.getTime())) {
+      arr.push(
+        <i
+          className='ui icon dumbbell large green'
+          key={date.getTime() + 'workout'}
+        />
+      )
+    }
+    if (bodyweights.includes(date.getTime())) {
+      arr.push(
+        <i className='ui icon weight large blue' key={date.getTime() + 'bw'} />
+      )
+    }
+    if (competitions.includes(date.getTime())) {
+      arr.push(
+        <i
+          className='ui icon trophy large yellow'
+          key={date.getTime() + 'comp'}
+        />
+      )
+    }
+    return <div>{arr}</div>
   }
 
   const addBodyweight = async () => {
@@ -97,6 +178,10 @@ const CustomCalendar: React.FC = () => {
         minDetail='year'
         onChange={handleClick}
         className='react-calendar'
+        tileContent={drawWorkoutIcons}
+        onActiveDateChange={({ activeStartDate }) =>
+          setStartOfMonth(activeStartDate)
+        }
       />
       <TransitionablePortal
         onClose={() => setPortalOpen(false)}
@@ -172,9 +257,7 @@ const CustomCalendar: React.FC = () => {
         date={moment(selectedDay).toDate()}
       />
       <Header inverted as='h4'>
-        {selectedDay !== ''
-          ? moment(selectedDay).format('MMMM D, YYYY') + ' selected'
-          : null}{' '}
+        {moment(selectedDay).format('MMMM D, YYYY') + ' selected'}
       </Header>
     </Container>
   )
