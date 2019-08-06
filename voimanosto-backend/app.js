@@ -24,7 +24,7 @@ mongoose
 
 app.use(cors())
 app.use(bodyParser.json())
-app.use(express.static('build'))
+app.use(express.static(path.join(__dirname, 'build')))
 app.use(middleware.requstLogger)
 
 app.use('/api/login', loginRouter)
