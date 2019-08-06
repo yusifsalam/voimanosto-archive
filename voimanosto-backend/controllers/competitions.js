@@ -5,6 +5,7 @@ const Exercise = require('../models/exercise')
 const Bodyweight = require('../models/bodyweight')
 const PR = require('../models/personalRecord')
 const utils = require('../utils/middleware')
+const moment = require('moment')
 
 competitionsRouter.get('/:type', async (req, res, next) => {
   const verified = await utils.verifyIdentity(req)
@@ -18,6 +19,37 @@ competitionsRouter.get('/:type', async (req, res, next) => {
         type: req.params.type
       }).sort({ date: 1 })
       res.json(comps.map(comp => comp.toJSON()))
+    } catch (exception) {
+      next(exception)
+    }
+  }
+})
+competitionsRouter.get('/:date/month', async (req, res, next) => {
+  const verified = await utils.verifyIdentity(req)
+  if (verified !== true) {
+    res.status(401).json({ error: verified })
+  } else {
+    try {
+      const user = await User.findOne({ username: req.params.username })
+      const day = req.params.date
+      const start = moment(day)
+        .startOf('month')
+        .subtract(6, 'days')
+      const end = moment(day)
+        .endOf('month')
+        .add(6, 'days')
+      const comps = await Competition.find({
+        date: {
+          $gte: start,
+          $lte: end
+        },
+        user: user._id
+      }).select({ _id: 1, date: 1 })
+      if (comps && comps.length !== 0) {
+        res.json(comps)
+      } else {
+        res.json([{ error: 'no competitions during period' }])
+      }
     } catch (exception) {
       next(exception)
     }
