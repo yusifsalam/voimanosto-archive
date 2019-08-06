@@ -1,0 +1,12 @@
+{
+  "name": "voimanosto",
+  "version": "1.0.0",
+  "description": "Backend for voimanosto fullstack app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node voimanosto-backend/index.js",
+    "watch": "nodemon voimanosto-backend/index.js",
+    "build": "cd voimanosto-backend && npm i"
+  },
+  "author": "Yusif Salam-zade"
+}
