@@ -1,20 +1,21 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import {
+  Button,
   Card,
-  Icon,
-  Image,
-  Label,
   Grid,
   Header,
-  Button
+  Icon,
+  Image,
+  Label
 } from 'semantic-ui-react'
+import LoadingLottie from '../../animations/LoadingLottie'
+import BodyweightChart from '../../components/Bodyweight/Chart'
 import ExerciseLibrary from '../../components/ExerciseLibrary'
 import NotificationGroup from '../../components/NotificationGroup'
+import VolumePiechart from '../../components/VolumeCharts/Piechart'
 import { UserContext } from '../../context/userContext'
 import bodyweightService from '../../services/bodyweightService'
-import LoadingLottie from '../../animations/LoadingLottie'
-import { NavLink } from 'react-router-dom'
-import BodyweightChart from '../../components/Bodyweight/Chart'
 
 const UserProfile: React.FC = () => {
   const { user } = useContext(UserContext)
@@ -96,6 +97,9 @@ const UserProfile: React.FC = () => {
               </div>
             )}
           </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <VolumePiechart />
         </Grid.Row>
         <Grid.Row>
           <ExerciseLibrary user={user} />
