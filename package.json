@@ -1,7 +1,7 @@
 {
   "name": "voimanosto",
   "version": "1.0.0",
-  "description": "Backend for voimanosto fullstack app",
+  "description": "Voimanosto - a powerlifting tracker",
   "main": "voimanosto-backend/index.js",
   "scripts": {
     "start": "node voimanosto-backend/index.js",
