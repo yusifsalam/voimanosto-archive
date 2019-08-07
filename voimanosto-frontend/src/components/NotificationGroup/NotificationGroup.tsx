@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import Notification from '../Notification'
+import React, { useEffect, useState } from 'react'
+import Notification from './Notification'
 
 interface Notification {
   message: string

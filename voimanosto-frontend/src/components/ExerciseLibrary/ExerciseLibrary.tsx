@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Dropdown, Header, Icon, Table } from 'semantic-ui-react'
 import exerciseLibraryService from '../../services/exerciseLibraryService'
-import NewExerciseForm from '../NewExerciseForm'
+import NewExerciseForm from './NewExerciseForm'
 
 interface ExerciseLibraryProps {
   user: IUser | null | undefined

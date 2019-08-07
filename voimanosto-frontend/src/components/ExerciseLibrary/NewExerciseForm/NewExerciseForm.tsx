@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import {
-  Modal,
   Button,
-  Form,
-  Transition,
   Dimmer,
-  Message
+  Form,
+  Message,
+  Modal,
+  Transition
 } from 'semantic-ui-react'
-import exerciseLibraryService from '../../services/exerciseLibraryService'
-import SuccessLottie from '../../animations/SuccessLottie'
+import SuccessLottie from '../../../animations/SuccessLottie'
+import exerciseLibraryService from '../../../services/exerciseLibraryService'
 
 interface NewExerciseFormProps {
   isOpen: boolean
