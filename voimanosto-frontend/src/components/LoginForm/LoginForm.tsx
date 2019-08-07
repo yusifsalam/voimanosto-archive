@@ -1,15 +1,14 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import {
-  Segment,
-  Grid,
-  Form,
   Button,
   Divider,
+  Form,
+  Grid,
+  Header,
   Message,
-  Header
+  Segment
 } from 'semantic-ui-react'
-import { NavLink } from 'react-router-dom'
-import { ILoginProps } from '../../types'
 
 const LoginForm: React.FC<ILoginProps> = ({
   username,
