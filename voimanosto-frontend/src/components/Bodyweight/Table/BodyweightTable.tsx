@@ -1,8 +1,8 @@
+import { UserContext } from 'context/userContext'
 import moment from 'moment'
 import React, { useContext, useState } from 'react'
 import { Button, Header, Icon, Modal, Popup, Table } from 'semantic-ui-react'
-import { UserContext } from '../../../context/userContext'
-import bodyweightService from '../../../services/bodyweightService'
+import bodyweightService from 'services/bodyweightService'
 import BodyweightPlainForm from '../Form/PlainForm'
 
 const BodyweightTable: React.FC<IBodyweightTableProps> = ({

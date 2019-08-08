@@ -9,7 +9,7 @@ interface ILoginProps {
   setPassword(password: string): void
 }
 
-type IUser = {
+interface IUser {
   name: string
   username: string
   avatar: string
