@@ -105,7 +105,9 @@ class RegistrationForm extends React.PureComponent<Props & FormikProps<FormValue
             onChange={handleChange}
             onBlur={handleBlur}
           />
-          <Button type="submit">Register</Button>
+          <Button inverted color="green" type="submit">
+            Register
+          </Button>
         </Form>
       </div>
     )
