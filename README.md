@@ -9,8 +9,6 @@ MongoDB Atlas is used as the database provider and Cloudinary is used for image 
 
 The project is deployed to Heroku at [https://voimanosto.herokuapp.com](http://voimanosto.herokuapp.com).
 
-Please note that the Heroku deployment is intended for demonstration purposes only and the database will be cleared periodically. If you intend to use the app regularly, you will need to set up your own instance of the app (consult the user manual for instructions).
-
 ### Features:
 
 - track training volume
@@ -33,5 +31,4 @@ Please note that the Heroku deployment is intended for demonstration purposes on
 
 ### Known Issues
 
-Firefox does not render some elements correctly and the animations can be choppy even on powerful machines, so the use of Firefox is discouraged for now; Chrome and Safari are recommended instead.
 Input validation is missing from most forms currently, so unexpected behavior is possible.
